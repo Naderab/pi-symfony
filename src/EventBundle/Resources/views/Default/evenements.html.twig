@@ -1,0 +1,49 @@
+{% for x in evenements %}
+    <div class="col-md-4 pb-30 pt-10">
+        <!-- Product Start -->
+        <div class="ee-product">
+            <!-- Image -->
+            <div class="image">
+                <a href="{{ path('detailsevent',{'id':x.id}) }}" class="img"><img src="{{ asset('uploads/images/' ~ x.image) }}"
+                                            alt=""></a>
+                <div class="wishlist-compare">
+                    <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
+                    <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                </div>
+            </div>
+            <div class="content">
+                <!-- Category & Title -->
+                <div class="category-title">
+                    <a href="#" class="cat">{{ x.adresse }}</a>
+                    <h5 class="title"><a href="{{ path('detailsevent',{'id':x.id}) }}">{{ x.nom }}</a></h5>
+                    <a href="#" class="cat">{{ x.dateDebut | date('Y-m-d') }}
+                        - {{ x.dateFin | date('Y-m-d') }}</a></h5>
+                </div>
+                <!-- Price & Ratting -->
+                <div class="price-ratting">
+                    {% if x.Prix == 0 %}
+                        <h5 class="price">Gratuit</h5>
+                    {% else %}
+                        <h5 class="price">{{ x.Prix }} DT</h5>
+                    {% endif %}
+                    <div class="ratting">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                        <i class="fa fa-star-o"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div><!-- Product End -->
+    </div>
+{% endfor %}
+<div class="row mt-30">
+    <div class="col">
+        <div class="text-center">{{ knp_pagination_render(evenements) }}</div>
+
+    </div>
+</div>

@@ -24,12 +24,157 @@
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{ asset('Front/assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('Front/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('Front/bower_components/font-awesome/css/font-awesome.min.css')}}'">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{{ asset('Front/bower_components/Ionicons/css/ionicons.min.css')}}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('Front/dist/css/AdminLTE.min.css')}}'">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{{ asset('Front/dist/css/skins/_all-skins.min.css')}}">
+
 
     <!-- Modernizer JS -->
     <script src="{{ asset('Front/assets/js/vendor/modernizr-2.8.3.min.js')}}"></script>
+    <style id='tribe-events-calendar-style-inline-css' type='text/css'>
+        .tribe-events-list .tribe-events-loop .tribe-event-featured,
+        .tribe-events-list #tribe-events-day.tribe-events-loop .tribe-event-featured,
+        .type-tribe_events.tribe-events-photo-event.tribe-event-featured .tribe-events-photo-event-wrap,
+        .type-tribe_events.tribe-events-photo-event.tribe-event-featured .tribe-events-photo-event-wrap:hover {
+            background-color: #0ea0d7;
+        }
+
+        #tribe-events-content table.tribe-events-calendar .type-tribe_events.tribe-event-featured {
+            background-color: #0ea0d7;
+        }
+
+        .tribe-events-list-widget .tribe-event-featured,
+        .tribe-events-venue-widget .tribe-event-featured,
+        .tribe-mini-calendar-list-wrapper .tribe-event-featured,
+        .tribe-events-adv-list-widget .tribe-event-featured .tribe-mini-calendar-event {
+            background-color: #0ea0d7;
+        }
+
+        .tribe-grid-body .tribe-event-featured.tribe-events-week-hourly-single {
+            background-color: rgba(14,160,215, .7 );
+            border-color: #0ea0d7;
+        }
+
+        .tribe-grid-body .tribe-event-featured.tribe-events-week-hourly-single:hover {
+            background-color: #0ea0d7;
+        }
+
+        .tribe-button {
+            background-color: #0ea0d7;
+            color: #fff;
+        }
+
+        .tribe-button:hover,
+        .tribe-button:active,
+        .tribe-button:focus {
+            background-color: #096b8f;
+        }
+
+        #tribe-events .tribe-event-featured .tribe-button:hover {
+            color: #053547;
+        }
+
+        .tribe-events-list .tribe-events-event-cost span {
+            background-color: #eeeeee;
+            border-color: #c7c7c7;
+            color: #333333;
+        }
+
+        #tribe-events .tribe-events-calendar td.tribe-events-othermonth,
+        #tribe-events .tribe-grid-allday,
+        #tribe-events .tribe-events-calendar td:hover {
+            background-color: #f1f1f1;
+        }
+
+        #tribe-events .tribe-events-calendar td,
+        #tribe-events .tribe-week-grid-block div,
+        #tribe-events .tribe-events-grid,
+        #tribe-events .tribe-grid-allday,
+        #tribe-events .tribe-events-grid .tribe-scroller,
+        #tribe-events .tribe-events-grid .tribe-grid-body .column,
+        #tribe-events .tribe-events-grid .tribe-grid-allday .column {
+            border-color: #d2d2d2;
+        }
+
+        .events-archive.events-gridview #tribe-events-content table .type-tribe_events,
+        .tribe-events-shortcode .tribe-events-month table .type-tribe_events {
+            border-color: #e4e4e4;
+        }
+
+        .tribe-events-calendar td.tribe-events-past div[id*="tribe-events-daynum-"],
+        .tribe-events-calendar td.tribe-events-past div[id*="tribe-events-daynum-"] > a {
+            background-color: #d2d2d2;
+        }
+
+        .tribe-events-calendar div[id*="tribe-events-daynum-"],
+        .tribe-events-calendar div[id*="tribe-events-daynum-"] a {
+            background-color: #acacac;
+        }
+
+        .tribe-events-calendar thead th,
+        .tribe-events-grid .tribe-grid-header .tribe-grid-content-wrap .column,
+        .tribe-grid-header {
+            background-color: #464646;
+            border-left-color: #464646;
+            border-right-color: #464646;
+        }
+
+        #tribe-events td.tribe-events-present div[id*="tribe-events-daynum-"],
+        #tribe-events td.tribe-events-present div[id*="tribe-events-daynum-"] > a {
+            background-color: #21759b;
+            color: #fff;
+        }
+
+        #tribe-events .tribe-events-grid .tribe-grid-header div.tribe-week-today {
+            background-color: #21759b;
+        }
+
+        .tribe-grid-allday .tribe-events-week-allday-single,
+        .tribe-grid-body .tribe-events-week-hourly-single,
+        .tribe-grid-allday .tribe-events-week-allday-single:hover,
+        .tribe-grid-body .tribe-events-week-hourly-single:hover {
+            background-color: #21759b;
+            background-color: rgba( 33, 117, 155, .75 );
+            border-color: #14455c
+        }
+
+
+        .single-tribe_events .tribe-events-event-meta {
+            background-color: #e5e5e5;
+            color: #333333;
+        }
+
+        .tribe-events-single-event-title {
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
+{% if app.session.flashBag.has('success') %}
+
+    <div class="alert alert-success">
+        {% for msg in app.session.flashBag.get('success') %}
+            {{ msg }}
+        {% endfor %}
+    </div>
+{% endif %}
+{% if app.session.flashBag.has('error') %}
+
+    <div class="alert alert-danger">
+        {% for msg in app.session.flashBag.get('error') %}
+            {{ msg }}
+        {% endfor %}
+    </div>
+{% endif %}
+
 {% block Header %}
 
 
@@ -48,7 +193,7 @@
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <a href="track-order.html"><img src="{{ asset('Front/assets/images/icons/car.png')}}" alt="Car Icon"> <span>Suivre commande</span></a>
                         {% endif %}
-                        <a href="store.html"><img src="{{ asset('Front/assets/images/icons/marker.png')}}" alt="Car Icon"> <span>localiser magasins</span></a>
+                        <a href="store.html"><img src="{{ asset('Front/assets/images/icons/marker.png')}}" alt="Car Icon"> <span>localiser Nos points de collect</span></a>
                     </div><!-- Header Links End -->
                 </div>
 
@@ -56,19 +201,6 @@
                     <!-- Header Advance Search Start -->
                     <div class="header-advance-search">
 
-                        <form action="#">
-                            <div class="input"><input type="text" placeholder="Search your product"></div>
-                            <div class="select">
-                                <select class="nice-select">
-                                    <option>All Categories</option>
-                                    <option>Mobile</option>
-                                    <option>Computer</option>
-                                    <option>Laptop</option>
-                                    <option>Camera</option>
-                                </select>
-                            </div>
-                            <div class="submit"><button><i class="icofont icofont-search-alt-1"></i></button></div>
-                        </form>
 
                     </div><!-- Header Advance Search End -->
                 </div>
@@ -79,7 +211,7 @@
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
                         <a href="{{ path('fos_user_profile_show') }}"><i class="icofont icofont-user-alt-7"></i> <span>{{ '%username%'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span></a>
-                            <a href="{{ path('fos_user_security_logout') }}"><i class="icofont icofont-logout d-none"></i> <span>{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</span></a>
+                            <a href="{{ path('fos_user_security_logout') }}"><i class="icofont icofont-logout "></i> <span>{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</span></a>
 
 
 
@@ -97,6 +229,7 @@
                                 {% endfor %}
                             {% endfor %}
                         {% endif %}
+
                     </div><!-- Header Account Links End -->
                 </div>
 
@@ -113,8 +246,8 @@
                     <!-- Logo Start -->
                     <div class="header-logo">
                         <a href="index.html">
-                            <img src="{{ asset('Front/assets/images/logo.png')}}" alt="E&E - Electronics eCommerce Bootstrap4 HTML Template">
-                            <img class="theme-dark" src="{{ asset('Front/assets/images/logo-light.png')}}" alt="E&E - Electronics eCommerce Bootstrap4 HTML Template">
+                            <img src="{{ asset('Front/assets/images/logo.png')}}" alt="Eco-System">
+                            <img class="theme-dark" src="{{ asset('Front/assets/images/logo-light.png')}}" alt="Eco-System">
                         </a>
                     </div><!-- Logo End -->
                 </div>
@@ -124,50 +257,36 @@
                     <div class="main-menu">
                         <nav>
                             <ul>
-                                <li class="active"><a href="index.html">HOME</a></li>
-                                <li class="menu-item-has-children"><a href="shop-grid.html">Shop</a>
+                                <li class="active"><a href="{{ path('event_homepage') }}">Accueil</a></li>
+                                <li class="menu-item-has-children"><a href="">Les produits </a>
                                     <ul class="sub-menu">
-                                        <li class="menu-item-has-children"><a href="shop-grid.html">shop grid</a>
+                                        <li class="menu-item-has-children"><a href="">Commensez vos achats</a>
                                             <ul class="sub-menu">
-                                                <li><a href="shop-grid.html">shop grid</a></li>
+                                                <li><a href="category-1.html">Téléphones & Tablettes </a></li>
+                                                <li><a href="category-2.html">INFORMATIQUE</a></li>
+                                                <li><a href="category-3.html">ÉLECTROMÉNAGER</a></li>
                                             </ul>
                                         </li>
-                                        <li class="menu-item-has-children"><a href="single-product.html">Single Product</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="single-product.html">Single Product 1</a></li>
-                                            </ul>
+                                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+                                        <li class="menu-item"><a href="{{ path('event_ajoutevenement') }}">Ajoutez Annonce</a>
+                                            {% endif %}
+
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="menu-item-has-children"><a href="#">PAGES</a>
-                                    <ul class="mega-menu three-column">
-                                        <li><a href="#">Column One</a>
-                                            <ul>
-                                                <li><a href="about-us.html">About us</a></li>
-                                                <li><a href="best-deals.html">Best Deals</a></li>
-                                                <li><a href="cart.html">Cart</a></li>
-                                                <li><a href="checkout.html">Checkout</a></li>
-                                            </ul>
+                                <li class="menu-item-has-children"><a href="{{ path('event_afficheeventuser') }}">Les Evenements </a>
+                                    <ul class="sub-menu">
+                                        <li class="menu-item"><a href="{{ path('event_afficheeventuser') }}">Consulter nos Evenements</a>
+
                                         </li>
-                                        <li><a href="#">Column Two</a>
-                                            <ul>
-                                                <li><a href="compare.html">Compare</a></li>
-                                                <li><a href="faq.html">Faq</a></li>
-                                                <li><a href="feature.html">Feature</a></li>
-                                                <li><a href="login.html">Login</a></li>
-                                                <li><a href="register.html">Register</a></li>
-                                                <li><a href="store.html">Store</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Column Three</a>
-                                            <ul>
-                                                <li><a href="terms-conditions.html">Terms & Conditions</a></li>
-                                                <li><a href="track-order.html">Track Order</a></li>
-                                                <li><a href="wishlist.html">Wishlist</a></li>
-                                            </ul>
+                                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                        <li class="menu-item"><a href="{{ path('event_ajoutevenement') }}">Proposez Evenemenet</a>
+                                       {% endif %}
                                         </li>
                                     </ul>
                                 </li>
+
                                 <li class="menu-item-has-children"><a href="blog-1-column-left-sidebar.html">BLOG</a>
                                     <ul class="sub-menu">
                                         <li><a href="blog-1-column-left-sidebar.html">Blog 1 Column Left Sidebar</a></li>
@@ -184,8 +303,6 @@
                     <!-- Header Shop Links Start -->
                     <div class="header-shop-links">
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <!-- Compare -->
-                        <a href="compare.html" class="header-compare"><i class="ti-control-shuffle"></i></a>
                         <!-- Wishlist -->
                         <a href="wishlist.html" class="header-wishlist"><i class="ti-heart"></i> <span class="number">3</span></a>
                         <!-- Cart -->
@@ -200,8 +317,6 @@
             </div>
         </div>
     </div><!-- Header Bottom End -->
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-    <!-- Header Category Start -->
     <div class="header-category-section">
         <div class="container">
             <div class="row">
@@ -219,12 +334,14 @@
                         <!-- Category Menu -->
                         <nav class="category-menu">
                             <ul>
-                                <li><a href="category-1.html">Tv & Audio System</a></li>
-                                <li><a href="category-2.html">Computer & Laptop</a></li>
-                                <li><a href="category-3.html">Phones & Tablets</a></li>
-                                <li><a href="category-1.html">Home Appliances</a></li>
-                                <li><a href="category-2.html">Kitchen appliances</a></li>
-                                <li><a href="category-3.html">Accessories</a></li>
+                                <li><a href="">&nbsp; &nbsp; &nbsp; &nbsp;</a></li>
+                                <li><a href="">&nbsp; &nbsp; &nbsp; &nbsp;</a></li>
+                                <li><a href="">&nbsp; &nbsp; &nbsp; &nbsp;</a></li>
+                                <li><a href="">&nbsp; &nbsp; &nbsp; &nbsp;</a></li>
+
+                                <li><a href="category-1.html">Téléphones & Tablettes </a></li>
+                                <li><a href="category-2.html">INFORMATIQUE</a></li>
+                                <li><a href="category-3.html">ÉLECTROMÉNAGER</a></li>
                             </ul>
                         </nav>
 
@@ -234,7 +351,7 @@
             </div>
         </div>
     </div><!-- Header Category End -->
-{% endif %}
+
 </div><!-- Header Section End -->
 {% endblock %}
 
@@ -345,13 +462,11 @@
 
                 <!-- Footer Copyright -->
                 <div class="col-lg-6 col-12">
-                    <div class="footer-copyright"><p>&copy; Copyright, 2018 All Rights Reserved by <a href="https://freethemescloud.com/">Free themes Cloud</a></p></div>
+                    <div class="footer-copyright"><p>&copy; Copyright, 2018 All Rights Reserved by <a href="">DARIN</a></p></div>
                 </div>
 
                 <!-- Footer Payment Support -->
-                <div class="col-lg-6 col-12">
-                    <div class="footer-payments-image"><img src="{{ asset('Front/assets/images/payment-support.png')}}" alt="Payment Support Image"></div>
-                </div>
+
 
             </div>
         </div>
@@ -361,44 +476,9 @@
 
 <!-- Popup Subscribe Section Start -->
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-<div class="popup-subscribe-section section bg-gray pt-55 pb-55" data-modal="popup-modal">
 
-    <!-- Popup Subscribe Wrap Start -->
-    <div class="popup-subscribe-wrap">
-
-        <button class="close-popup">X</button>
-
-        <!-- Popup Subscribe Banner -->
-        <div class="popup-subscribe-banner banner">
-            <a href="#"><img src="{{ asset('Front/assets/images/banner/banner-7.jpg')}}" alt="Banner"></a>
-        </div>
-
-        <!-- Popup Subscribe Form Wrap Start -->
-        <div class="popup-subscribe-form-wrap">
-
-            <h1>SUBSCRIBE <br>OUR NEWSLETTER</h1>
-            <h4>Get latest product update...</h4>
-
-            <!-- Newsletter Form -->
-            <form action="#" method="post" class="popup-subscribe-form validate" target="_blank" novalidate>
-                <div id="mc_embed_signup_scroll">
-                    <label for="popup_subscribe" class="d-none">Subscribe to our mailing list</label>
-                    <input type="email" value="" name="EMAIL" class="email" id="popup_subscribe" placeholder="Enter your email here" required>
-                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef" tabindex="-1" value=""></div>
-                    <button type="submit" name="subscribe" id="" class="button">subscribe</button>
-                </div>
-            </form>
-
-            <p>Be the first in the by getting special deals and offers send directly to your inbox.</p>
-
-        </div><!-- Popup Subscribe Form Wrap End -->
-
-    </div><!-- Popup Subscribe Wrap End -->
-
-</div><!-- Popup Subscribe Section End -->
 {% endif %}
-
+{% endblock %}
 <!-- JS
 ============================================ -->
 
@@ -413,8 +493,31 @@
 
 <!-- Main JS -->
 <script src="{{ asset('Front/assets/js/main.js') }}"></script>
-{% block javascript  %} {% endblock %}
+<script>
+
+        $(document).ready(function(){
+
+            $.ajax({
+                url: "{{path('event_getevent')}}",
+                method: "GET",
+                dataType: 'json',
+                success: function(data, status){
+                    $('#parent').html(data);
+                }
+            });
+        });
+
+
+
+
+
+
+
+
+
+</script>
+
+{% block javascripts  %} {% endblock %}
 </body>
 
 </html>
-{% endblock %}

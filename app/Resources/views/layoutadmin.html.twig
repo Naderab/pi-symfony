@@ -16,9 +16,13 @@
     <link rel="stylesheet" href="{{ asset('TemplateAdmin/bower_components/jvectormap/jquery-jvectormap.css' ) }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('TemplateAdmin/dist/css/AdminLTE.min.css' ) }}">
+    <link rel="stylesheet" href="{{ asset('TemplateAdmin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('TemplateAdmin/dist/css/skins/_all-skins.min.css') }}">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -377,8 +381,8 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href=""><i class="fa fa-edit"></i> Traiter demande d'ajout </a></li>
-                        <li><a href=""><i class="fa fa-table"></i>Consulter liste des evenements</a></li>
+                        <li><a href="{{ path('event_afficheeventNtadmin') }}"><i class="fa fa-edit"></i> Traiter demande d'ajout </a></li>
+                        <li><a href="{{ path('event_afficheeventadmin') }}"><i class="fa fa-table"></i>Consulter liste des evenements</a></li>
                         <li><a href=""><i class="fa fa-calendar"></i> <span>Planning</span></a></li>
                     </ul>
                 </li>
@@ -408,6 +412,21 @@
                         <li><a href=""><i class="fa fa-edit"></i>Gerer les livreurs</a></li>
                         <li><a href=""><i class="fa fa-table"></i>Consulter liste des livraisons</a></li>
                         <li><a href=""><i class="fa fa-calendar"></i> <span>Planning</span></a></li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-laptop"></i>
+                        <span>Gestion E-commerce</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href=""><i class="fa fa-edit"></i>Gerer les ventes</a></li>
+                        <li><a href=""><i class="fa fa-edit"></i>Gerer les achats</a></li>
+                        <li><a href=""><i class="fa fa-edit"></i>Gerer les commandes </a></li></a>
 
                     </ul>
                 </li>
@@ -622,7 +641,7 @@
 
 </div>
 <!-- ./wrapper -->
-
+{% endblock %}
 <!-- jQuery 3 -->
 <script src="{{ asset('TemplateAdmin/bower_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -644,7 +663,17 @@
 <script src="{{ asset('TemplateAdmin/dist/js/pages/dashboard2.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('TemplateAdmin/dist/js/demo.js')}}"></script>
-{% block javascript  %} {% endblock %}
+<script src="{{ asset('TemplateAdmin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('TemplateAdmin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+
+{% block javascripts %}{% endblock %}
+<script>
+
+
+</script>
+
+
+
 </body>
 </html>
-{% endblock %}
+

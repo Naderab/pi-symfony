@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+    {% block title %} Eco System {% endblock %}
+{% block Containt %}
+
+    <div class="page-banner-section section">
+        <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+            <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+                <div class="page-banner">
+                    <h1>Les évenements</h1>
+                    <div class="breadcrumb">
+                        <ul>
+                            <li><a href="#">Accueil</a></li>
+                            <li><a href="#">list Evénements</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+            </div>
+            <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+            </div>
+        </div>
+    </div>
+
+    <div class="product-section section mt-90 mb-90">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row mb-50">
+                        <div class="col">
+                            <div class="shop-top-bar">
+                                <div class="product-view-mode">
+                                </div>
+                                <div class="product-showing">
+                                    <p>Showing</p>
+                                    <select name="showing" class="nice-select" onchange="Showing(this.options[this.selectedIndex].value);">
+                                        <option value="6">6</option>
+                                        <option value="10">10</option>
+                                        <option value="14">14</option>
+                                        <option value="18">18</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="product-short">
+                                    <p>Short by</p>
+                                    <select name="sortby" id="sortby" class="nice-select" onchange="Tri(this.options[this.selectedIndex].value);">
+                                        <option value="trending">Trending items</option>
+                                        <option value="croissant" >Prix Croissant</option>
+                                        <option value="decroissant" >Prix Décroissant</option>
+                                        <option value="meilleur">Meilleur noté</option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="shop-product-wrap grid row" id="parent">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
+      {% block javascripts %}
+
+
+
+
+
+           <script language="JavaScript">
+                function Tri(nom) {
+
+                     var urll = '/' +nom ;
+
+                    $.ajax({
+                        url: urll ,
+                        method: "GET",
+                        dataType: 'json',
+                        success: function(data, status){
+                            $('#parent').html(data);
+                        }
+                    });
+                };
+
+
+
+
+
+
+
+
+                function Showing(nb) {
+
+                     var urll = '/showing' +nb ;
+
+                    $.ajax({
+                        url: urll ,
+                        method: "GET",
+                        dataType: 'json',
+                        success: function(data, status){
+                            $('#parent').html(data);
+                        }
+                    });
+                };
+
+
+
+
+
+
+
+
+
+              </script>
+
+
+
+
+
+
+
+
+
+        {% endblock %}

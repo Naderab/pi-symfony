@@ -4,3 +4,48 @@ event_homepage:
 event_homepageadmin:
     path:     /admin/
     defaults: { _controller: EventBundle:Default:indexadmin }
+event_ajoutevenement:
+    path:     /ajout
+    defaults: { _controller: EventBundle:Event:AjoutEvenement }
+event_afficheeventadmin:
+    path:     /admin/afficheevent
+    defaults: { _controller: EventBundle:Event:AfficheEvenement2 }
+event_afficheeventNtadmin:
+    path:     /admin/afficheeventnontraiter
+    defaults: { _controller: EventBundle:Event:AfficheEvenementNonTraiter }
+event_deleteeventadmin:
+    path:     /admin/deleteevent/{id}
+    defaults: { _controller: EventBundle:Event:deleteEvenement }
+event_traitereventadmin:
+    path:     /admin/traitervent/{id}
+    defaults: { _controller: EventBundle:Event:traiterEvenement }
+croissant:
+    path:     /croissant
+    defaults: { _controller: EventBundle:Event:Orderprixasc }
+decroissant:
+    path:     /decroissant
+    defaults: { _controller: EventBundle:Event:Orderprixdesc }
+date:
+    path:     /date
+    defaults: { _controller: EventBundle:Event:Orderdate }
+meilleur:
+    path:     /meilleur
+    defaults: { _controller: EventBundle:Event:Ordermeuilleur }
+event_afficheeventuser:
+    path:     /listeevenements
+    defaults: { _controller: EventBundle:Event:AfficheEvenement }
+detailsevent:
+    path:     /eventdetails/{id}
+    defaults: { _controller: EventBundle:Event:detailEvenement }
+event_getevent:
+    path:     /getevent
+    defaults: { _controller: EventBundle:Event:getEvenements }
+event_showing10:
+    path:     /showing10
+    defaults: { _controller: EventBundle:Event:showing10 }
+event_getevent14:
+    path:     /showing14
+    defaults: { _controller: EventBundle:Event:showing14 }
+event_getevent18:
+    path:     /showing18
+    defaults: { _controller: EventBundle:Event:showing18 }
