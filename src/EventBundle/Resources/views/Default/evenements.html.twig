@@ -1,49 +1,46 @@
 {% for x in evenements %}
-    <div class="col-md-4 pb-30 pt-10">
-        <!-- Product Start -->
-        <div class="ee-product">
-            <!-- Image -->
-            <div class="image">
-                <a href="{{ path('detailsevent',{'id':x.id}) }}" class="img"><img src="{{ asset('uploads/images/' ~ x.image) }}"
-                                            alt=""></a>
-                <div class="wishlist-compare">
-                    <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
-                    <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
-                </div>
-            </div>
-            <div class="content">
-                <!-- Category & Title -->
-                <div class="category-title">
-                    <a href="#" class="cat">{{ x.adresse }}</a>
-                    <h5 class="title"><a href="{{ path('detailsevent',{'id':x.id}) }}">{{ x.nom }}</a></h5>
-                    <a href="#" class="cat">{{ x.dateDebut | date('Y-m-d') }}
-                        - {{ x.dateFin | date('Y-m-d') }}</a></h5>
-                </div>
-                <!-- Price & Ratting -->
-                <div class="price-ratting">
+<div class="col-md-4 pb-30 pt-10" id="focus">
+    <!-- Product Start -->
+
+    <div class="column">
+        <!-- Post-->
+        <div class="post-module" >
+            <!-- Thumbnail-->
+            <div class="thumbnail">
+                <div class="date">
                     {% if x.Prix == 0 %}
-                        <h5 class="price">Gratuit</h5>
-                    {% else %}
-                        <h5 class="price">{{ x.Prix }} DT</h5>
-                    {% endif %}
-                    <div class="ratting">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
+                    <div class="">Gratuit</div>
+{% else %}
+                    <div class="">{{ x.Prix }} DT</div>
+    {% endif %}
 
                 </div>
+                <a href="{{ path('detailsevent',{'id':x.id}) }}" ><img src="{{ asset('uploads/images/' ~ x.image) }} " style="width:  380px;"/></a>
+            </div>
+            <!-- Post Content-->
+            <div class="post-content">
+                <div class="category">{{ x.adresse }}</div>
+                <h1 class="title">{{ x.nom }}</h1>
+                <p >{{ x.dateDebut | date('Y-m-d') }}
+                    - {{ x.dateFin | date('Y-m-d') }}</p>
+
+                <div class="post-meta">
+                    <span class="comments">
+                        <i class="fa fa-user">
+
+                        </i>
+
+                        <a href="#">{{ x.OwnerUser.username }} </a>
+                    </span>
+                    <span class="timestamp">
+                        <i class="fa fa-eye"></i>{{ x.nombrevu }} Vu</span></div>
+
 
             </div>
-
-        </div><!-- Product End -->
+        </div>
     </div>
-{% endfor %}
-<div class="row mt-30">
-    <div class="col">
-        <div class="text-center">{{ knp_pagination_render(evenements) }}</div>
 
-    </div>
 </div>
+
+{% endfor %}
+

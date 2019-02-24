@@ -1,33 +1,34 @@
 {% extends 'base.html.twig' %}
     {% block title %} Eco System {% endblock %}
+
 {% block Containt %}
 
-<div class="page-banner-section section">
-    <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+    <div class="page-banner-section section">
+        <div class="page-banner-wrap row row-0 d-flex align-items-center ">
 
-        <!-- Page Banner -->
-        <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
-            <div class="page-banner">
-                <h1>{{ evenement.nom }}</h1>
+            <!-- Page Banner -->
+            <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+                <div class="page-banner">
+                    <h1>{{ evenement.nom }}</h1>
 
-                <div class="breadcrumb">
-                    <ul>
-                        <li><a href="#">Accueil</a></li>
-                        <li><a href="#">list Evénements</a></li>
-                        <li><a href="#">{{ evenement.nom }}</a></li>
-                    </ul>
+                    <div class="breadcrumb">
+                        <ul>
+                            <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                            <li><a href="{{ path('event_afficheeventuser') }}">list Evénements</a></li>
+                            <li><a href="">{{ evenement.nom }}</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Banner -->
-        <div class="col-lg-4 col-md-6 col-12 order-lg-1">
-        </div>
+            <!-- Banner -->
+            <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+            </div>
 
-        <!-- Banner -->
-        <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+            <!-- Banner -->
+            <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+            </div>
         </div>
     </div>
-</div>
 
     <div class="product-section section mt-90 mb-90">
         <div class="container">
@@ -41,13 +42,21 @@
 
                         <div class="tab-content">
                             <div id="single-image-1" class="tab-pane fade show active big-image-slider">
-                                <div class="big-image"><img src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="Big Image"><a href="{{ asset('uploads/images/' ~ evenement.image) }}" class="big-image-popup"><i class="fa fa-search-plus"></i></a></div>
-                                <div class="big-image"><img src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="Big Image"><a href="{{ asset('uploads/images/' ~ evenement.image) }}" class="big-image-popup"><i class="fa fa-search-plus"></i></a></div>
-                                <div class="big-image"><img src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="Big Image"><a href="{{ asset('uploads/images/' ~ evenement.image) }}" class="big-image-popup"><i class="fa fa-search-plus"></i></a></div>
+                                <div class="big-image"><img src="{{ asset('uploads/images/' ~ evenement.image) }}"
+                                                            alt="Big Image"><a
+                                            href="{{ asset('uploads/images/' ~ evenement.image) }}"
+                                            class="big-image-popup"><i class="fa fa-search-plus"></i></a></div>
+                                <div class="big-image"><img src="{{ asset('uploads/images/' ~ evenement.image) }}"
+                                                            alt="Big Image"><a
+                                            href="{{ asset('uploads/images/' ~ evenement.image) }}"
+                                            class="big-image-popup"><i class="fa fa-search-plus"></i></a></div>
+                                <div class="big-image"><img src="{{ asset('uploads/images/' ~ evenement.image) }}"
+                                                            alt="Big Image"><a
+                                            href="{{ asset('uploads/images/' ~ evenement.image) }}"
+                                            class="big-image-popup"><i class="fa fa-search-plus"></i></a></div>
                             </div>
 
                         </div>
-
 
 
                     </div>
@@ -67,9 +76,9 @@
                                 <h5 class="title">{{ evenement.nom }}</h5>
                             </div>
                             {% if evenement.Prix == 0 %}
-                            <h5 class="price"></h5>
+                                <h5 class="price"></h5>
                             {% else %}
-                            <h5 class="price">{{ evenement.Prix }}</h5>
+                                <h5 class="price">{{ evenement.Prix }} DT</h5>
                             {% endif %}
 
                         </div>
@@ -85,36 +94,66 @@
                             </div>
 
                             <div class="desc">
-                                <p> {{ evenement.description }}</p>
+                                <p style="font-size: 20px;color: #f5d730;"> Start: &nbsp;&nbsp;&nbsp;
+
+
+                                    {% set dateTime = date(evenement.dateDebut) %}
+
+                                <h3 style="font-size: 15px; color: #0a0a0a">{{ dateTime | date('d') }}
+                                    &nbsp; {{ dateTime | date('F') }} &nbsp; {{ dateTime | date('Y') }}
+                                    &nbsp;@ {{ dateTime | date('H') }} &nbsp;{{ dateTime | date('i') }} </h3></p>
+                                <hr style="color: #f5d730; height: 4px">
+                                <p style="font-size: 20px;color: #f5d730;"> End: &nbsp;&nbsp;&nbsp;
+
+                                    {% set dateTime1 = date(evenement.dateFin) %}
+
+                                <h3 style="font-size: 15px; color: #0a0a0a"> {{ dateTime1 | date('d') }}
+                                    &nbsp; {{ dateTime1 | date('F') }} &nbsp; {{ dateTime1 | date('Y') }}
+                                    &nbsp;@ {{ dateTime1 | date('H') }} &nbsp;{{ dateTime1 | date('i') }} </h3></p>
+
                             </div>
 
-                            {% if evenement.maxParticipants > evenement.nombretickets  %}
+                            {% if evenement.maxParticipants > evenement.nombretickets %}
 
-                            <span class="availability">Availability: <span>Place Disponible</span></span>
-                                <div class="quantity-colors">
-                                    <div class="quantity">
-                                        <h5>Nombre Tickets :</h5>
-                                        <div class="pro-qty"><input type="text" value="1"></div>
+                                <span class="availability">Availability: <span>Place Disponible</span></span>
+                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                    <div class="quantity-colors">
+
+                                        <div class="quantity">
+                                            <h5>Nombre Tickets :</h5>
+                                            <div class="pro-qty"><input id="nbplace" type="number" min="1" value="1">
+                                            </div>
+                                            <input id="event" type="text" value="{{ evenement.id }}" hidden>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="actions">
+                                    <div class="actions">
 
-                                    <a href="#" class="add-to-cart"><i class="ti-shopping-cart"></i><span>Réserver</span></a>
+                                        <button id="btn1" class="add-to-cart"><i class="ti-shopping-cart"></i><span>Réserver</span>
+                                        </button>
 
-                                    <div class="wishlist-compare">
-                                        <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
-                                        <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                                        <div class="wishlist-compare">
+                                            <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
+                                            <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                                        </div>
+
                                     </div>
+                                {% else %}
+                                    <div class="quantity-colors">
+                                        <p style="font-size: 14px"><a href="{{ path('fos_user_security_login') }}"
+                                                                      style="font-size: 20px; color:#f5d730;">Login</a>
+                                            &nbsp; OU &nbsp; <a href="{{ path('fos_user_registration_register') }}"
+                                                                style="font-size: 20px; color:#f5d730;"> Register </a>
+                                            &nbsp;Pour Participer à cet Evénement .</p>
 
-                                </div>
+
+                                    </div>
+                                {% endif %}
+
                             {% else %}
-                            <span class="availability">Availability: <span>Complet</span></span>
+                                <span class="availability">Availability: <span>Complet</span></span>
 
 
                             {% endif %}
-
-
-
 
 
                             <div class="share">
@@ -140,9 +179,9 @@
                 <div class="col-lg-10 col-12 ml-auto mr-auto">
 
                     <ul class="single-product-tab-list nav">
-                        <li><a href="#product-description" class="active" data-toggle="tab" >Détails</a></li>
-                        <li><a href="#product-specifications" data-toggle="tab" >Lieu</a></li>
-                        <li><a href="#product-reviews" data-toggle="tab" >Avis</a></li>
+                        <li><a href="#product-description" class="active" data-toggle="tab">Détails</a></li>
+                        <li><a href="#product-specifications" data-toggle="tab">Lieu</a></li>
+                        <li><a href="#product-reviews" data-toggle="tab">Avis</a></li>
                     </ul>
 
                     <div class="single-product-tab-content tab-content">
@@ -150,45 +189,15 @@
 
                             <div class="row">
                                 <div class="single-product-description-content col-lg-8 col-12">
-                                    <div class="tribe-events-meta-group tribe-events-meta-group-details clearfix">
+                                    <p style="font-size: 25px;color: #f5d730;"> Description :</p>
+                                    <p style="font-size: 15px;">{{ evenement.description }}</p>
 
-
-
-
-                                        <table class="deuxvaleurs">
-
-
-                                            <tr>
-                                                <th> Start: </th>
-                                                <td>
-                                                    {% set dateTime = date(evenement.dateDebut) %}
-
-                                                    <abbr class="tribe-events-abbr updated published dtstart" title="2019-02-22">{{ dateTime | date('d') }} &nbsp; {{ dateTime | date('F') }} &nbsp; {{ dateTime | date('Y') }}&nbsp;@ <br>{{ dateTime | date('H') }} &nbsp;{{ dateTime | date('i') }}</abbr>			</td>
-                                            </tr>
-
-                                            <tr>
-                                                <th> End: </th>
-                                                <td>
-                                                    {% set dateTime1 = date(evenement.dateFin) %}
-
-                                                    <abbr class="tribe-events-abbr dtend" title="2019-02-23">{{ dateTime1 | date('d') }} &nbsp; {{ dateTime1 | date('F') }} &nbsp; {{ dateTime1 | date('Y') }} &nbsp;@ <br>{{ dateTime1 | date('H') }} &nbsp;{{ dateTime1 | date('i') }} </abbr>			</td>
-                                            </tr>
-
-
-
-
-
-
-
-
-                                        </table>
-
-                                    </div>
                                 </div>
                                 <div class="single-product-description-image col-lg-4 col-12">
                                     <img src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="description">
                                 </div>
                             </div>
+
 
                         </div>
                         <div class="tab-pane fade" id="product-specifications">
@@ -214,9 +223,11 @@
 </span>
 
                                             <p class="location">
-                                                <a class="tribe-events-gmap" href="https://maps.google.com/maps?f=q&#038;source=s_q&#038;hl=en&#038;geocode=&#038;q=Gammarth+Tunisie" title="Cliquez pour voir une carte Google Maps" target="_blank">+ Google Map</a>					</p>
+                                                <a class="tribe-events-gmap"
+                                                   href="https://maps.google.com/maps?f=q&#038;source=s_q&#038;hl=en&#038;geocode=&#038;q=Gammarth+Tunisie"
+                                                   title="Cliquez pour voir une carte Google Maps" target="_blank">+
+                                                    Google Map</a></p>
                                         </address>
-
 
 
                                     </div>
@@ -230,8 +241,10 @@
                                                 width="100%"
                                                 height="350px"
                                                 frameborder="0" style="border:0"
-                                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDNsicAsP6-VuGtAb1O9riI3oc_NOb7IOU&#038;q=Gammarth+Tunisie+" allowfullscreen>
-                                        </iframe>	</div>
+                                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDNsicAsP6-VuGtAb1O9riI3oc_NOb7IOU&#038;q=Gammarth+Tunisie+"
+                                                allowfullscreen>
+                                        </iframe>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -239,131 +252,28 @@
 
                             <div class="product-ratting-wrap">
                                 <div class="pro-avg-ratting">
-                                    <h4>4.5 <span>(Overall)</span></h4>
-                                    <span>Based on 9 Comments</span>
+                                    <span>Based on{{ thread.numComments }} Comments</span>
                                 </div>
-                                <div class="ratting-list">
-                                    <div class="sin-list float-left">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <span>(5)</span>
-                                    </div>
-                                    <div class="sin-list float-left">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <span>(3)</span>
-                                    </div>
-                                    <div class="sin-list float-left">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <span>(1)</span>
-                                    </div>
-                                    <div class="sin-list float-left">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <span>(0)</span>
-                                    </div>
-                                    <div class="sin-list float-left">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <span>(0)</span>
-                                    </div>
-                                </div>
-                                <div class="rattings-wrapper">
+                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
-                                    <div class="sin-rattings">
-                                        <div class="ratting-author">
-                                            <h3>Cristopher Lee</h3>
-                                            <div class="ratting-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <span>(5)</span>
-                                            </div>
-                                        </div>
-                                        <p>enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia res eos qui ratione voluptatem sequi Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci veli</p>
-                                    </div>
+                                    <div class="ratting-list">
+                                        <div id="fos_comment_thread" data-thread="{{ thread.id }}">
 
-                                    <div class="sin-rattings">
-                                        <div class="ratting-author">
-                                            <h3>Nirob Khan</h3>
-                                            <div class="ratting-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <span>(5)</span>
-                                            </div>
-                                        </div>
-                                        <p>enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia res eos qui ratione voluptatem sequi Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci veli</p>
-                                    </div>
+                                            {% include '@FOSComment/Thread/async.html.twig' with {
+                                                'comments': comments,
+                                                'thread': thread,
+                                                'id': thread.id
+                                            } %}
 
-                                    <div class="sin-rattings">
-                                        <div class="ratting-author">
-                                            <h3>MD.ZENAUL ISLAM</h3>
-                                            <div class="ratting-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <span>(5)</span>
-                                            </div>
                                         </div>
-                                        <p>enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia res eos qui ratione voluptatem sequi Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci veli</p>
                                     </div>
-
-                                </div>
-                                <div class="ratting-form-wrapper fix">
-                                    <h3>Add your Comments</h3>
-                                    <form action="#">
-                                        <div class="ratting-form row">
-                                            <div class="col-12 mb-15">
-                                                <h5>Rating:</h5>
-                                                <div class="ratting-star fix">
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-12 mb-15">
-                                                <label for="name">Name:</label>
-                                                <input id="name" placeholder="Name" type="text">
-                                            </div>
-                                            <div class="col-md-6 col-12 mb-15">
-                                                <label for="email">Email:</label>
-                                                <input id="email" placeholder="Email" type="text">
-                                            </div>
-                                            <div class="col-12 mb-15">
-                                                <label for="your-review">Your Review:</label>
-                                                <textarea name="review" id="your-review" placeholder="Write a review"></textarea>
-                                            </div>
-                                            <div class="col-12">
-                                                <input value="add review" type="submit">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
+                                {% else %}
+                                    <p style="font-size: 14px"><a href="{{ path('fos_user_security_login') }}"
+                                                                  style="font-size: 20px; color:#f5d730;">Login</a>
+                                        &nbsp; OU &nbsp; <a href="{{ path('fos_user_registration_register') }}"
+                                                            style="font-size: 20px; color:#f5d730;"> Register </a>
+                                        &nbsp;Pour Commenter cet Evénement .</p>
+                                {% endif %}
                             </div>
 
                         </div>
@@ -383,7 +293,7 @@
 
                 <!-- Section Title Start -->
                 <div class="col-12 mb-40">
-                    <div class="section-title-one" data-title="RELATED PRODUCT"><h1>RELATED PRODUCT</h1></div>
+                    <div class="section-title-one" data-title="RELATED EVENT"><h1>RELATED EVENT</h1></div>
                 </div><!-- Section Title End -->
 
                 <!-- Product Tab Content Start -->
@@ -394,261 +304,116 @@
                         <!-- Product Slider Start -->
                         <div class="product-slider product-slider-4">
 
-                            <div class="col pb-20 pt-10">
-                                <!-- Product Start -->
-                                <div class="ee-product">
 
-                                    <!-- Image -->
-                                    <div class="image">
+                            {% for x in evenements %}
+                                <div class="col pb-20 pt-10">
+                                    <!-- Product Start -->
 
-                                        <a href="single-product.html" class="img"><img src="assets/images/product/product-1.png" alt="Product Image"></a>
+                                    <div class="column">
+                                        <!-- Post-->
+                                        <div class="post-module">
+                                            <!-- Thumbnail-->
+                                            <div class="thumbnail">
+                                                <div class="date">
+                                                    {% if x.Prix == 0 %}
+                                                        <div class="">Gratuit</div>
+                                                    {% else %}
+                                                        <div class="">{{ x.Prix }} DT</div>
+                                                    {% endif %}
 
-                                        <div class="wishlist-compare">
-                                            <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
-                                            <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
-                                        </div>
-
-                                        <a href="#" class="add-to-cart"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
-
-                                    </div>
-
-                                    <!-- Content -->
-                                    <div class="content">
-
-                                        <!-- Category & Title -->
-                                        <div class="category-title">
-
-                                            <a href="#" class="cat">Laptop</a>
-                                            <h5 class="title"><a href="single-product.html">Zeon Zen 4 Pro</a></h5>
-
-                                        </div>
-
-                                        <!-- Price & Ratting -->
-                                        <div class="price-ratting">
-
-                                            <h5 class="price">$295.00</h5>
-                                            <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                                <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <a href="{{ path('detailsevent',{'id':x.id}) }}"><img
+                                                            src="{{ asset('uploads/images/' ~ x.image) }} "
+                                                            style="width:  380px;"/></a>
                                             </div>
+                                            <!-- Post Content-->
+                                            <div class="post-content">
+                                                <div class="category">{{ x.adresse }}</div>
+                                                <h1 class="title">{{ x.nom }}</h1>
+                                                <p>{{ x.dateDebut | date('Y-m-d') }}
+                                                    - {{ x.dateFin | date('Y-m-d') }}</p>
+                                                <div class="post-meta">
+                                                      <span class="comments">
+                                                            <i class="fa fa-user">
 
-                                        </div>
+                                                                       </i>
 
-                                    </div>
-
-                                </div><!-- Product End -->
-                            </div>
-
-                            <div class="col pb-20 pt-10">
-                                <!-- Product Start -->
-                                <div class="ee-product">
-
-                                    <!-- Image -->
-                                    <div class="image">
-
-                                        <span class="label sale">sale</span>
-
-                                        <a href="single-product.html" class="img"><img src="assets/images/product/product-2.png" alt="Product Image"></a>
-
-                                        <div class="wishlist-compare">
-                                            <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
-                                            <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
-                                        </div>
-
-                                        <a href="#" class="add-to-cart"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
-
-                                    </div>
-
-                                    <!-- Content -->
-                                    <div class="content">
-
-                                        <!-- Category & Title -->
-                                        <div class="category-title">
-
-                                            <a href="#" class="cat">Drone</a>
-                                            <h5 class="title"><a href="single-product.html">Aquet Drone D 420</a></h5>
-
-                                        </div>
-
-                                        <!-- Price & Ratting -->
-                                        <div class="price-ratting">
-
-                                            <h5 class="price"><span class="old">$350</span>$275.00</h5>
-                                            <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                                <i class="fa fa-star-o"></i>
+                                                             <a href="#">{{ x.OwnerUser.username }} </a>
+                                                                  </span>
+                                                    <span class="timestamp">
+                                                    <i class="fa fa-eye"></i>{{ x.nombrevu }} Vu</span></div>
                                             </div>
-
                                         </div>
-
                                     </div>
 
-                                </div><!-- Product End -->
-                            </div>
+                                </div>
 
-                            <div class="col pb-20 pt-10">
-                                <!-- Product Start -->
-                                <div class="ee-product">
+                            {% endfor %}
 
-                                    <!-- Image -->
-                                    <div class="image">
+                        </div>
 
-                                        <a href="single-product.html" class="img"><img src="assets/images/product/product-3.png" alt="Product Image"></a>
 
-                                        <div class="wishlist-compare">
-                                            <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
-                                            <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
-                                        </div>
+                    </div><!-- Product End -->
+                </div>
 
-                                        <a href="#" class="add-to-cart"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+            </div><!-- Product Slider End -->
+        </div><!-- Product Slider Wrap End -->
 
-                                    </div>
+    </div><!-- Product Tab Content End -->
 
-                                    <!-- Content -->
-                                    <div class="content">
+    </div>
 
-                                        <!-- Category & Title -->
-                                        <div class="category-title">
 
-                                            <a href="#" class="cat">Games</a>
-                                            <h5 class="title"><a href="single-product.html">Game Station X 22</a></h5>
 
-                                        </div>
 
-                                        <!-- Price & Ratting -->
-                                        <div class="price-ratting">
 
-                                            <h5 class="price">$295.00</h5>
-                                            <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
 
-                                        </div>
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#ffff99 ">
+                    <h5 class="modal-title" id="exampleModalLabel">Succès!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Réservation effectuée!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 
-                                    </div>
-
-                                </div><!-- Product End -->
-                            </div>
-
-                            <div class="col pb-20 pt-10">
-                                <!-- Product Start -->
-                                <div class="ee-product">
-
-                                    <!-- Image -->
-                                    <div class="image">
-
-                                        <a href="single-product.html" class="img"><img src="assets/images/product/product-4.png" alt="Product Image"></a>
-
-                                        <div class="wishlist-compare">
-                                            <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
-                                            <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
-                                        </div>
-
-                                        <a href="#" class="add-to-cart"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
-
-                                    </div>
-
-                                    <!-- Content -->
-                                    <div class="content">
-
-                                        <!-- Category & Title -->
-                                        <div class="category-title">
-
-                                            <a href="#" class="cat">Accessories</a>
-                                            <h5 class="title"><a href="single-product.html">Roxxe Headphone Z 75</a></h5>
-
-                                        </div>
-
-                                        <!-- Price & Ratting -->
-                                        <div class="price-ratting">
-
-                                            <h5 class="price">$110.00</h5>
-                                            <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div><!-- Product End -->
-                            </div>
-
-                            <div class="col pb-20 pt-10">
-                                <!-- Product Start -->
-                                <div class="ee-product">
-
-                                    <!-- Image -->
-                                    <div class="image">
-
-                                        <a href="single-product.html" class="img"><img src="assets/images/product/product-5.png" alt="Product Image"></a>
-
-                                        <div class="wishlist-compare">
-                                            <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
-                                            <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
-                                        </div>
-
-                                        <a href="#" class="add-to-cart"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
-
-                                    </div>
-
-                                    <!-- Content -->
-                                    <div class="content">
-
-                                        <!-- Category & Title -->
-                                        <div class="category-title">
-
-                                            <a href="#" class="cat">Camera</a>
-                                            <h5 class="title"><a href="single-product.html">Mony Handycam Z 105</a></h5>
-
-                                        </div>
-
-                                        <!-- Price & Ratting -->
-                                        <div class="price-ratting">
-
-                                            <h5 class="price">$110.00</h5>
-                                            <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div><!-- Product End -->
-                            </div>
-
-                        </div><!-- Product Slider End -->
-                    </div><!-- Product Slider Wrap End -->
-
-                </div><!-- Product Tab Content End -->
-
+                </div>
             </div>
         </div>
-    </div><
-
-
-
-
-
-
+    </div>
 
 {% endblock %}
+ {% block javascripts %}
+     <script>
+
+         $('#btn1').click(function () {
+             var nbplace = $('#nbplace').val();
+             var event = $('#event').val();
+             $.ajax({
+                 url: '/participer',
+                 type: "POST",
+                 dataType: "json",
+                 data: {
+                     nbPlace: nbplace,
+                     event: event
+                 },
+                 async: true,
+                 success: function (data) {
+                     $('#successModal').modal('show');
+                 }
+             })
+         });
+     </script>
+
+     <script src="{{ asset('@FOSCommentBundle/Resources/public/js/comments.js') }}"></script>
+
+
+
+ {% endblock %}

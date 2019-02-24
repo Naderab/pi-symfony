@@ -39,7 +39,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
-    form_themes: ['bootstrap_4_layout.html.twig']
+    form_themes:
+    - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -119,6 +120,48 @@ hwi_oauth:
             client_id:           "532131030974-evrnjfsrkmqgik8e155plhm4hj17ip7r.apps.googleusercontent.com"
             client_secret:       "4d-U1AjBpyxGRjkdtuiWRuca"
             scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+
+fos_comment:
+    db_driver: orm
+    class:
+        model:
+            comment: AppBundle\Entity\Comment
+            thread: AppBundle\Entity\Thread
+    acl: true
+    service:
+        acl:
+            thread:  fos_comment.acl.thread.roles
+            comment: fos_comment.acl.comment.roles
+            vote:    fos_comment.acl.vote.roles
+        manager:
+            thread:  fos_comment.manager.thread.acl
+            comment: fos_comment.manager.comment.acl
+            vote:    fos_comment.manager.vote.acl
+        sorting:
+            default: date_asc
+
+    acl_roles:
+        comment:
+            create: IS_AUTHENTICATED_ANONYMOUSLY
+            view: IS_AUTHENTICATED_ANONYMOUSLY
+            edit: ROLE_ADMIN
+            delete: ROLE_ADMIN
+        thread:
+            create: IS_AUTHENTICATED_ANONYMOUSLY
+            view: IS_AUTHENTICATED_ANONYMOUSLY
+            edit: ROLE_ADMIN
+            delete: ROLE_ADMIN
+        vote:
+            create: IS_AUTHENTICATED_ANONYMOUSLY
+            view: IS_AUTHENTICATED_ANONYMOUSLY
+            edit: ROLE_ADMIN
+            delete: ROLE_ADMIN
+
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
+
 
 sensio_framework_extra:
    router:

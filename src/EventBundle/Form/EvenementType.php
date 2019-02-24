@@ -2,12 +2,15 @@
 
 namespace EventBundle\Form;
 
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,21 +32,39 @@ class EvenementType extends AbstractType
             ->add('dateFin',DateTimeType::class)
 
 
-            ->add('adresse',TextareaType::class ,  array(
+            ->add('adresse',CKEditorType::class ,  array(
                 'label' => '',
-                'attr' => array('placeholder' => "Adresse ")))
-            ->add('description',TextareaType::class ,  array(
-                'label' => '',
-                'attr' => array('placeholder' => "Description ")))
+                'attr' => array('placeholder' => "Adresse "),
+                'config' => array(
+                'uiColor' => '#ffffff',
+                    'autoload' => false,
+                    'async'    => true,
+                    'enable' => false,
+                    'toolbar' => 'basic',
+                    'required' =>'true'
 
-            ->add('minParticipants' ,TextType::class,  array(
+
+                )))
+            ->add('description',CKEditorType::class ,  array(
+                'label' => '',
+                'attr' => array('placeholder' => "Description "),
+                'config' => array(
+                    'uiColor' => '#ffffff',
+                    'autoload' => false,
+                    'async'    => true,
+                    'enable' => false,
+                    'toolbar' => 'basic',
+                    'required' =>'true'
+                    )))
+
+            ->add('minParticipants' ,NumberType::class,  array(
                 'label' => '',
                 'attr' => array('placeholder' => "Minimum de participants ")))
-            ->add('maxParticipants',TextType::class ,  array(
+            ->add('maxParticipants',NumberType::class ,  array(
                 'label' => '',
                 'attr' => array('placeholder' => "Maximum de participants ")))
-            ->add('image', FileType::class, array('label' => 'Image(JPG)'))
-            ->add('submit',SubmitType::class)
+            ->add('image', FileType::class, array('label' => 'Image(JPG)', 'data_class' => null))
+            ->add('Ajouter',SubmitType::class)
 
         ;
 

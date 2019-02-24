@@ -34,6 +34,12 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('Front/dist/css/skins/_all-skins.min.css')}}">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{{ asset('@FOSCommentBundle/Resources/public/css/comments.css') }}" type="text/css" />
+
+
 
 
     <!-- Modernizer JS -->
@@ -154,28 +160,104 @@
         .tribe-events-single-event-title {
             color: #333;
         }
+        .navbar-nav > .user-menu > .dropdown-menu {
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            padding: 1px 0 0 0;
+            border-top-width: 0;
+            width: 300px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .navbar-nav > .user-menu > .dropdown-menu,
+        .navbar-nav > .user-menu > .dropdown-menu > .user-body {
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+        .navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+            height: 175px;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .navbar-nav > .user-menu > .dropdown-menu > li.user-header > img {
+            z-index: 5;
+            height: 90px;
+            width: 90px;
+            border: 3px solid;
+            border-color: transparent;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .navbar-nav > .user-menu > .dropdown-menu > li.user-header > p {
+            z-index: 5;
+            color: #fff;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 17px;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .navbar-nav > .user-menu > .dropdown-menu > li.user-header > p > small {
+            display: block;
+            font-size: 12px;
+        }
+        .navbar-nav > .user-menu > .dropdown-menu > .user-body {
+            padding: 15px;
+            border-bottom: 1px solid #f4f4f4;
+            border-top: 1px solid #dddddd;
+        }
+        .navbar-nav > .user-menu > .dropdown-menu > .user-body:before,
+        .navbar-nav > .user-menu > .dropdown-menu > .user-body:after {
+            content: " ";
+            display: table;
+        }
+        .navbar-nav > .user-menu > .dropdown-menu > .user-body:after {
+            clear: both;
+        }
+        .navbar-nav > .user-menu > .dropdown-menu > .user-body a {
+            color: #444 !important;
+        }
+        @media (max-width: 991px) {
+            .navbar-nav > .user-menu > .dropdown-menu > .user-body a {
+                background: #fff !important;
+                color: #444 !important;
+            }
+        }
+        .navbar-nav > .user-menu > .dropdown-menu > .user-footer {
+            background-color: #f9f9f9;
+            padding: 10px;
+        }
+        .navbar-nav > .user-menu > .dropdown-menu > .user-footer:before,
+        .navbar-nav > .user-menu > .dropdown-menu > .user-footer:after {
+            content: " ";
+            display: table;
+        }
+        .navbar-nav > .user-menu > .dropdown-menu > .user-footer:after {
+            clear: both;
+        }
+
+
+        .header-links a span {
+            font-size: 14px;
+            font-weight: 600;
+            overflow: hidden; }
+        .header-account-links a span {
+            font-size: 14px;
+            font-weight: 600;
+            overflow: hidden; }
+
+
     </style>
+
+
 </head>
 
 <body>
-{% if app.session.flashBag.has('success') %}
 
-    <div class="alert alert-success">
-        {% for msg in app.session.flashBag.get('success') %}
-            {{ msg }}
-        {% endfor %}
-    </div>
-{% endif %}
-{% if app.session.flashBag.has('error') %}
-
-    <div class="alert alert-danger">
-        {% for msg in app.session.flashBag.get('error') %}
-            {{ msg }}
-        {% endfor %}
-    </div>
-{% endif %}
 
 {% block Header %}
+
 
 
 
@@ -207,17 +289,51 @@
 
                 <div class="col order-2 order-xs-2 order-lg-12 mt-10 mb-10">
                     <!-- Header Account Links Start -->
-                    <div class="header-account-links">
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
-                        <a href="{{ path('fos_user_profile_show') }}"><i class="icofont icofont-user-alt-7"></i> <span>{{ '%username%'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span></a>
-                            <a href="{{ path('fos_user_security_logout') }}"><i class="icofont icofont-logout "></i> <span>{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</span></a>
+
+                            <li class="dropdown user user-menu" style="font-size: 14px;
+            font-weight: 600;">
+
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+
+
+                                    <span >{{ '%username%'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+                                </a>
+
+
+                                <ul class="dropdown-menu">
+                                    <!-- User image -->
+                                    <ul class="user-body">
+                                        <li ><a href="{{ path('fos_user_profile_show') }}"><i class="material-icons" style="padding-right:10px">&#xe00c;</i>Profile</a></li>
+                                        <li><hr></li>
+                                        <li ><a href="{{ path('fos_user_profile_edit') }}"><i class="material-icons" style="padding-right:10px">&#xe8b8;</i>Paramétres</a></li>
+                                        <li><hr></li>
+                                        <li ><a href="#"><i class="material-icons" style="padding-right:10px">&#xe854;</i>Mes Commandes</a></li>
+                                        <li><hr></li>
+                                        <li><a href="#"><i class="material-icons" style="padding-right:10px">&#xe616;</i>Mes Evenements</a></li>
+
+                                    </ul>
+                                    <!-- Menu Body -->
+
+                                    <!-- Menu Footer-->
+                                    <li class="user-footer">
+
+                                        <div class="pull-right">
+                                            <a href="{{ path('fos_user_security_logout') }}" > <i class="icofont icofont-logout"></i>Déconnexion </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+
 
 
 
                         {% else %}
                             <a href="{{ path('fos_user_registration_register') }}"><i class="icofont icofont-user-alt-7"></i> <span>{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</span></a>
-                            <a href="{{ path('fos_user_security_login') }}"><i class="icofont icofont-login d-none"></i> <span>{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</span></a>
+                            <a href="{{ path('fos_user_security_login') }}"><i class="icofont icofont-login"></i> <span>{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</span></a>
                         {% endif %}
 
                         {% if app.request.hasPreviousSession %}
@@ -229,7 +345,7 @@
                                 {% endfor %}
                             {% endfor %}
                         {% endif %}
-
+                        </ul>
                     </div><!-- Header Account Links End -->
                 </div>
 
@@ -257,8 +373,9 @@
                     <div class="main-menu">
                         <nav>
                             <ul>
-                                <li class="active"><a href="{{ path('event_homepage') }}">Accueil</a></li>
-                                <li class="menu-item-has-children"><a href="">Les produits </a>
+                                <li class="active"><a href="{{ path('homepage') }}">Accueil</a></li>
+                                <li class="active"><a href="{{ path('homepage') }}">A propos</a></li>
+                                <li class="menu-item-has-children"><a href="">Produits</a>
                                     <ul class="sub-menu">
                                         <li class="menu-item-has-children"><a href="">Commensez vos achats</a>
                                             <ul class="sub-menu">
@@ -275,24 +392,25 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="menu-item-has-children"><a href="{{ path('event_afficheeventuser') }}">Les Evenements </a>
+                                <li class="menu-item-has-children"><a href="{{ path('event_afficheeventuser') }}">Evénements</a>
                                     <ul class="sub-menu">
-                                        <li class="menu-item"><a href="{{ path('event_afficheeventuser') }}">Consulter nos Evenements</a>
+                                        <li class="menu-item"><a href="{{ path('event_afficheeventuser') }}">Liste Des Evénements</a>
 
                                         </li>
                                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                        <li class="menu-item"><a href="{{ path('event_ajoutevenement') }}">Proposez Evenemenet</a>
+                                        <li class="menu-item"><a href="{{ path('event_ajoutevenement') }}">Proposez Evénements</a>
                                        {% endif %}
                                         </li>
                                     </ul>
                                 </li>
 
-                                <li class="menu-item-has-children"><a href="blog-1-column-left-sidebar.html">BLOG</a>
+                                <li class="menu-item-has-children"><a href="">BLOG</a>
                                     <ul class="sub-menu">
-                                        <li><a href="blog-1-column-left-sidebar.html">Blog 1 Column Left Sidebar</a></li>
-                                        <li><a href="single-blog-left-sidebar.html">Single Blog Left Sidebar</a></li>
+                                        <li><a href="">Consulter Les posts</a></li>
+                                        <li><a href="">Ajouter post</a></li>
                                     </ul>
                                 </li>
+
                                 <li><a href="contact.html">CONTACT</a></li>
                             </ul>
                         </nav>
@@ -306,7 +424,6 @@
                         <!-- Wishlist -->
                         <a href="wishlist.html" class="header-wishlist"><i class="ti-heart"></i> <span class="number">3</span></a>
                         <!-- Cart -->
-                        <a href="cart.html" class="header-cart"><i class="ti-shopping-cart"></i> <span class="number">3</span></a>
                         {% endif %}
                     </div><!-- Header Shop Links End -->
                 </div>
@@ -317,40 +434,6 @@
             </div>
         </div>
     </div><!-- Header Bottom End -->
-    <div class="header-category-section">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-
-                    <!-- Header Category -->
-                    <div class="header-category">
-
-                        <!-- Category Toggle Wrap -->
-                        <div class="category-toggle-wrap d-block d-lg-none">
-                            <!-- Category Toggle -->
-                            <button class="category-toggle">Categories <i class="ti-menu"></i></button>
-                        </div>
-
-                        <!-- Category Menu -->
-                        <nav class="category-menu">
-                            <ul>
-                                <li><a href="">&nbsp; &nbsp; &nbsp; &nbsp;</a></li>
-                                <li><a href="">&nbsp; &nbsp; &nbsp; &nbsp;</a></li>
-                                <li><a href="">&nbsp; &nbsp; &nbsp; &nbsp;</a></li>
-                                <li><a href="">&nbsp; &nbsp; &nbsp; &nbsp;</a></li>
-
-                                <li><a href="category-1.html">Téléphones & Tablettes </a></li>
-                                <li><a href="category-2.html">INFORMATIQUE</a></li>
-                                <li><a href="category-3.html">ÉLECTROMÉNAGER</a></li>
-                            </ul>
-                        </nav>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div><!-- Header Category End -->
 
 </div><!-- Header Section End -->
 {% endblock %}
@@ -495,15 +578,14 @@
 <script src="{{ asset('Front/assets/js/main.js') }}"></script>
 <script>
 
-        $(document).ready(function(){
 
-            $.ajax({
-                url: "{{path('event_getevent')}}",
-                method: "GET",
-                dataType: 'json',
-                success: function(data, status){
-                    $('#parent').html(data);
-                }
+
+        $(window).load(function() {
+            $('.post-module').hover(function() {
+                $(this).find('.description').stop().animate({
+                    height: "toggle",
+                    opacity: "toggle"
+                }, 300);
             });
         });
 

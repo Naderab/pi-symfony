@@ -26,5 +26,10 @@ facebook_login:
 
 googleplus_login:
     path: /connect/check-google
+fos_comment_api:
+    type: rest
+    resource: "@FOSCommentBundle/Resources/config/routing.yml"
+    prefix: /api
+    defaults: { _format: html }
 
 

@@ -4,6 +4,7 @@ namespace EventBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Evenement
@@ -117,6 +118,57 @@ class Evenement
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+
+    /**
+     * @var int
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="id_user",referencedColumnName="id", onDelete="CASCADE")
+     *
+     */
+    private $OwnerUser;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"id"})
+     * @ORM\Column(length=255, unique=true,nullable=false)
+     */
+    protected $slug;
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOwnerUser()
+    {
+        return $this->OwnerUser;
+    }
+
+    /**
+     * @param int $OwnerUser
+     */
+    public function setOwnerUser($OwnerUser)
+    {
+        $this->OwnerUser = $OwnerUser;
+    }
+
+
 
     /**
      * @return text

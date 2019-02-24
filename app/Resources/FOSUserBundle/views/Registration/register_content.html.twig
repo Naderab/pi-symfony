@@ -40,7 +40,7 @@
     <div>
         <input type="submit" value="{{ 'registration.submit'|trans }}" />
     </div>
-{{ form_end(form) }}
+
                 </div>
             </div>
 
@@ -59,7 +59,6 @@
                     <img src="{{ asset('Front/assets/images/account-image-placeholder.jpg') }}" alt="Account Image Placeholder" class="image-placeholder">
 
                     <div class="account-image-upload">
-                        <input type="file" name="chooseFile" id="account-image-upload">
                         <label class="account-image-label" for="account-image-upload">Choose your image</label>
                     </div>
 
@@ -68,6 +67,7 @@
                 </div>
 
             </div>
+            {{ form_end(form) }}
 
         </div>
     </div>

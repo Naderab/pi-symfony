@@ -7,9 +7,15 @@ event_homepageadmin:
 event_ajoutevenement:
     path:     /ajout
     defaults: { _controller: EventBundle:Event:AjoutEvenement }
+event_ajoutevenementAdmin:
+    path:     /admin/ajoutAdmin
+    defaults: { _controller: EventBundle:Event:AjoutEvenementAdmin }
 event_afficheeventadmin:
     path:     /admin/afficheevent
     defaults: { _controller: EventBundle:Event:AfficheEvenement2 }
+event_updateeventadmin:
+    path:     /admin/updateevent/{id}
+    defaults: { _controller: EventBundle:Event:UpdateEvenementAdmin }
 event_afficheeventNtadmin:
     path:     /admin/afficheeventnontraiter
     defaults: { _controller: EventBundle:Event:AfficheEvenementNonTraiter }
@@ -49,3 +55,6 @@ event_getevent14:
 event_getevent18:
     path:     /showing18
     defaults: { _controller: EventBundle:Event:showing18 }
+Participer:
+    path:     /participer
+    defaults: { _controller: EventBundle:Event:particper }

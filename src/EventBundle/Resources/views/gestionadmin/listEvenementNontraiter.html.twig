@@ -7,13 +7,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Liste des événements
+                Liste des événements à traiter
 
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#">Gestion des évenements</a></li>
-                <li class="active">Liste des événements</li>
+                <li><a href="{{ path('homepageadmin') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+                <li><a href="">Gestion des évenements</a></li>
+                <li class="active">Liste des événements à traiter</li>
             </ol>
         </section>
 
@@ -33,6 +33,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th>Image</th>
                                     <th>Nom</th>
                                     <th>Date debut</th>
                                     <th>Date fin</th>
@@ -45,6 +46,8 @@
                                 <tbody>
                                 {% for x in evenements %}
                                     <tr>
+                                        <td><img src="{{ asset('uploads/images/' ~ x.image) }} " style="width:  50px;"/></td>
+
                                         <td>{{ x.nom }}</td>
                                         <td>{{  x.dateDebut|date('Y-m-d')}}</td>
                                         <td>{{ x.dateFin|date('Y-m-d') }}</td>

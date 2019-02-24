@@ -8,11 +8,11 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('@Event/Default/index.html.twig');
+        return $this->render('default/index.html.twig');
     }
 
     public function indexadminAction()
     {
-        return $this->render('@Event/Default/indexadmin.html.twig');
+        return $this->render('default/backoffice.html.twig');
     }
 }

@@ -9,8 +9,8 @@
                     <h1>Les évenements</h1>
                     <div class="breadcrumb">
                         <ul>
-                            <li><a href="#">Accueil</a></li>
-                            <li><a href="#">list Evénements</a></li>
+                            <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                            <li><a href="{{ path('event_afficheeventuser') }}">list Evénements</a></li>
                         </ul>
                     </div>
                 </div>
@@ -48,14 +48,14 @@
                                         <option value="trending">Trending items</option>
                                         <option value="croissant" >Prix Croissant</option>
                                         <option value="decroissant" >Prix Décroissant</option>
-                                        <option value="meilleur">Meilleur noté</option>
+                                        <option value="meilleur">Les Plus Visionées</option>
                                     </select>
                                 </div>
 
 
                             </div>
                         </div>
-                        <div class="shop-product-wrap grid row" id="parent">
+                        <div class="shop-product-wrap grid row animated wobble" id="parent">
                         </div>
                     </div>
                 </div>
@@ -70,6 +70,22 @@
 
 
            <script language="JavaScript">
+
+
+
+        $(document).ready(function(){
+
+            $.ajax({
+                url: "{{path('event_getevent')}}",
+                method: "GET",
+                dataType: 'json',
+                success: function(data, status){
+                    $('#parent').html(data);
+
+
+                }
+            });
+        });
                 function Tri(nom) {
 
                      var urll = '/' +nom ;
@@ -101,9 +117,13 @@
                         dataType: 'json',
                         success: function(data, status){
                             $('#parent').html(data);
+
                         }
                     });
                 };
+
+
+
 
 
 

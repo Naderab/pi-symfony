@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block title %} Eco System {% endblock %}
 {% block Containt %}
     <!-- Mini Cart Wrap Start -->
     <div class="mini-cart-wrap">
@@ -54,7 +54,14 @@
         </div>
 
     </div><!-- Mini Cart Wrap End -->
+    {% if app.session.flashBag.has('success') %}
 
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
     <!-- Cart Overlay -->
     <div class="cart-overlay"></div>
 
