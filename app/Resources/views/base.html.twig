@@ -272,9 +272,7 @@
                 <div class="col mt-10 mb-10">
                     <!-- Header Links Start -->
                     <div class="header-links">
-                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <a href="track-order.html"><img src="{{ asset('Front/assets/images/icons/car.png')}}" alt="Car Icon"> <span>Suivre commande</span></a>
-                        {% endif %}
+
                         <a href="store.html"><img src="{{ asset('Front/assets/images/icons/marker.png')}}" alt="Car Icon"> <span>localiser Nos points de collect</span></a>
                     </div><!-- Header Links End -->
                 </div>
@@ -313,7 +311,7 @@
                                         <li><hr></li>
                                         <li ><a href="#"><i class="material-icons" style="padding-right:10px">&#xe854;</i>Mes Commandes</a></li>
                                         <li><hr></li>
-                                        <li><a href="#"><i class="material-icons" style="padding-right:10px">&#xe616;</i>Mes Evenements</a></li>
+                                        <li><a href="{{ path('affichemesevenements') }}"><i class="material-icons" style="padding-right:10px">&#xe616;</i>Mes Evenements</a></li>
 
                                     </ul>
                                     <!-- Menu Body -->
@@ -374,7 +372,7 @@
                         <nav>
                             <ul>
                                 <li class="active"><a href="{{ path('homepage') }}">Accueil</a></li>
-                                <li class="active"><a href="{{ path('homepage') }}">A propos</a></li>
+                                <li class="active"><a href="{{ path('about') }}">A propos</a></li>
                                 <li class="menu-item-has-children"><a href="">Produits</a>
                                     <ul class="sub-menu">
                                         <li class="menu-item-has-children"><a href="">Commensez vos achats</a>
@@ -399,7 +397,9 @@
                                         </li>
                                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                         <li class="menu-item"><a href="{{ path('event_ajoutevenement') }}">Proposez Evénements</a>
-                                       {% endif %}
+                                        <li class="menu-item"><a href="{{ path('afficheWishlist') }}">Wishlist</a>
+
+                                            {% endif %}
                                         </li>
                                     </ul>
                                 </li>
@@ -411,7 +411,7 @@
                                     </ul>
                                 </li>
 
-                                <li><a href="contact.html">CONTACT</a></li>
+                                <li><a href="{{ path('contact') }}">CONTACT</a></li>
                             </ul>
                         </nav>
                     </div><!-- Main Menu End -->
@@ -464,20 +464,17 @@
 
                         <p class="contact-info">
                             <span>Address</span>
-                            You address will be here <br>
-                            Lorem Ipsum text                        </p>
-
-                        <p class="contact-info">
-                            <span>Phone</span>
-                            <a href="tel:01234567890">01234 567 890</a>
-                            <a href="tel:01234567891">01234 567 891</a>
+                            <br>Z.I. Chotrana II B.P. 160
+                            Pôle Technologique El Ghazela - Ariana 2083
                         </p>
 
                         <p class="contact-info">
-                            <span>Web</span>
-                            <a href="mailto:info@example.com">info@example.com</a>
-                            <a href="#">www.example.com</a>
+                            <span>Télephone</span>
+                            <a href="tel:01234567890">50287104</a>
+                            <a href="tel:01234567891">24955983</a>
                         </p>
+
+
 
                     </div>
                 </div><!-- Footer Widget End -->
@@ -489,38 +486,22 @@
                         <h4 class="widget-title">CUSTOMER CARE</h4>
 
                         <ul class="link-widget">
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">Features</a></li>
-                            <li><a href="#">My Account</a></li>
+                            <li><a href="{{ path('about') }}">About us</a></li>
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <li><a href="{{ path('fos_user_profile_show') }}">My Account</a></li>
                             <li><a href="#">Cart</a></li>
                             <li><a href="#">Checkout</a></li>
                             <li><a href="#">Wishlist</a></li>
                             <li><a href="#">blog</a></li>
-                            <li><a href="#">Contact</a></li>
+                            {% endif %}
+                            <li><a href="{{ path('contact') }}">Contact</a></li>
                         </ul>
 
                     </div>
                 </div><!-- Footer Widget End -->
 
                 <!-- Footer Widget Start -->
-                <div class="col-lg-3 col-md-6 col-12 mb-40">
-                    <div class="footer-widget">
 
-                        <h4 class="widget-title">INFORMATION</h4>
-
-                        <ul class="link-widget">
-                            <li><a href="#">Track your order</a></li>
-                            <li><a href="#">Locate Store</a></li>
-                            <li><a href="#">Online Support</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
-                            <li><a href="#">Payment</a></li>
-                            <li><a href="#">Shipping & Returns</a></li>
-                            <li><a href="#">Gift coupon</a></li>
-                            <li><a href="#">Special coupon</a></li>
-                        </ul>
-
-                    </div>
-                </div><!-- Footer Widget End -->
 
                 <!-- Footer Widget Start -->
                 <div class="col-lg-3 col-md-6 col-12 mb-40">

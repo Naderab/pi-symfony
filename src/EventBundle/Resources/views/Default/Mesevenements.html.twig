@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+    {% block title %} Eco System {% endblock %}
+
+{% block Containt %}
+
+    <div class="page-banner-section section">
+        <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+
+            <!-- Page Banner -->
+            <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+                <div class="page-banner">
+                    <h1>Mes évenements</h1>
+
+                    <div class="breadcrumb">
+                        <ul>
+                            <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                            <li><a href="">Mes événements </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Banner -->
+            <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+            </div>
+
+            <!-- Banner -->
+            <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+            </div>
+        </div>
+    </div>
+    <div class="page-section section mt-90 mb-90">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+
+                    <form action="#">
+                        <div class="cart-table table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="pro-thumbnail">Image</th>
+                                    <th class="pro-title">Nom</th>
+                                    <th class="pro-price">Lieu</th>
+                                    <th class="pro-quantity">Catégorie</th>
+                                    <th class="pro-quantity">Nombre de vu</th>
+                                    <th class="pro-quantity">Nombre de particpants</th>
+
+                                    <th class="pro-subtotal">--</th>
+                                    <th class="pro-remove">--</th>
+                                    <th class="pro-remove">--</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for x in evenements %}
+                                    <tr>
+                                        <td class="pro-thumbnail"><a href="#"><img src="{{ asset('uploads/images/' ~ x.image) }}" alt="Event"></a></td>
+                                        <td class="pro-title"><a href="#">{{ x.nom }}</a></td>
+                                        <td class="pro-title"><span>{{ x.adresse }}</span></td>
+                                        <td class="pro-title"><span>{{  x.categorie}}</span></td>
+                                        <td class="pro-title"><span>{{  x.nombrevu}}</span></td>
+                                        <td class="pro-title"><span>{{  x.nombretickets}}</span></td>
+
+                                        <td class="pro-remove"><a href="{{ path('detailsevent',{'id':x.slug}) }}"><i class="fa fa-eye"></i></a></td>
+                                        <td class="pro-remove"><a href="{{ path('event_updateevent',{'id':x.slug}) }}"><i class="fa fa-edit"></i></a></td>
+                                        <td class="pro-remove"><a data-toggle="modal" data-target="#exampleModal" onclick="onPressDelete ({{ x.slug }})"><i class="fa fa-trash-o"></i></a></td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff6b6b">
+                    <h5 class="modal-title" id="exampleModalLabel">Supprimer un évenement</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Voulez-vous bien supprimer cet évenement ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a   class="btn btn-primary" href="" id="btnDelete" style="background-color: #ff6b6b; border-color: white">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+
+
+
+
+
+        function onPressDelete (id )
+        {
+            newLien = '/deletemyevent/' + id;
+            document.getElementById('btnDelete').href = newLien;
+        }
+    </script>
+{% endblock %}

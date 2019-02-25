@@ -7,13 +7,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Liste des événements à traiter
+                Liste des Utilisateurs
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{{ path('homepageadmin') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
-                <li><a href="">Gestion des évenements</a></li>
-                <li class="active">Liste des événements à traiter</li>
+                <li><a href="">Gestion des Utilisateurs</a></li>
+                <li class="active">Liste des utilisateurs</li>
             </ol>
         </section>
 
@@ -35,26 +35,40 @@
                                 <tr>
                                     <th>Image</th>
                                     <th>Nom</th>
-                                    <th>Date debut</th>
-                                    <th>Date fin</th>
-                                    <th>Lieu</th>
-                                    <th>Catégorie</th>
+                                    <th>Email</th>
+                                    <th>Etat</th>
+
                                     <th>-</th>
-                                    <th>-</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for x in evenements %}
+                                {% for x in users %}
                                     <tr>
-                                        <td><img src="{{ asset('uploads/images/' ~ x.image) }} " style="width:  50px;"/></td>
+                                        <td><img src="{{ asset('uploads/images/' ~ x.avatar) }} " style="width:  50px;"/></td>
+                                        <td>{{ x.username }}</td>
+                                        <td>{{  x.email}}</td>
+                                        {% if x.enabled == 0 %}
+                                        <td><select name="etat" class="nice-select" onchange="Update(this.options[this.selectedIndex].value,{{ x.id }});">
+                                                <option value="0" selected>Disable</option>
+                                                <option value="1">Enable</option>
 
-                                        <td>{{ x.nom }}</td>
-                                        <td>{{  x.dateDebut|date('Y-m-d')}}</td>
-                                        <td>{{ x.dateFin|date('Y-m-d') }}</td>
-                                        <td>{{ x.adresse }}</td>
-                                        <td>{{  x.categorie}}</td>
-                                        <td><a data-toggle="modal" data-target="#exampleModal1" onclick="onPressAccept ({{ x.id }})"><i class="material-icons">&#xE03B;</i></a></td>
-                                        <td><a data-toggle="modal" data-target="#exampleModal" onclick="onPressDelete ({{ x.id }})"><i class="material-icons">&#xE872;</i></a></td>
+                                            </select>
+                                        </td>
+                                            {% else %}
+                                                <td>
+                                                <select name="etat" class="nice-select" onchange="Update(this.options[this.selectedIndex].value,{{ x.id }});">
+                                                    <option value="0" >Disable</option>
+                                                    <option value="1" selected>Enable</option>
+
+                                                </select>
+
+                                        </td>
+
+                                        {% endif %}
+
+                                        <td><a data-toggle="modal" data-target="#exampleModal" onclick="onPressDelete ({{ x.id }})" ><i class="material-icons" >&#xE872;</i></a></td>
+
 
                                     </tr>
                                 {% endfor %}
@@ -90,21 +104,22 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #1e7e34">
-                    <h5 class="modal-title" id="exampleModalLabel">Accepter un évenement</h5>
+                <div class="modal-header" style="background-color: #1e7e34 ">
+                    <h5 class="modal-title" id="exampleModalLabel">Succès!</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Voulez-vous bien accepter cet évenement ?
+                    Opération effectuée!
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                    <a   class="btn btn-primary" href="" id="btnAccepter" style="background-color: #1e7e34; border-color: white">Accepter</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+
                 </div>
             </div>
         </div>
@@ -114,7 +129,6 @@
 {% block javascripts %}
 
     <script>
-
         $(function () {
             $('#example1').DataTable()
             $('#example2').DataTable({
@@ -129,17 +143,33 @@
 
         function onPressDelete (id )
         {
-            newLien = '/admin/deleteevent/' + id;
+            newLien = '/admin/deleteuser/' + id;
             document.getElementById('btnDelete').href = newLien;
         }
 
-        function onPressAccept (id )
-        {
-            newLien = '/admin/traitervent/' + id;
-            document.getElementById('btnAccepter').href = newLien;
-        }
+        function Update(nb,id) {
 
+            var urll='';
 
+            if(nb == 0){
+
+                urll ='/etatdisable/' +id;
+            }
+            else {
+
+                 urll = '/etatenable/' + id;
+            }
+
+            $.ajax({
+                url: urll ,
+                method: "GET",
+                dataType: 'json',
+                success: function(data, status){
+                    $('#successModal').modal('show');
+
+                }
+            });
+        };
 
     </script>
 

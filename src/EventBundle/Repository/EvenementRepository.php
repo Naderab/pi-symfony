@@ -10,7 +10,9 @@ namespace EventBundle\Repository;
  */
 class EvenementRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function update($id)
+
+
+    public function updatepublie($id)
     {
 
         $qb = $this->_em->createQueryBuilder();
@@ -23,6 +25,21 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery();
         return $q->getResult();
     }
+
+    public function updatenonpublie($id)
+    {
+
+        $qb = $this->_em->createQueryBuilder();
+        $q = $qb->update('EventBundle:Evenement', 'p')
+            ->set('p.publie', '?1')
+            ->where('p.id = ?2')
+            ->setParameter(1, "0")
+            ->setParameter(2, $id)
+
+            ->getQuery();
+        return $q->getResult();
+    }
+
 
     public function OrderByPrixAsc(){
         $currentdate = new \DateTime('now');

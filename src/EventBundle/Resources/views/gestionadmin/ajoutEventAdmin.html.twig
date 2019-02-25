@@ -12,7 +12,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ path('homepageadmin') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
-            <li><a href="">Gestion des évenements</a></li>
+            <li><a href="{{ path('event_afficheeventadmin') }}">liste des évenements</a></li>
             <li class="active">Ajouter Evénement</li>
         </ol>
     </section>
@@ -204,22 +204,12 @@
                 document.getElementById("prix").disabled = false;
 
             }
-        }
-
-        $(document).ready(function(){
-            $("#eventbundle_evenement_Ajouter").click(function () {
-                if($("#eventbundle_evenement_dateDebut").val() > $("#eventbundle_evenement_dateFin").val())
-                {
-                alert('Date Début doit etre inferieur a la date Fin');
-                return false; }
-                else
-            {
-                $("#eventbundle_evenement_Ajouter").submit();
-            }
-        });
+        };
 
 
-        });
+
+
+
 
     </script>
 

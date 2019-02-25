@@ -4,6 +4,7 @@ namespace EventBundle\Controller;
 
 use EventBundle\Entity\Evenement;
 use EventBundle\Entity\Participation;
+use EventBundle\Entity\Wishlist;
 use EventBundle\EventBundle;
 use EventBundle\Form\EvenementType;
 use EventBundle\ImageUpload;
@@ -18,7 +19,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 class EventController extends Controller
 {
-
+//Partie : Front
     public function AfficheEvenementAction(Request $request) {
         $evenements = $this->getDoctrine()
             ->getRepository('EventBundle:Evenement')
@@ -55,16 +56,6 @@ class EventController extends Controller
 
 
     }
-    public function AfficheEvenement2Action() {
-        $evenements = $this->getDoctrine()
-            ->getRepository('EventBundle:Evenement')
-            ->findAll();
-
-
-        return $this->render('@Event/gestionadmin/listEvenement.html.twig', array('evenements' => $evenements));
-
-    }
-
     public function detailEvenementAction(Request $request, $id) {
         $idthread = $id;
         $thread = $this->container->get('fos_comment.manager.thread')->findThreadById($idthread);
@@ -79,6 +70,9 @@ class EventController extends Controller
 
         $comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
 
+        $wishlists = $this->getDoctrine()
+            ->getRepository('EventBundle:Wishlist')
+            ->findBy(array('User'=>$this->getUser()));
         $evenement = $this->getDoctrine()
             ->getRepository('EventBundle:Evenement')
             ->findBySlug($id);
@@ -95,41 +89,8 @@ class EventController extends Controller
 
 
         return $this->render('@Event/Default/Evenementdetail.html.twig',array('evenement'=>$evenement,'evenements'=>$evenements,'comments' => $comments,
-            'thread' => $thread));
+            'thread' => $thread ,'wishlist'=>$wishlists));
 
-    }
-
-    public function AfficheEvenementNonTraiterAction() {
-        $evenements = $this->getDoctrine()
-            ->getRepository('EventBundle:Evenement')
-            ->findBy(array('publie'=>0));
-
-
-        return $this->render('@Event/gestionadmin/listEvenementNontraiter.html.twig', array('evenements' => $evenements));
-
-    }
-
-    public function deleteEvenementAction($id) {
-        $m=$this->getDoctrine()->getManager();
-        $mod = $this->getDoctrine()
-            ->getRepository('EventBundle:Evenement')
-            ->findBySlug($id);
-
-        $m->remove($mod);
-        $m->flush();
-
-        return $this->redirect($this->generateUrl('event_afficheeventadmin'));
-    }
-    public function deleteEvenement2Action($id) {
-        $m=$this->getDoctrine()->getManager();
-        $mod = $this->getDoctrine()
-            ->getRepository('EventBundle:Evenement')
-            ->findBySlug($id);
-
-        $m->remove($mod);
-        $m->flush();
-
-        return $this->redirect($this->generateUrl('event_afficheeventadmin'));
     }
 
     public function AjoutEvenementAction(Request $request)
@@ -169,43 +130,43 @@ class EventController extends Controller
             else{
 
 
-            $user = $this->getUser();
-            $evenement->setOwnerUser($user);
+                $user = $this->getUser();
+                $evenement->setOwnerUser($user);
 
-            $evenement->setPublie(0);
-            $evenement->setNombretickets(0);
-            $evenement->setNombrevu(0);
-            $file = $evenement->getImage();
+                $evenement->setPublie(0);
+                $evenement->setNombretickets(0);
+                $evenement->setNombrevu(0);
+                $file = $evenement->getImage();
 
-            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
-            try {
-                $file->move(
-                    $this->getParameter('images_directory'),
-                    $fileName
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
-            }
-            $evenement->setImage($fileName);
-            $evenement->setCategorie($request->get('grat'));
-            if($request->get('grat') == 'gratuit')
-            {
-                $evenement->setPrix(0);
+                $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+                try {
+                    $file->move(
+                        $this->getParameter('images_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $evenement->setImage($fileName);
+                $evenement->setCategorie($request->get('grat'));
+                if($request->get('grat') == 'gratuit')
+                {
+                    $evenement->setPrix(0);
 
-            }
-            else{
-                $evenement->setPrix($request->get('prix'));
+                }
+                else{
+                    $evenement->setPrix($request->get('prix'));
 
-            }
+                }
 
-            $m=$this->getDoctrine()->getManager();
-            $m->persist($evenement);
-            $m->flush();
-            $request->getSession()
-                ->getFlashBag()
-                ->add('success', "Votre evenement est ajouté ! attend de confirmation d'administrateur")
-            ;
-            return $this->redirect($this->generateUrl('homepage'));
+                $m=$this->getDoctrine()->getManager();
+                $m->persist($evenement);
+                $m->flush();
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('success', "Votre evenement est ajouté ! attend de confirmation d'administrateur")
+                ;
+                //return $this->redirect($this->generateUrl('homepage'));
             }
 
         }
@@ -214,18 +175,6 @@ class EventController extends Controller
         $formview=$form->createView();
 
         return $this->render('@Event/Default/ajoutEvenement.html.twig', array('form' => $formview));
-
-    }
-
-    public function traiterEvenementAction(Request $request,$id)
-    {
-        $m=$this->getDoctrine()->getManager();
-        $this->getDoctrine()
-            ->getRepository('EventBundle:Evenement')
-            ->update($id);
-
-        $m->flush();
-        return $this->redirect($this->generateUrl('event_afficheeventNtadmin'));
 
     }
 
@@ -371,6 +320,214 @@ class EventController extends Controller
 
     }
 
+    public function particperAction(Request $request)
+    {
+        $particpation=new Participation();
+
+        $nbplace=intval($request->request->get('nbPlace'));
+
+        $event=$request->request->get('event');
+        $evenement = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->find($event);
+
+        $user = $this->getUser();
+
+        $particpation->setEvent($evenement);
+
+        $particpation->setUser($user);
+
+        $particpation->setNbPlace($nbplace);
+
+
+
+        $evenement->setnombretickets($evenement->getnombretickets()+$nbplace);
+
+        $m=$this->getDoctrine()->getManager();
+        $m->persist($evenement);
+        $m->persist($particpation);
+        $m->flush();
+        return new JsonResponse();
+
+
+
+
+
+
+
+    }
+
+    public function wishlistAction(Request $request)
+    {
+        $event=$request->request->get('event');
+        $user = $this->getUser();
+
+
+
+        $wishlist=new Wishlist();
+
+
+        $evenement = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->find($event);
+
+
+        $wishlist->setEvent($evenement);
+
+        $wishlist->setUser($user);
+
+
+
+
+
+        $m=$this->getDoctrine()->getManager();
+        $m->persist($wishlist);
+        $m->flush();
+        return new JsonResponse();
+
+
+
+
+
+
+
+    }
+
+    public function affichewishlistAction(Request $request) {
+        $wishlists = $this->getDoctrine()
+            ->getRepository('EventBundle:Wishlist')
+            ->findBy(array('User'=>$this->getUser()));
+
+
+        return $this->render('@Event/Default/wishlist.html.twig',array('wishlists'=>$wishlists));
+
+    }
+
+    public function deleteWishlistAction($id) {
+        $m=$this->getDoctrine()->getManager();
+        $mod = $this->getDoctrine()
+            ->getRepository('EventBundle:Wishlist')
+            ->find($id);
+
+        $m->remove($mod);
+        $m->flush();
+
+        return $this->redirect($this->generateUrl('afficheWishlist'));
+    }
+
+
+    public function AfficheMesEvenementsAction() {
+        $evenements = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->findBy(array('OwnerUser'=>$this->getUser()));
+        $nb=$this->getDoctrine()
+            ->getRepository('EventBundle:Wishlist')
+            ->Number();
+
+
+        return $this->render('@Event/Default/Mesevenements.html.twig', array('evenements' => $evenements,'number'=>$nb));
+
+    }
+
+    public function deleteEvenementUserAction($id) {
+        $m=$this->getDoctrine()->getManager();
+        $mod = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->findBySlug($id);
+
+        $m->remove($mod);
+        $m->flush();
+
+        return $this->redirect($this->generateUrl('affichemesevenements'));
+    }
+
+    public function UpdateEvenementAction(Request $request,$id)
+    {
+        $m=$this->getDoctrine()->getManager();
+        $event=$m->getRepository("EventBundle:Evenement")->findBySlug($id);
+        $form=$this->createForm(EvenementType::class,$event);
+        $form->handleRequest($request);
+        if($form->isSubmitted()) {
+            $file = $event->getImage();
+
+            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+            try {
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+            $event->setImage($fileName);
+            $m->persist($event);
+            $m->flush();
+            return $this->redirect($this->generateUrl('affichemesevenements'));
+        }
+        $formview = $form->createView();
+
+        return $this->render('@Event/Default/updateevent.html.twig', array('form' => $formview,'event'=>$event));
+    }
+
+
+
+
+
+
+
+  //Partie Back end :
+
+    public function AfficheEvenement2Action() {
+        $evenements = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->findAll();
+
+
+        return $this->render('@Event/gestionadmin/listEvenement.html.twig', array('evenements' => $evenements));
+
+    }
+
+
+
+    public function AfficheEvenementNonTraiterAction() {
+        $evenements = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->findBy(array('publie'=>0));
+
+
+        return $this->render('@Event/gestionadmin/listEvenementNontraiter.html.twig', array('evenements' => $evenements));
+
+    }
+
+    public function deleteEvenementAction($id) {
+        $m=$this->getDoctrine()->getManager();
+        $mod = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->findBySlug($id);
+
+        $m->remove($mod);
+        $m->flush();
+
+        return $this->redirect($this->generateUrl('event_afficheeventadmin'));
+    }
+    public function deleteEvenement2Action($id) {
+        $m=$this->getDoctrine()->getManager();
+        $mod = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->findBySlug($id);
+
+        $m->remove($mod);
+        $m->flush();
+
+        return $this->redirect($this->generateUrl('event_afficheeventadmin'));
+    }
+
+
+
+
+
+
+
     public function AjoutEvenementAdminAction(Request $request)
     {
         $evenement=new Evenement();
@@ -436,6 +593,18 @@ class EventController extends Controller
         $form=$this->createForm(EvenementType::class,$event);
         $form->handleRequest($request);
         if($form->isSubmitted()) {
+            $file = $event->getImage();
+
+            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+            try {
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+            $event->setImage($fileName);
             $m->persist($event);
             $m->flush();
             return $this->redirect($this->generateUrl('event_afficheeventadmin'));
@@ -445,39 +614,74 @@ class EventController extends Controller
         return $this->render('@Event/gestionadmin/UpdateEventAdmin.html.twig', array('form' => $formview));
     }
 
-    public function particperAction(Request $request)
+    public function traiteruserEnableAction(Request $request,$id)
     {
-        $particpation=new Participation();
-
-        $nbplace=intval($request->request->get('nbPlace'));
-
-        $event=$request->request->get('event');
-        $evenement = $this->getDoctrine()
-            ->getRepository('EventBundle:Evenement')
-            ->find($event);
-
-        $user = $this->getUser();
-
-        $particpation->setEvent($evenement);
-
-        $particpation->setUser($user);
-
-        $particpation->setNbPlace($nbplace);
-
-
-
-        $evenement->setnombretickets($evenement->getnombretickets()+$nbplace);
-
         $m=$this->getDoctrine()->getManager();
-        $m->persist($evenement);
-        $m->persist($particpation);
+        $this->getDoctrine()
+            ->getRepository('AppBundle:User')
+            ->updateenable($id);
+
+        $m->flush();
+        return new JsonResponse();
+
+    }
+
+    public function traiteruserdisableAction(Request $request,$id)
+    {
+        $m=$this->getDoctrine()->getManager();
+        $this->getDoctrine()
+            ->getRepository('AppBundle:User')
+            ->updatedisable($id);
+
+        $m->flush();
+        return new JsonResponse();
+
+    }
+
+    public function AfficheuserAction() {
+        $users = $this->getDoctrine()
+            ->getRepository('AppBundle:User')
+            ->findAll();
+
+
+        return $this->render('@Event/gestionadmin/listeuser.html.twig', array('users' => $users));
+
+    }
+
+    public function deleteuserAction($id) {
+        $m=$this->getDoctrine()->getManager();
+        $mod = $this->getDoctrine()
+            ->getRepository('AppBundle:User')
+            ->find($id);
+
+        $m->remove($mod);
+        $m->flush();
+
+        return $this->redirect($this->generateUrl('afficheuser'));
+    }
+
+    public function traiterEvenementpublieAction(Request $request,$id)
+    {
+        $m=$this->getDoctrine()->getManager();
+        $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->updatepublie($id);
+
         $m->flush();
         return new JsonResponse();
 
 
+    }
 
+    public function traiterEvenementnonpublieAction(Request $request,$id)
+    {
+        $m=$this->getDoctrine()->getManager();
+        $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->updatenonpublie($id);
 
-
+        $m->flush();
+        return new JsonResponse();
 
 
     }

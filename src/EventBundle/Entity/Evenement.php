@@ -132,7 +132,7 @@ class Evenement
      * @var string
      *
      * @Gedmo\Slug(fields={"id"})
-     * @ORM\Column(length=255, unique=true,nullable=false)
+     * @ORM\Column(length=255, unique=true, nullable=false)
      */
     protected $slug;
 

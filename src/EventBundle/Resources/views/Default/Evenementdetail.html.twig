@@ -2,6 +2,16 @@
     {% block title %} Eco System {% endblock %}
 
 {% block Containt %}
+    {% if app.session.flashBag.has('wishlist') %}
+        <div class="alert alert-danger">
+
+
+            {% for msg in app.session.flashBag.get('wishlist') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+
+    {% endif %}
 
     <div class="page-banner-section section">
         <div class="page-banner-wrap row row-0 d-flex align-items-center ">
@@ -43,15 +53,15 @@
                         <div class="tab-content">
                             <div id="single-image-1" class="tab-pane fade show active big-image-slider">
                                 <div class="big-image"><img src="{{ asset('uploads/images/' ~ evenement.image) }}"
-                                                            alt="Big Image"><a
+                                                            alt="Event"><a
                                             href="{{ asset('uploads/images/' ~ evenement.image) }}"
                                             class="big-image-popup"><i class="fa fa-search-plus"></i></a></div>
                                 <div class="big-image"><img src="{{ asset('uploads/images/' ~ evenement.image) }}"
-                                                            alt="Big Image"><a
+                                                            alt="Event"><a
                                             href="{{ asset('uploads/images/' ~ evenement.image) }}"
                                             class="big-image-popup"><i class="fa fa-search-plus"></i></a></div>
                                 <div class="big-image"><img src="{{ asset('uploads/images/' ~ evenement.image) }}"
-                                                            alt="Big Image"><a
+                                                            alt="Event"><a
                                             href="{{ asset('uploads/images/' ~ evenement.image) }}"
                                             class="big-image-popup"><i class="fa fa-search-plus"></i></a></div>
                             </div>
@@ -128,14 +138,21 @@
                                     </div>
                                     <div class="actions">
 
-                                        <button id="btn1" class="add-to-cart"><i class="ti-shopping-cart"></i><span>Réserver</span>
+                                        <button id="btn1" class="pro-addtocart"><i class="ti-shopping-cart"></i><span>Réserver</span>
                                         </button>
+                                        {% for wish in wishlist %}
+
+                                            {% if wish.Event.id != evenement.id %}
 
                                         <div class="wishlist-compare">
-                                            <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
-                                            <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                                            <button id="btn2" data-tooltip="Wishlist"><i class="ti-heart"></i></button>
                                         </div>
 
+
+
+                                            {% endif %}
+
+                                         {% endfor %}
                                     </div>
                                 {% else %}
                                     <div class="quantity-colors">
@@ -322,7 +339,7 @@
                                                     {% endif %}
 
                                                 </div>
-                                                <a href="{{ path('detailsevent',{'id':x.id}) }}"><img
+                                                <a href="{{ path('detailsevent',{'id':x.slug}) }}"><img
                                                             src="{{ asset('uploads/images/' ~ x.image) }} "
                                                             style="width:  380px;"/></a>
                                             </div>
@@ -389,6 +406,27 @@
         </div>
     </div>
 
+    <div class="modal fade" id="successModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#ffff99 ">
+                    <h5 class="modal-title" id="exampleModalLabel">Succès!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Evénement ajouté à votre Wishlist !
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
  {% block javascripts %}
      <script>
@@ -407,6 +445,23 @@
                  async: true,
                  success: function (data) {
                      $('#successModal').modal('show');
+                 }
+             })
+         });
+
+         $('#btn2').click(function () {
+             var event = $('#event').val();
+             $.ajax({
+                 url: '/wishlist',
+                 type: "POST",
+                 dataType: "json",
+                 data: {
+                     event: event
+                 },
+                 async: true,
+                 success: function (data) {
+                     $('#successModal1').modal('show');
+                     $('#btn2').hide();
                  }
              })
          });

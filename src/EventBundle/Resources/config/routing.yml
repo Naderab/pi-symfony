@@ -22,9 +22,6 @@ event_afficheeventNtadmin:
 event_deleteeventadmin:
     path:     /admin/deleteevent/{id}
     defaults: { _controller: EventBundle:Event:deleteEvenement }
-event_traitereventadmin:
-    path:     /admin/traitervent/{id}
-    defaults: { _controller: EventBundle:Event:traiterEvenement }
 croissant:
     path:     /croissant
     defaults: { _controller: EventBundle:Event:Orderprixasc }
@@ -58,3 +55,39 @@ event_getevent18:
 Participer:
     path:     /participer
     defaults: { _controller: EventBundle:Event:particper }
+Wishlist:
+    path:     /wishlist
+    defaults: { _controller: EventBundle:Event:wishlist }
+afficheWishlist:
+    path:     /affichewishlist
+    defaults: { _controller: EventBundle:Event:affichewishlist }
+deleteWishlist:
+    path:     /deletewishlist/{id}
+    defaults: { _controller: EventBundle:Event:deleteWishlist }
+deleteeventuser:
+    path:     /deletemyevent/{id}
+    defaults: { _controller: EventBundle:Event:deleteEvenementUser }
+affichemesevenements:
+    path:     /mesevenements
+    defaults: { _controller: EventBundle:Event:AfficheMesEvenements }
+event_updateevent:
+    path:     /updateevent/{id}
+    defaults: { _controller: EventBundle:Event:UpdateEvenement }
+traiteruserenable:
+    path:     /etatenable/{id}
+    defaults: { _controller: EventBundle:Event:traiteruserEnable }
+traiteruserdisable:
+    path:     /etatdisable/{id}
+    defaults: { _controller: EventBundle:Event:traiteruserdisable }
+deleteuser:
+    path:         /admin/deleteuser/{id}
+    defaults: { _controller: EventBundle:Event:deleteuser }
+afficheuser:
+    path:     /admin/users
+    defaults: { _controller: EventBundle:Event:Afficheuser }
+traitereventpublie:
+    path:     /etatpublie/{id}
+    defaults: { _controller: EventBundle:Event:traiterEvenementpublie }
+traitereventnonpublie:
+    path:     /etatnonpublie/{id}
+    defaults: { _controller: EventBundle:Event:traiterEvenementnonpublie }

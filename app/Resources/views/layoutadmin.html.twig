@@ -768,8 +768,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href=""><i class="fa fa-edit"></i> Traiter demande d'inscription </a></li>
-                        <li><a href=""><i class="fa fa-table"></i>Consulter liste des utilisateurs</a></li>
+                        <li><a href="{{ path('afficheuser') }}"><i class="fa fa-table"></i>Consulter liste des utilisateurs</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -794,7 +793,6 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ path('event_afficheeventNtadmin') }}"><i class="fa fa-edit"></i> Traiter demande d'ajout </a></li>
                         <li><a href="{{ path('event_afficheeventadmin') }}"><i class="fa fa-table"></i>Consulter liste des evenements</a></li>
                         <li><a href=""><i class="fa fa-calendar"></i> <span>Planning</span></a></li>
                     </ul>
