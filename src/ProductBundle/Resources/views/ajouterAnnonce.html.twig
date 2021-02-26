@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+    {% block title %} Eco System {% endblock %}
+{% block Containt %}
+
+    <div class="page-banner-section section" style="background-color: #ffff99">
+        <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+            <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+                <div class="page-banner" style="background-color: #ffff99">
+                    <h1>Ajoutez une annonce</h1>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+            </div>
+            <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+            </div>
+        </div>
+    </div>
+
+    <div class="product-section section mt-20 mb-90" >
+        <div class="container">
+            <div class="row" >
+
+            <div class="col-lg-4">
+                {{ form_start(form) }}
+
+                <div class="form-group">
+                    <b>{{ form_label(form.titre,'Titre : ') }}</b>
+                    {{ form_widget(form.titre,{'attr':{'class':'form-control'}}) }}
+                </div>
+
+                <div class="form-group">
+                    <b>{{ form_label(form.description,'Description : ') }}</b>
+                    {{ form_widget(form.description,{'attr':{'class':'form-control'}}) }}
+                </div>
+
+
+                <div  class="form-group" data-toggle="collapse" data-target="#demo">
+                    <b> {{ form_label(form.Categorie,'Categorie : ') }}</b>
+                        {{ form_widget(form.Categorie,{'attr':{'class':'form-control'}}) }}
+                    </div>
+                <div id="demo" class="collapse in">
+
+                    <div class="form-group">
+                        <b>  {{ form_label(form.SousCategorie,'Sous categorie : ') }}</b>
+                        {{ form_widget(form.SousCategorie,{'attr':{'class':'form-control'}}) }}
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    <b> {{ form_label(form.Prix,'Prix: ') }}</b>
+                    {{ form_widget(form.Prix,{'attr':{'class':'form-control'}}) }}
+                </div>
+
+                   {# {{ form_label(form.PGratuit,'Gratuit') }}
+                    {{ form_radio-inline(formPGratuit,{'attr':}) }}
+
+                    <div class="radio"> <input type="radio" name="optradio"> Gratuit
+                    </div>#}
+
+
+                <div class="form-group">
+                    <b>{{ form_label(form.image,'Image : ') }}</b>
+                    <small class="text-muted">
+                        Photos (10 maximum)
+                    </small>
+                    {{ form_widget(form.image,{'attr':{'class':'form-control'}}) }}
+                </div>
+
+                <div class=" center-block">
+                    {#<button type="reset" class="btn btn-primary" value="Reset">Retour</button>#}
+                    <button type="submit" class="btn btn-warning" data-toggle="modal">Valider</button>
+
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Annonce créée</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Terminé! Vous avez créé votre annonce avec succès.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">fermer</button>
+                                        <button type="submit" id="btn-save" name="btn-save" class="btn btn-success">Voir le profile</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

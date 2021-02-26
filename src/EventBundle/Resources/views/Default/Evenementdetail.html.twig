@@ -95,13 +95,29 @@
 
                         <div class="single-product-description">
 
-                            <div class="ratting">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
+                            <section class='rating-widget'>
+
+                                <!-- Rating Stars Box -->
+                                <div class='rating-stars text-center'>
+                                    <ul id='stars'>
+                                        <li class='star' title='Poor' data-value='1'>
+                                            <i class='fa fa-star fa-fw'></i>
+                                        </li>
+                                        <li class='star' title='Fair' data-value='2'>
+                                            <i class='fa fa-star fa-fw'></i>
+                                        </li>
+                                        <li class='star' title='Good' data-value='3'>
+                                            <i class='fa fa-star fa-fw'></i>
+                                        </li>
+                                        <li class='star' title='Excellent' data-value='4'>
+                                            <i class='fa fa-star fa-fw'></i>
+                                        </li>
+                                        <li class='star' title='WOW!!!' data-value='5'>
+                                            <i class='fa fa-star fa-fw'></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </section>
 
                             <div class="desc">
                                 <p style="font-size: 20px;color: #f5d730;"> Start: &nbsp;&nbsp;&nbsp;
@@ -138,21 +154,20 @@
                                     </div>
                                     <div class="actions">
 
-                                        <button id="btn1" class="pro-addtocart"><i class="ti-shopping-cart"></i><span>Réserver</span>
-                                        </button>
-                                        {% for wish in wishlist %}
 
-                                            {% if wish.Event.id != evenement.id %}
+
+                                        <button id="btn1" class="add-to-cart"><i class="ti-shopping-cart"></i><span>Réserver</span> </button>
+
+
+
 
                                         <div class="wishlist-compare">
-                                            <button id="btn2" data-tooltip="Wishlist"><i class="ti-heart"></i></button>
+                                            <a  data-tooltip="Wishlist" onClick="wishlist();"><i class="ti-heart"></i></a>
                                         </div>
 
 
 
-                                            {% endif %}
 
-                                         {% endfor %}
                                     </div>
                                 {% else %}
                                     <div class="quantity-colors">
@@ -182,6 +197,8 @@
                                 <a href="#"><i class="fa fa-google-plus"></i></a>
 
                             </div>
+
+
 
                         </div>
 
@@ -223,27 +240,21 @@
                                     <h3 class="tribe-events-single-section-title"> Lieu </h3>
                                     <div class="meta-inner">
 
-                                        <p class="author fn org">
-                                            Habibi
-                                        </p>
+
 
                                         <address class="tribe-events-address">
 				<span class="tribe-address">
 
 
-	<span class="tribe-locality">Gammarth</span><span class="tribe-delimiter">,</span>
+	<span class="tribe-locality">{{ evenement.adresse }}</span><span class="tribe-delimiter">,</span>
 
 
 
-	<span class="tribe-country-name">Tunisie</span>
+
 
 </span>
 
-                                            <p class="location">
-                                                <a class="tribe-events-gmap"
-                                                   href="https://maps.google.com/maps?f=q&#038;source=s_q&#038;hl=en&#038;geocode=&#038;q=Gammarth+Tunisie"
-                                                   title="Cliquez pour voir une carte Google Maps" target="_blank">+
-                                                    Google Map</a></p>
+
                                         </address>
 
 
@@ -251,18 +262,7 @@
                                 </div>
 
 
-                                <div class="tribe-events-meta-group tribe-events-meta-group-gmap clearfix">
-                                    <div class="tribe-events-venue-map" style="height:350px">
 
-                                        <iframe
-                                                width="100%"
-                                                height="350px"
-                                                frameborder="0" style="border:0"
-                                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDNsicAsP6-VuGtAb1O9riI3oc_NOb7IOU&#038;q=Gammarth+Tunisie+"
-                                                allowfullscreen>
-                                        </iframe>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="product-reviews">
@@ -339,7 +339,7 @@
                                                     {% endif %}
 
                                                 </div>
-                                                <a href="{{ path('detailsevent',{'id':x.slug}) }}"><img
+                                                <a href="{{ path('detailsevent',{'id':x.id}) }}"><img
                                                             src="{{ asset('uploads/images/' ~ x.image) }} "
                                                             style="width:  380px;"/></a>
                                             </div>
@@ -427,6 +427,28 @@
         </div>
     </div>
 
+    <div class="modal fade" id="RatingModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#ffff99 ">
+                    <h5 class="modal-title" id="exampleModalLabel">Succès!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="rating">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 {% endblock %}
  {% block javascripts %}
      <script>
@@ -435,7 +457,7 @@
              var nbplace = $('#nbplace').val();
              var event = $('#event').val();
              $.ajax({
-                 url: '/participer',
+                 url: 'http://localhost:4040/EcoSystem/web/app_dev.php/event/participer',
                  type: "POST",
                  dataType: "json",
                  data: {
@@ -449,10 +471,10 @@
              })
          });
 
-         $('#btn2').click(function () {
+         function wishlist() {
              var event = $('#event').val();
              $.ajax({
-                 url: '/wishlist',
+                 url: 'http://localhost:4040/EcoSystem/web/app_dev.php/event/wishlist',
                  type: "POST",
                  dataType: "json",
                  data: {
@@ -464,7 +486,84 @@
                      $('#btn2').hide();
                  }
              })
+         };
+
+         $(document).ready(function(){
+
+             /* 1. Visualizing things on Hover - See next part for action on click */
+             $('#stars li').on('mouseover', function(){
+                 var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
+
+                 // Now highlight all the stars that's not after the current hovered star
+                 $(this).parent().children('li.star').each(function(e){
+                     if (e < onStar) {
+                         $(this).addClass('hover');
+                     }
+                     else {
+                         $(this).removeClass('hover');
+                     }
+                 });
+
+             }).on('mouseout', function(){
+                 $(this).parent().children('li.star').each(function(e){
+                     $(this).removeClass('hover');
+                 });
+             });
+
+
+             /* 2. Action to perform on click */
+             $('#stars li').on('click', function(){
+                 var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+                 var stars = $(this).parent().children('li.star');
+
+                 for (i = 0; i < stars.length; i++) {
+                     $(stars[i]).removeClass('selected');
+                 }
+
+                 for (i = 0; i < onStar; i++) {
+                     $(stars[i]).addClass('selected');
+                 }
+
+                 // JUST RESPONSE (Not needed)
+                 var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+
+
+                 responseMessage(ratingValue);
+
+             });
+
+
          });
+
+
+         function responseMessage(ratingValue) {
+
+             var event = $('#event').val();
+             $.ajax({
+                 url: 'http://localhost:4040/EcoSystem/web/app_dev.php/event/rating',
+                 type: "POST",
+                 dataType: "json",
+                 data: {
+                     event: event ,
+                     rating: ratingValue
+                 },
+                 async: true,
+                 success: function (data) {
+                     if (ratingValue > 1) {
+                         $('#rating').html("Thanks! You rated this " + ratingValue + " stars.");
+
+                         $('#RatingModel').modal('show');
+
+                     }
+                     else {
+                         $('#rating').html("We will improve ourselves. You rated this " + ratingValue + " stars.");
+
+                         $('#RatingModel').modal('show');
+                     }
+                 }
+             })
+
+         }
      </script>
 
      <script src="{{ asset('@FOSCommentBundle/Resources/public/js/comments.js') }}"></script>

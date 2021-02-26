@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <h1> Commande N° {{ commandeId }} de l'utilisateur N °{{ user.id }}</h1>
+
+    <h3> Quantite  {{ quantite }}</h3>
+    <h3>Date {{ "now"|date("m/d/Y") }}</h3>
+    <h3>Products </h3>
+    <table  class=" table table-striped">
+
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Prix</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for p in produits %}
+                <td>{{ p.titre }} </td>
+                <td>{{ p.prix }} </td>
+            {% endfor %}
+        </tr>
+        </tbody>
+
+
+
+    </table>
+      <h3>Prix total {{ prixTotal }}</h3>
+        <h3>Shipping Cost : {{ shipping }}</h3>
+
+
+</body>
+</html>

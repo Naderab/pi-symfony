@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+    {% block title %} Eco System {% endblock %}
+
+{% block Containt %}
+
+    <div class="page-banner-section section">
+        <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+
+            <!-- Page Banner -->
+            <div class="col-lg-6 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+                <div class="page-banner">
+                    <h1>Liste des demandes de devis</h1>
+
+                    <div class="breadcrumb">
+                        <ul>
+                            <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                            <li><a href="">Liste des demandes de devis</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Banner -->
+            <div class="col-lg-3 col-md-6 col-12 order-lg-1">
+            </div>
+
+            <!-- Banner -->
+            <div class="col-lg-3 col-md-6 col-12 order-lg-3">
+            </div>
+        </div>
+    </div>
+    <div class="page-section section mt-90 mb-90">
+    <div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <form action="#">
+                <div class="cart-table table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="pro-thumbnail">titre</th>
+                            <th class="pro-title">type</th>
+                            <th class="pro-price">description</th>
+                            <th class="pro-quantity">dateoffre</th>
+                            <th class="pro-quantity">datevalidite</th>
+
+                            <th class="pro-remove">--</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                    {% for x in data %}
+                        {% if x.demande=="oui" and x.etat=="non" and x.archiver=="non" %}
+                            <tr>
+
+                                <td>{{ x.titre }}</td>
+                                <td>{{ x.type }}</td>
+                                <td>{{ x.description }}</td>
+                                <td>{{ x.dateoffre | date('D,M,Y') }}</td>
+                                <td>{{ x.datevalidite | date('D,M,Y') }}</td>
+                                <td><a href="{{ path('ajouterdevis', {'id': x.Id }) }}"  onclick="return confirm('Génerer un devis')"><i class="fa fa-address-book-o"></i> Génerer un Devis </a> </td>
+
+
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}

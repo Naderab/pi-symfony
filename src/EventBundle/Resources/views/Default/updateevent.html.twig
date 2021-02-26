@@ -2,43 +2,7 @@
     {% block title %} Eco System {% endblock %}
     {% form_theme form 'bootstrap_4_layout.html.twig' %}
     {% block Containt %}
-        {% if app.session.flashBag.has('error') %}
 
-            <div class="alert alert-danger">
-                {% for msg in app.session.flashBag.get('error') %}
-                    {{ msg }}
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        {% if app.session.flashBag.has('Nberror') %}
-
-            <div class="alert alert-danger">
-                {% for msg in app.session.flashBag.get('Nberror') %}
-                    {{ msg }}
-                {% endfor %}
-            </div>
-        {% endif %}
-        {% if app.session.flashBag.has('dateerror') %}
-            <div class="alert alert-danger">
-
-
-                {% for msg in app.session.flashBag.get('dateerror') %}
-                    {{ msg }}
-                {% endfor %}
-            </div>
-
-        {% endif %}
-        {% if app.session.flashBag.has('datedebuterror') %}
-            <div class="alert alert-danger">
-
-
-                {% for msg in app.session.flashBag.get('datedebuterror') %}
-                    {{ msg }}
-                {% endfor %}
-            </div>
-
-        {% endif %}
 
 
 
@@ -83,7 +47,7 @@
                             <div class="box box-warning">
 
                                 {{ form_start(form) }}
-                                <div class="my-custom-class-for-errors">
+                                <div class="alert alert-error" id="errornom">
                                     {{ form_errors(form) }}
                                 </div>
 
@@ -100,7 +64,16 @@
                     <div class="row">
 
                         <div class="col-md-6">
-
+                            {% for flash_message in app.session.flashBag.get('errorDatedebut') %}
+                                <div class="alert alert-warning">
+                                    {{ flash_message }}
+                                </div>
+                            {% endfor %}
+                            {% for flash_message in app.session.flashBag.get('errorDate') %}
+                                <div class="alert alert-warning">
+                                    {{ flash_message }}
+                                </div>
+                            {% endfor %}
                             <div class="form-group">
 
 
@@ -149,6 +122,9 @@
                             <div class="form-group">
                                 <input type="text" name="prix" id="prix" placeholder="Prix" class="form-control" required>
                             </div>
+                            <div class="alert alert-error" id="errorprix" >
+                                {{ form_errors(form) }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -181,6 +157,9 @@
                             <div class="form-group">
                                 {{ form_errors(form.minParticipants) }}
                                 {{ form_widget(form.minParticipants, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <div class="alert alert-error" id="errornombre" >
+                                {{ form_errors(form) }}
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -237,7 +216,50 @@
                     document.getElementById("prix").disabled = false;
 
                 }
-            }
+            };
+
+            $(document).ready(function(){
+
+                $("#eventbundle_evenement_maxParticipants").keyup(function () {
+                    var min =  $('#eventbundle_evenement_minParticipants').val() ;
+                    var max =  $('#eventbundle_evenement_maxParticipants').val() ;
+                    verify(min,max);
+                });
+                $("#prix").keyup(function () {
+                    var prix =  $('#prix').val() ;
+
+                    verifyprix(prix);
+                });
+                function verify(min,max) {
+
+                    if((isNaN(parseFloat(min)) || isNaN(parseFloat(max))))
+                    {
+                        $('#errornombre').html("Max de partcipants et/ou Min particpants doivent etre nombres").css('color','red');
+
+                    }
+                    else if (min>max) {
+
+                        $('#errornombre').html("Max de partcipants doit etre supérier a  Min particpants").css('color','red');
+
+                    }
+
+
+                }
+
+                function verifyprix(prix) {
+
+                    if((isNaN(parseFloat(prix)) ))
+                    {
+                        $('#errorprix').html("le Prix doit  etre un  nombre").css('color','red');
+
+                    }
+
+
+
+                }
+
+            });
+
 
 
 

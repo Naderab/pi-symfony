@@ -1,0 +1,153 @@
+{% extends 'layoutadmin.html.twig' %}
+{% block title %}
+    Admin
+{% endblock %}
+{% block Containt %}
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Formulaire d'ajout d'un Newsletter
+
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Gestion de </a></li>
+            <li class="active">Liste des postes</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+
+
+
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title"></h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        {{ form_start(form) }}
+                        <div class="form-group">
+                            <label>Titre</label>
+                            {{ form_widget(form.titre,{'attr':{'class':'form-control','onkeyup':'showHint(this.value)'}}) }}
+
+                        </div>
+                        <div class="form-group">
+                            <label>description</label>
+
+                            {{ form_widget(form.description,{'attr':{'class':'form-control','onkeyup':'showHint1(this.value)'}}) }}
+
+                        </div>
+
+                        <div class="form-group">
+                            <label>lien</label>
+
+
+                            {{ form_widget(form.lienAbonnement,{'attr':{'class':'form-control'}}) }}
+
+                        </div>
+                        <div class="form-group">
+                            <label>contenu</label>
+
+                            {{ form_widget(form.contenu,{'attr':{'class':'form-control','onkeyup':'showHint2(this.value)'}}) }}
+                        </div>
+
+                        <br>
+                        <br>
+
+                        {{ form_widget(form.Ajouter,{'attr':{'class':'btn btn-primary'}}) }}
+                        {{ form_end(form) }}
+
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <script>
+
+
+        function showHint(str)
+
+        {
+            //var lien='/methode/'+str;
+            if (str.length == 0)
+            {
+                document.getElementById("txtHint").innerHTML="";
+                return;
+            }
+            else{
+
+
+                document.getElementById("txtHint").innerHTML=str;
+
+
+            }
+
+
+        }
+        function showHint1(str)
+
+        {
+            //var lien='/methode/'+str;
+            if (str.length == 0)
+            {
+                document.getElementById("txtHint1").innerHTML="";
+                return;
+            }
+            else{
+
+
+                document.getElementById("txtHint1").innerHTML=str;
+
+
+            }
+
+
+        }
+        function showHint2(str)
+
+        {
+            //var lien='/methode/'+str;
+            if (str.length == 0)
+            {
+                document.getElementById("txtHint2").innerHTML="";
+                return;
+            }
+            else{
+
+
+                document.getElementById("txtHint2").innerHTML=str;
+
+
+            }
+
+
+        }
+
+        $(function () {
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+            CKEDITOR.replace('editor1')
+            //bootstrap WYSIHTML5 - text editor
+            $('.textarea').wysihtml5()
+        })
+
+
+    </script>
+
+
+
+
+
+{% endblock %}

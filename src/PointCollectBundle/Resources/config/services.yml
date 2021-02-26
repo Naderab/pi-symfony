@@ -1,0 +1,4 @@
+services:
+#    point_collect.example:
+#        class: PointCollectBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

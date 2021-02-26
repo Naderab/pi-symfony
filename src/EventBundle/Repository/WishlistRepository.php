@@ -10,10 +10,11 @@ namespace EventBundle\Repository;
  */
 class WishlistRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function Number()
+    public function Number($eventID)
     {
         $query=$this->getEntityManager()
-            ->createQuery("SELECT COUNT (e) as nb FROM EventBundle:Wishlist e");
+            ->createQuery("SELECT COUNT (e) as nb FROM EventBundle:Wishlist e where e.Event=:event");
+        $query->setParameter('event',$eventID);
 
         return $query->getSingleScalarResult();
 

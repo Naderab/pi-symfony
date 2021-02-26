@@ -1,8 +1,49 @@
 {% trans_default_domain 'FOSUserBundle' %}
+<div class="page-banner-section section">
+    <div class="page-banner-wrap row row-0 d-flex align-items-center ">
 
+        <!-- Page Banner -->
+        <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+            <div class="page-banner">
+                <h1>Paramétres</h1>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                        <li><a href="#">Paramétres</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banner -->
+        <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+        </div>
+
+        <!-- Banner -->
+        <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+        </div>
+
+    </div>
+</div>
+<div class="login-section section mt-90 mb-90">
+    <div class="container">
+        <div class="row">
+
+            <!-- Login -->
+            <div class="col-md-6 col-12 d-flex">
+                <div class="ee-login">
+
+                    <h3>
+                        Modifier votre données</h3>
 {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
     {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+    <div style="padding-top: 20px; padding-right: 20px;">
+        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" style="width: 100%;"/>
     </div>
 {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

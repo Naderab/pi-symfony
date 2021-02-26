@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+    {% block title %} Eco System {% endblock %}
+    {% block Containt %}
+
+        <div class="page-banner-section section">
+            <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+
+                <!-- Page Banner -->
+                <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+                    <div class="page-banner">
+                        <h1>{{ post.titre }}</h1>
+
+                        <div class="breadcrumb">
+                            <ul>
+                                <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                                <li><a href="{{ path('blog_affichepost') }}">Liste des Blogs</a></li>
+
+                                <li><a href="">{{ post.titre }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Banner -->
+                <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+                </div>
+
+                <!-- Banner -->
+                <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <!-- Blog Section Start -->
+        <div class="blog-section section mt-90 mb-50">
+            <div class="container">
+                <div class="row row-40">
+
+                    <div class="col-lg-8 col-12 order-1 order-lg-2 mb-40">
+                        <div class="row">
+
+                            <div class="col-12 mb-50">
+                                <div class="ee-single-blog">
+                                    <div class="image"><img src="{{ asset('uploads/images/' ~ post.image) }}" alt="Blog Image" ></div>
+                                    <div class="content">
+                                        <h3>{{ post.titre }}</h3>
+                                        <ul class="meta">
+                                            <li><a href="#">{{ post.CategorieBlog.nom }}</a></li>
+                                            {% set dateTime =date(post.datepost) %}
+                                            <li><a href="#">{{ dateTime|date('d') }}   , {{ dateTime|date('F') }} ,&nbsp;  {{ dateTime|date('Y') }}</a></li>
+                                            <li><a href="#">{{ post.nombrevue }} Vue</a></li>
+                                            <li><a href="#">{{ post.nombrelike }} Like</a></li>
+                                            <p>{{ post.description }}</p>
+                                        </ul>
+                                        <p>{{ post.contenu }}</p>
+
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <input type="text" id="post" value="{{ post.id }}" hidden>
+                        <input type="checkbox" id="like" onclick="like()"/>
+                        <label for="like">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32c-5.15-4.67-8.55-7.75-8.55-11.53 0-3.08 2.42-5.5 5.5-5.5 1.74 0 3.41.81 4.5 2.09 1.09-1.28 2.76-2.09 4.5-2.09 3.08 0 5.5 2.42 5.5 5.5 0 3.78-3.4 6.86-8.55 11.54l-1.45 1.31z"/>
+                            </svg>
+                        </label>
+
+
+
+
+
+
+                                <div id="fos_comment_thread" data-thread="{{ thread.id }}">
+
+                                            {% include '@FOSComment/Thread/async.html.twig' with {
+                                                'comments': comments,
+                                                'thread': thread,
+                                                'id': thread.id
+                                            } %}
+
+                                        </div>
+
+
+                    </div>
+
+                    <div class="col-lg-4 col-12 order-2 order-lg-1">
+
+                        <div class="blog-sidebar mb-40">
+
+                            <h4 class="title">CATEGORIES</h4>
+
+                            <ul>
+                                {% for y in categorie %}
+
+                                    <li><a onclick="categorie({{ y.id }})">{{ y.nom }}</a></li>
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+
+                        <div class="blog-sidebar mb-40">
+
+                            <h4 class="title">PLUS POPULAIRES</h4>
+                            {% for z in postpop %}
+
+                                <div class="sidebar-blog">
+                                    <a href="{{ path('blog_detailpost',{'id':z.slug}) }}" class="image"><img src="{{ asset('uploads/images/' ~ z.image) }}" alt="Sidebar Blog"></a>
+                                    <div class="content">
+                                        <h5><a href="{{ path('blog_detailpost',{'id':z.slug}) }}">{{ z.titre }}</a></h5>
+                                        <span> {{ z.nombrevue }} vue</span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- Blog Section End -->
+
+
+
+    {% endblock %}
+{% block javascripts %}
+    <script>
+
+        $(document).ready(function(){
+
+            $.ajax({
+                url: "{{path('blog_getpost')}}",
+                method: "GET",
+                dataType: 'json',
+                success: function(data, status){
+                    $('#parent').html(data);
+                }
+            });
+        });
+
+        function categorie(id)
+        {
+            urll='http://localhost:4040/EcoSystem/web/app_dev.php/blog/categoriepost/' +id;
+            $.ajax({
+                url: urll,
+                method: "GET",
+                dataType: 'json',
+                success: function(data, status){
+                    $('#parent').html(data);
+                }
+            });
+        }
+
+        function like()  {
+
+            var post = $('#post').val();
+            $.ajax({
+                url: 'http://localhost:4040/EcoSystem/web/app_dev.php/blog/like',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    post: post ,
+
+                },
+                async: true,
+                success: function (data) {
+                    alert("merci pour votre like")
+                }
+            })
+        }
+
+
+    </script>
+
+
+
+{% endblock %}

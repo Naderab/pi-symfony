@@ -42,6 +42,8 @@ security:
     - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/ajout, role: IS_AUTHENTICATED_REMEMBERED }
+    - { path: ^/affichewishlist, role: IS_AUTHENTICATED_REMEMBERED }
+    - { path: ^/mesevenements, role: IS_AUTHENTICATED_REMEMBERED }
     - { path: ^/listeevenements, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/ajout, role: IS_AUTHENTICATED_REMEMBERED }
-    - { path: ^/admin/, role: ROLE_ADMIN }
+    - { path: ^/admin, role: ROLE_ADMIN }

@@ -42,15 +42,15 @@
                                 <th class="pro-title">Nom</th>
                                 <th class="pro-price">Prix</th>
                                 <th class="pro-quantity">Nombre tickets</th>
-                                <th class="pro-subtotal">Total</th>
-                                <th class="pro-remove">Remove</th>
+                                <th class="pro-subtotal">Réserver</th>
+                                <th class="pro-remove">Effacer</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for x in wishlists %}
                             <tr>
-                                <td class="pro-thumbnail"><a href="#"><img src="{{ asset('uploads/images/' ~ x.event.image) }}" alt="Event"></a></td>
-                                <td class="pro-title"><a href="#">{{ x.event.nom }}</a></td>
+                                <td class="pro-thumbnail"><a href="{{ path('detailsevent',{'id':x.event.id}) }}"><img src="{{ asset('uploads/images/' ~ x.event.image) }}" alt="Event"></a></td>
+                                <td class="pro-title"><a href="{{ path('detailsevent',{'id':x.event.id}) }}">{{ x.event.nom }}</a></td>
                                 <td class="pro-price"><span>{{ x.event.Prix }} DT</span></td>
                                 <td class="pro-quantity"><div class="pro-qty"><input id="nbplace" type="number" min="1" value="1"><input id="event" type="text" value="{{ x.event.id }}" hidden></div></td>
                                 <td class="pro-addtocart"><button id="btn1">Réserver</button></td>
@@ -115,7 +115,7 @@
             var nbplace = $('#nbplace').val();
             var event = $('#event').val();
             $.ajax({
-                url: '/participer',
+                url: 'http://localhost:4040/EcoSystem/web/app_dev.php/event/participer',
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -134,7 +134,7 @@
 
     function onPressDelete (id )
     {
-    newLien = '/deletewishlist/' + id;
+    newLien = 'http://localhost:4040/EcoSystem/web/app_dev.php/event/deletewishlist/' + id;
     document.getElementById('btnDelete').href = newLien;
     }
     </script>

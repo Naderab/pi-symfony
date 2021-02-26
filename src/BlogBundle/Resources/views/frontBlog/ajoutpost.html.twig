@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+    {% block title %} Eco System {% endblock %}
+    {% block Containt %}
+
+        <div class="page-banner-section section">
+            <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+
+                <!-- Page Banner -->
+                <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+                    <div class="page-banner">
+                        <h1>Proposez un Blog</h1>
+
+                        <div class="breadcrumb">
+                            <ul>
+                                <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                                <li><a href="">Proposer Post</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Banner -->
+                <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+                </div>
+
+                <!-- Banner -->
+                <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+                </div>
+            </div>
+        </div>
+        <div class="login-section section mt-90 mb-90">
+            <div class="container">
+                <div class="row">
+
+
+                    <!-- Login -->
+                    <div class="col-md-12">
+                        <div class="box box-warning">
+
+                            {{ form_start(form) }}
+                            <div class="my-custom-class-for-errors">
+                                {{ form_errors(form) }}
+                            </div>
+
+                            <div class="form-group">
+
+                                {{ form_widget(form.titre, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_label(form.description, 'Description :') }}
+                            <div class="form-group">
+
+                                {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(form.contenu, 'Contenu :') }}
+                        <div class="form-group">
+
+                                {{ form_widget(form.contenu, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+
+
+                            <div class="form-group">
+
+
+                                {{ form_label(form.CategorieBlog, 'Categorie :') }}
+                                <div class="input-group-addon">
+                                    {{ form_widget(form.CategorieBlog,{ 'attr': {'class': 'form-control'} }) }}
+
+                                </div>
+
+
+                                <!-- /.input group -->
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+
+
+
+
+
+                        <div class="form-group">
+                                <label for="exampleInputFile">{{ form_label(form.image, 'Choisir image :') }}</label>
+                            <div class="input-group-addon">
+                                {{ form_widget(form.image) }}
+
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+<div class="col-md-4">
+</div>
+                        <div class="col-md-4">
+
+                        <div class="form-group">
+                                {{ form_widget(form.ajouter, { 'attr': {'class': 'btn btn-block btn-success btn-lg'} }) }}
+                            </div>
+
+                            {{ form_end(form) }}
+                        </div>
+
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+
+
+                    </div>
+
+                </div>
+
+
+    {% endblock %}
+
+

@@ -1,6 +1,38 @@
+esprit_api:
+    resource: "@EspritApiBundle/Resources/config/routing.yml"
+    prefix:   /api
+
+api:
+    resource: "@ApiBundle/Resources/config/routing.yml"
+    prefix:   /api
+
+product:
+    resource: "@ProductBundle/Resources/config/routing.yml"
+    prefix:   /produit
+
+module_devis:
+    resource: "@ModuleDevisBundle/Resources/config/routing.yml"
+    prefix:   /
+
+point_collect:
+    resource: "@PointCollectBundle/Resources/config/routing.yml"
+    prefix:   /
+
+newsletter:
+    resource: "@NewsletterBundle/Resources/config/routing.yml"
+    prefix:   /newsletter
+
+blog:
+    resource: "@BlogBundle/Resources/config/routing.yml"
+    prefix:   /blog
+
+ecommerce:
+    resource: "@EcommerceBundle/Resources/config/routing.yml"
+    prefix:   /
+
 event:
     resource: "@EventBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /event
 
 app:
     resource: '@AppBundle/Controller/'

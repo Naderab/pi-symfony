@@ -1,0 +1,116 @@
+{% extends 'layoutadmin.html.twig' %}
+{% block title %}
+    Admin
+{% endblock %}
+{% block Containt %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+               Modifier un blog
+
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('homepageadmin') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+                <li><a href="#">Gestion de blog</a></li>
+
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="box box-warning">
+
+                                {{ form_start(form) }}
+                                <div class="my-custom-class-for-errors">
+                                    {{ form_errors(form) }}
+                                </div>
+                            <div class="col-md-12">
+
+                            {{ form_label(form.titre, 'Titre :') }}
+
+
+                                <div class="form-group">
+
+                                    {{ form_widget(form.titre, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_label(form.description, 'Description :') }}
+                            <div class="form-group">
+
+                                {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(form.contenu, 'Contenu :') }}
+                            <div class="form-group">
+
+                                {{ form_widget(form.contenu, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+
+
+                            <div class="form-group">
+
+
+                                {{ form_label(form.CategorieBlog, 'Categorie :') }}
+                                <div class="input-group-addon">
+                                    {{ form_widget(form.CategorieBlog,{ 'attr': {'class': 'form-control'} }) }}
+
+                                </div>
+
+
+                                <!-- /.input group -->
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+
+
+
+
+
+                            <div class="form-group">
+                                <label for="exampleInputFile">{{ form_label(form.image, 'Choisir image :') }}</label>
+                                <div class="input-group-addon">
+                                    {{ form_widget(form.image) }}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                {{ form_widget(form.ajouter, { 'attr': {'class': 'btn btn-block btn-success btn-lg'} }) }}
+                            </div>
+
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+    </div>
+{% endblock %}

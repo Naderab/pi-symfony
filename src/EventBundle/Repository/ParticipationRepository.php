@@ -10,4 +10,17 @@ namespace EventBundle\Repository;
  */
 class ParticipationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByuser($user,$event)
+    {
+
+        $qb = $this->createQueryBuilder('s');
+        $qb->where('s.User=:user')
+            ->andWhere('s.Event=:event')
+
+            ->setParameter('user', $user)
+            ->setParameter('event', $event);
+
+        return $qb->getQuery()->getResult();
+
+    }
 }

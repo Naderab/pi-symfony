@@ -1,0 +1,49 @@
+ajouteroffre:
+    path:     /ajouteroffre
+    defaults: { _controller: ModuleDevisBundle:Devis:AjouterOffre }
+afficheroffre:
+    path:     /afficheroffre
+    defaults: { _controller: ModuleDevisBundle:Devis:AfficherOffre }
+afficheroffreadmin:
+    path:     /admin/afficheroffreadmin
+    defaults: { _controller: ModuleDevisBundle:Devis:AfficherOffreAdmin }
+modifieroffre:
+    path:     /modifieroffre/{id}
+    defaults: { _controller: ModuleDevisBundle:Devis:ModifierOffre }
+supprimeroffre:
+    path:     /supprimeroffre/{id}
+    defaults: { _controller: ModuleDevisBundle:Devis:DeleteOffre }
+demanderdevisduoffre:
+    path:     /demanderdevisduoffre/{id}
+    defaults: { _controller: ModuleDevisBundle:Devis:DemanderDevis }
+annulerdemanderdevisduoffre:
+    path:     /annulerdemanderdevisduoffre/{id}
+    defaults: { _controller: ModuleDevisBundle:Devis:AnnulerDemanderDevis }
+afficherdemanderdevisduoffre:
+    path:     /afficherdemanderdevisduoffre
+    defaults: { _controller: ModuleDevisBundle:Devis:AfficherDemandeDevis }
+ajouterdevis:
+    path:     /ajouterdevis/{id}
+    defaults: { _controller: ModuleDevisBundle:Devis:AjouterDevis }
+afficherdevis:
+    path:     /afficherdevis
+    defaults: { _controller: ModuleDevisBundle:Devis:AfficherDevis }
+afficherdevisadmin:
+    path:     /admin/afficherdevisadmin
+    defaults: { _controller: ModuleDevisBundle:Devis:AfficherDevisAdmin }
+supprimerdevis:
+    path:     /supprimerdevis/{id}
+    defaults: { _controller: ModuleDevisBundle:Devis:DeleteDevis }
+modifierdevis:
+    path:     /modifierdevis/{id}
+    defaults: { _controller: ModuleDevisBundle:Devis:ModifierDevis }
+confirmerdevis:
+    path:     /confirmerdevis/{id}
+    defaults: { _controller: ModuleDevisBundle:Devis:ConfirmerDevis }
+annulerconfirmerdevis:
+    path:     /annulerconfirmerdevis/{id}
+    defaults: { _controller: ModuleDevisBundle:Devis:AnnulerConfirmerDevis }
+genererdevis:
+    path:     /genererdevis
+    defaults: { _controller: ModuleDevisBundle:Devis:GenererDevis }
+

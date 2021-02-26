@@ -1,0 +1,44 @@
+{% for x in produits %}
+    <div class="col-md-4 pb-30 pt-10">
+        <!-- Product Start -->
+        <div class="ee-product">
+            <!-- Image -->
+            <div class="image">
+                <a href="{{ path('detailAnnonce',{'id':x.id}) }}" class="img"><img src="{{ asset('uploads/images/' ~ x.image) }}" alt=""></a>
+                <div class="wishlist-compare">
+                    <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
+                    <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                </div>
+            </div>
+            <div class="content">
+                <!-- Category & Title -->
+                <div class="category-title">
+                    <a href="#" class="cat">{{ x.categorie.libelle }}</a>
+                    <h5 class="title"><a href="{{ path('detailAnnonce',{'id':x.id}) }}">{{ x.titre }}</a></h5>
+
+                </div>
+                <!-- Price & Ratting -->
+                <div class="price-ratting">
+
+                    <h5 class="price">{{ x.Prix }} DT</h5>
+
+                    <div class="ratting">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                        <i class="fa fa-star-o"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div><!-- Product End -->
+    </div>
+
+
+
+{% endfor %}
+
+

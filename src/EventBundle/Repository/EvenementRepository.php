@@ -45,7 +45,10 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
         $currentdate = new \DateTime('now');
 
         $qb=$this->CreateQueryBuilder('s');
-        $qb->where('s.dateFin>=:dateFin')
+        $qb->where('s.publie=:pub')
+            ->andWhere('s.dateFin>=:dateFin')
+
+            ->setParameter('pub', 1)
             ->setParameter('dateFin', $currentdate);
         $qb->orderBy('s.prix', 'ASC');
         return $qb->getQuery()->getResult();
@@ -72,7 +75,10 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
         $currentdate = new \DateTime('now');
 
         $qb=$this->CreateQueryBuilder('s');
-        $qb->where('s.dateFin>=:dateFin')
+        $qb->where('s.publie=:pub')
+            ->andWhere('s.dateFin>=:dateFin')
+
+            ->setParameter('pub', 1)
             ->setParameter('dateFin', $currentdate);
 
         $qb->orderBy('s.prix', 'DESC');
@@ -85,10 +91,14 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
         $currentdate = new \DateTime('now');
 
         $qb=$this->CreateQueryBuilder('s');
-        $qb->where('s.dateFin>=:dateFin')
+        $qb->where('s.publie=:pub')
+            ->andWhere('s.dateFin>=:dateFin')
+
+            ->setParameter('pub', 1)
             ->setParameter('dateFin', $currentdate);
 
-        $qb->orderBy('s.dateDebut', 'DESC');
+        $qb->orderBy('s.dateDebut', 'ASC');
+        $qb->setMaxResults(3);
         return $qb->getQuery()->getResult();
 
 
@@ -98,10 +108,29 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
         $currentdate = new \DateTime('now');
 
         $qb=$this->CreateQueryBuilder('s');
-        $qb->where('s.dateFin>=:dateFin')
+        $qb->where('s.publie=:pub')
+            ->andWhere('s.dateFin>=:dateFin')
+
+            ->setParameter('pub', 1)
             ->setParameter('dateFin', $currentdate);
 
         $qb->orderBy('s.nombrevu', 'DESC');
+        return $qb->getQuery()->getResult();
+
+
+    }
+
+    public function OrderByNote(){
+        $currentdate = new \DateTime('now');
+
+        $qb=$this->CreateQueryBuilder('s');
+        $qb->where('s.publie=:pub')
+            ->andWhere('s.dateFin>=:dateFin')
+
+            ->setParameter('pub', 1)
+            ->setParameter('dateFin', $currentdate);
+
+        $qb->orderBy('s.rating', 'DESC');
         return $qb->getQuery()->getResult();
 
 
@@ -116,10 +145,5 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
-    public function findBySlug($id)
-    {
-        $qb=$this->createQueryBuilder('s');
-        $qb->where('s.slug=:slug')->setParameter('slug',$id);
-        return $qb->getQuery()->getSingleResult();
-    }
+
 }

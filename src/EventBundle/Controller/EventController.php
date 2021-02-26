@@ -75,7 +75,7 @@ class EventController extends Controller
             ->findBy(array('User'=>$this->getUser()));
         $evenement = $this->getDoctrine()
             ->getRepository('EventBundle:Evenement')
-            ->findBySlug($id);
+            ->find($id);
         $evenements = $this->getDoctrine()
             ->getRepository('EventBundle:Evenement')
             ->findCat($evenement->getCategorie());
@@ -99,41 +99,29 @@ class EventController extends Controller
         $form=$this->createForm(EvenementType::class,$evenement);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-
-            $datedebut=$evenement->getDateDebut();
-            $datefin=$evenement->getDateFin();
-            $nbmin=$evenement->getMinParticipants();
-            $nbmax=$evenement->getMaxParticipants();
-            $datcourrant=new \DateTime('now');
-
-            if($datedebut>$datefin){
-                $request->getSession()
-                    ->getFlashBag()
-                    ->add('dateerror', "Date Debut doit etre inferieur a la date fin")
-                ;
-
-            }
-            elseif($datedebut<$datcourrant)
+            $currentdate= new \DateTime('now');
+            if($evenement->getDateDebut()<$currentdate)
             {
                 $request->getSession()
                     ->getFlashBag()
-                    ->add('datedebuterror', "Date debut doit etre superieur ou egale a la date courrante")
+                    ->add('errorDatedebut', "Date début ne peut pas etre inférieur a la date courrante")
                 ;
             }
-            elseif ($nbmin>$nbmax)
+            elseif ($evenement->getDateDebut()>$evenement->getDateFin())
             {
                 $request->getSession()
                     ->getFlashBag()
-                    ->add('Nberror', "Min participants doit etre inferieur a la Max de participants")
+                    ->add('errorDate', "Date début ne peut pas etre Supérieur a la date Fin")
                 ;
             }
             else{
 
 
+
                 $user = $this->getUser();
                 $evenement->setOwnerUser($user);
-
                 $evenement->setPublie(0);
+                $evenement->setRating(0);
                 $evenement->setNombretickets(0);
                 $evenement->setNombrevu(0);
                 $file = $evenement->getImage();
@@ -166,10 +154,11 @@ class EventController extends Controller
                     ->getFlashBag()
                     ->add('success', "Votre evenement est ajouté ! attend de confirmation d'administrateur")
                 ;
-                //return $this->redirect($this->generateUrl('homepage'));
+                return $this->redirect($this->generateUrl('event_ajoutevenement'));
             }
-
         }
+
+
 
 
         $formview=$form->createView();
@@ -182,6 +171,40 @@ class EventController extends Controller
         $evenements = $this->getDoctrine()
             ->getRepository('EventBundle:Evenement')
             ->OrderByPrixAsc();
+        $evenementss  = $this->get('knp_paginator')->paginate(
+            $evenements,
+            $request->query->getInt('page',1),
+            $request->query->getInt('limit',6));
+        $template = $this->render('@Event/Default/evenements.html.twig', array('evenements'=>$evenementss))->getContent();
+
+        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new
+        JsonEncoder()));
+        $json = $serializer->serialize($template, 'json');
+        return new Response($json);
+
+    }
+
+    public function EventGratuitAction(Request $request) {
+        $evenements = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->findBy(array('categorie'=>'gratuit'));
+        $evenementss  = $this->get('knp_paginator')->paginate(
+            $evenements,
+            $request->query->getInt('page',1),
+            $request->query->getInt('limit',6));
+        $template = $this->render('@Event/Default/evenements.html.twig', array('evenements'=>$evenementss))->getContent();
+
+        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new
+        JsonEncoder()));
+        $json = $serializer->serialize($template, 'json');
+        return new Response($json);
+
+    }
+
+    public function EventPayantAction(Request $request) {
+        $evenements = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->findBy(array('categorie'=>'payant'));
         $evenementss  = $this->get('knp_paginator')->paginate(
             $evenements,
             $request->query->getInt('page',1),
@@ -221,6 +244,26 @@ class EventController extends Controller
         $evenements = $this->getDoctrine()
             ->getRepository('EventBundle:Evenement')
             ->OrderByDate();
+        $evenementss  = $this->get('knp_paginator')->paginate(
+            $evenements,
+            $request->query->getInt('page',1),
+            $request->query->getInt('limit',6));
+        $template = $this->render('@Event/Default/evenements.html.twig', array('evenements'=>$evenementss))->getContent();
+
+        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new
+        JsonEncoder()));
+        $json = $serializer->serialize($template, 'json');
+        return new Response($json);
+
+
+    }
+
+    public function OrdernoteAction(Request $request) {
+
+
+        $evenements = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->OrderByNote();
         $evenementss  = $this->get('knp_paginator')->paginate(
             $evenements,
             $request->query->getInt('page',1),
@@ -357,6 +400,32 @@ class EventController extends Controller
 
     }
 
+    public function RatingAction(Request $request)
+    {
+
+
+        $nbrating=intval($request->request->get('rating'));
+
+        $event=$request->request->get('event');
+        $evenement = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->find($event);
+
+        $evenement->setRating($evenement->getRating()+$nbrating);
+
+        $m=$this->getDoctrine()->getManager();
+        $m->persist($evenement);
+        $m->flush();
+        return new JsonResponse();
+
+
+
+
+
+
+
+    }
+
     public function wishlistAction(Request $request)
     {
         $event=$request->request->get('event');
@@ -420,12 +489,10 @@ class EventController extends Controller
         $evenements = $this->getDoctrine()
             ->getRepository('EventBundle:Evenement')
             ->findBy(array('OwnerUser'=>$this->getUser()));
-        $nb=$this->getDoctrine()
-            ->getRepository('EventBundle:Wishlist')
-            ->Number();
 
 
-        return $this->render('@Event/Default/Mesevenements.html.twig', array('evenements' => $evenements,'number'=>$nb));
+
+        return $this->render('@Event/Default/Mesevenements.html.twig', array('evenements' => $evenements));
 
     }
 
@@ -433,7 +500,7 @@ class EventController extends Controller
         $m=$this->getDoctrine()->getManager();
         $mod = $this->getDoctrine()
             ->getRepository('EventBundle:Evenement')
-            ->findBySlug($id);
+            ->find($id);
 
         $m->remove($mod);
         $m->flush();
@@ -444,25 +511,36 @@ class EventController extends Controller
     public function UpdateEvenementAction(Request $request,$id)
     {
         $m=$this->getDoctrine()->getManager();
-        $event=$m->getRepository("EventBundle:Evenement")->findBySlug($id);
+        $event=$m->getRepository("EventBundle:Evenement")->find($id);
         $form=$this->createForm(EvenementType::class,$event);
         $form->handleRequest($request);
         if($form->isSubmitted()) {
-            $file = $event->getImage();
+            $currentdate = new \DateTime('now');
+            if ($event->getDateDebut() < $currentdate) {
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('errorDatedebut', "Date début ne peut pas etre inférieur a la date courrante");
+            } elseif ($event->getDateDebut() > $event->getDateFin()) {
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('errorDate', "Date début ne peut pas etre Supérieur a la date Fin");
+            } else {
+                $file = $event->getImage();
 
-            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
-            try {
-                $file->move(
-                    $this->getParameter('images_directory'),
-                    $fileName
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
+                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+                try {
+                    $file->move(
+                        $this->getParameter('images_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $event->setImage($fileName);
+                $m->persist($event);
+                $m->flush();
+                return $this->redirect($this->generateUrl('affichemesevenements'));
             }
-            $event->setImage($fileName);
-            $m->persist($event);
-            $m->flush();
-            return $this->redirect($this->generateUrl('affichemesevenements'));
         }
         $formview = $form->createView();
 
@@ -503,7 +581,7 @@ class EventController extends Controller
         $m=$this->getDoctrine()->getManager();
         $mod = $this->getDoctrine()
             ->getRepository('EventBundle:Evenement')
-            ->findBySlug($id);
+            ->find($id);
 
         $m->remove($mod);
         $m->flush();
@@ -514,7 +592,7 @@ class EventController extends Controller
         $m=$this->getDoctrine()->getManager();
         $mod = $this->getDoctrine()
             ->getRepository('EventBundle:Evenement')
-            ->findBySlug($id);
+            ->find($id);
 
         $m->remove($mod);
         $m->flush();
@@ -535,43 +613,56 @@ class EventController extends Controller
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
 
+            $currentdate = new \DateTime('now');
+            if ($evenement->getDateDebut() < $currentdate) {
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('errorDatedebut', "Date début ne peut pas etre inférieur a la date courrante");
+            } elseif ($evenement->getDateDebut() > $evenement->getDateFin()) {
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('errorDate', "Date début ne peut pas etre Supérieur a la date Fin");
+            } else {
 
 
-            $evenement->setPublie(1);
-            $evenement->setNombretickets(0);
-            $evenement->setNombrevu(0);
-            $file = $evenement->getImage();
+                $user = $this->getUser();
+                $evenement->setOwnerUser($user);
 
-            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
-            try {
-                $file->move(
-                    $this->getParameter('images_directory'),
-                    $fileName
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
+                $evenement->setPublie(1);
+                $evenement->setRating(0);
+
+                $evenement->setNombretickets(0);
+                $evenement->setNombrevu(0);
+                $file = $evenement->getImage();
+
+                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+                try {
+                    $file->move(
+                        $this->getParameter('images_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $evenement->setImage($fileName);
+                $evenement->setCategorie($request->get('grat'));
+                if ($request->get('grat') == 'gratuit') {
+                    $evenement->setPrix(0);
+
+                } else {
+                    $evenement->setPrix($request->get('prix'));
+
+                }
+
+                $m = $this->getDoctrine()->getManager();
+                $m->persist($evenement);
+                $m->flush();
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('success', "Votre evenement est ajouté ! attend de confirmation d'administrateur");
+                return $this->redirect($this->generateUrl('event_afficheeventadmin'));
+
             }
-            $evenement->setImage($fileName);
-            $evenement->setCategorie($request->get('grat'));
-            if($request->get('grat') == 'gratuit')
-            {
-                $evenement->setPrix(0);
-
-            }
-            else{
-                $evenement->setPrix($request->get('prix'));
-
-            }
-
-            $m=$this->getDoctrine()->getManager();
-            $m->persist($evenement);
-            $m->flush();
-            $request->getSession()
-                ->getFlashBag()
-                ->add('success', "Votre evenement est ajouté ! attend de confirmation d'administrateur")
-            ;
-            return $this->redirect($this->generateUrl('event_afficheeventadmin'));
-
         }
         else{
             $request->getSession()
@@ -589,25 +680,37 @@ class EventController extends Controller
     public function UpdateEvenementAdminAction(Request $request,$id)
     {
         $m=$this->getDoctrine()->getManager();
-        $event=$m->getRepository("EventBundle:Evenement")->findBySlug($id);
+        $event=$m->getRepository("EventBundle:Evenement")->find($id);
         $form=$this->createForm(EvenementType::class,$event);
         $form->handleRequest($request);
         if($form->isSubmitted()) {
-            $file = $event->getImage();
 
-            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
-            try {
-                $file->move(
-                    $this->getParameter('images_directory'),
-                    $fileName
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
+            $currentdate = new \DateTime('now');
+            if ($event->getDateDebut() < $currentdate) {
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('errorDatedebut', "Date début ne peut pas etre inférieur a la date courrante");
+            } elseif ($event->getDateDebut() > $event->getDateFin()) {
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('errorDate', "Date début ne peut pas etre Supérieur a la date Fin");
+            } else {
+                $file = $event->getImage();
+
+                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+                try {
+                    $file->move(
+                        $this->getParameter('images_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $event->setImage($fileName);
+                $m->persist($event);
+                $m->flush();
+                return $this->redirect($this->generateUrl('event_afficheeventadmin'));
             }
-            $event->setImage($fileName);
-            $m->persist($event);
-            $m->flush();
-            return $this->redirect($this->generateUrl('event_afficheeventadmin'));
         }
         $formview = $form->createView();
 
@@ -645,6 +748,25 @@ class EventController extends Controller
 
 
         return $this->render('@Event/gestionadmin/listeuser.html.twig', array('users' => $users));
+
+    }
+
+    public function AfficheparticipationAction() {
+        $participation = $this->getDoctrine()
+            ->getRepository('EventBundle:Participation')
+            ->findAll();
+
+
+        return $this->render('@Event/gestionadmin/particpation.html.twig', array('participation' => $participation));
+
+    }
+    public function DetailEventAction($id) {
+        $evenements = $this->getDoctrine()
+            ->getRepository('EventBundle:Evenement')
+            ->find($id);
+
+
+        return $this->render('@Event/gestionadmin/detailevent.html.twig', array('evenement' => $evenements));
 
     }
 

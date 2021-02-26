@@ -44,6 +44,8 @@
                                     <th class="pro-quantity">Catégorie</th>
                                     <th class="pro-quantity">Nombre de vu</th>
                                     <th class="pro-quantity">Nombre de particpants</th>
+                                    <th class="pro-quantity">Nombre de place disponible</th>
+
 
                                     <th class="pro-subtotal">--</th>
                                     <th class="pro-remove">--</th>
@@ -53,16 +55,18 @@
                                 <tbody>
                                 {% for x in evenements %}
                                     <tr>
-                                        <td class="pro-thumbnail"><a href="#"><img src="{{ asset('uploads/images/' ~ x.image) }}" alt="Event"></a></td>
-                                        <td class="pro-title"><a href="#">{{ x.nom }}</a></td>
+                                        <td class="pro-thumbnail"><a href="{{ path('detailsevent',{'id':x.id}) }}"><img src="{{ asset('uploads/images/' ~ x.image) }}" alt="Event"></a></td>
+                                        <td class="pro-title"><a href="{{ path('detailsevent',{'id':x.id}) }}">{{ x.nom }}</a></td>
                                         <td class="pro-title"><span>{{ x.adresse }}</span></td>
                                         <td class="pro-title"><span>{{  x.categorie}}</span></td>
                                         <td class="pro-title"><span>{{  x.nombrevu}}</span></td>
                                         <td class="pro-title"><span>{{  x.nombretickets}}</span></td>
+                                        {% set nbdispo=x.maxParticipants - x.nombretickets %}
+                                        <td class="pro-title"><span>{{  nbdispo}}</span></td>
 
-                                        <td class="pro-remove"><a href="{{ path('detailsevent',{'id':x.slug}) }}"><i class="fa fa-eye"></i></a></td>
-                                        <td class="pro-remove"><a href="{{ path('event_updateevent',{'id':x.slug}) }}"><i class="fa fa-edit"></i></a></td>
-                                        <td class="pro-remove"><a data-toggle="modal" data-target="#exampleModal" onclick="onPressDelete ({{ x.slug }})"><i class="fa fa-trash-o"></i></a></td>
+                                        <td class="pro-remove"><a href="{{ path('detailsevent',{'id':x.id}) }}"><i class="fa fa-eye"></i></a></td>
+                                        <td class="pro-remove"><a href="{{ path('event_updateevent',{'id':x.id}) }}"><i class="fa fa-edit"></i></a></td>
+                                        <td class="pro-remove"><a data-toggle="modal" data-target="#exampleModal" onclick="onPressDelete ({{ x.id }})"><i class="fa fa-trash-o"></i></a></td>
 
                                     </tr>
                                 {% endfor %}
@@ -107,7 +111,7 @@
 
         function onPressDelete (id )
         {
-            newLien = '/deletemyevent/' + id;
+            newLien = 'http://localhost:4040/EcoSystem/web/app_dev.php/event/deletemyevent/' + id;
             document.getElementById('btnDelete').href = newLien;
         }
     </script>

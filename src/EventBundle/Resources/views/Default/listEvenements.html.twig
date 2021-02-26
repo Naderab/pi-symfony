@@ -43,12 +43,25 @@
 
 
                                 <div class="product-short">
-                                    <p>Short by</p>
+                                    <p>Sort by</p>
                                     <select name="sortby" id="sortby" class="nice-select" onchange="Tri(this.options[this.selectedIndex].value);">
-                                        <option value="trending">Trending items</option>
+                                        <option value="trending">----</option>
                                         <option value="croissant" >Prix Croissant</option>
                                         <option value="decroissant" >Prix Décroissant</option>
-                                        <option value="meilleur">Les Plus Visionées</option>
+                                        <option value="meilleur">Les Plus Visionés</option>
+                                        <option value="note">Les mieux notés</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="product-short">
+                                    <p>Catégorie : </p>
+                                    <select name="categorie" id="categorie" class="nice-select" onchange="Categorie(this.options[this.selectedIndex].value);">
+                                        <option value="trending">----</option>
+                                        <option value="gratuit" >Gratuit</option>
+                                        <option value="payant" >Payant</option>
+
+
                                     </select>
                                 </div>
 
@@ -88,7 +101,21 @@
         });
                 function Tri(nom) {
 
-                     var urll = '/' +nom ;
+                     var urll = 'http://localhost:4040/EcoSystem/web/app_dev.php/event/' +nom ;
+
+                    $.ajax({
+                        url: urll ,
+                        method: "GET",
+                        dataType: 'json',
+                        success: function(data, status){
+                            $('#parent').html(data);
+                        }
+                    });
+                };
+
+                function Categorie(nom) {
+
+                     var urll = 'http://localhost:4040/EcoSystem/web/app_dev.php/event/' +nom ;
 
                     $.ajax({
                         url: urll ,
@@ -109,7 +136,7 @@
 
                 function Showing(nb) {
 
-                     var urll = '/showing' +nb ;
+                     var urll = 'http://localhost:4040/EcoSystem/web/app_dev.php/event/showing' +nb ;
 
                     $.ajax({
                         url: urll ,

@@ -73,9 +73,9 @@
                                             </td>
                                             {% endif %}
                                         <td>{{  x.categorie}}</td>
-                                        <td><a href=""  ><i class="material-icons">&#xE417;</i></a></td>
-                                        <td><a href="{{ path('event_updateeventadmin',{'id':x.slug}) }}"  ><i class="material-icons">&#xe923;</i></a></td>
-                                        <td><a data-toggle="modal" data-target="#exampleModal" onclick="onPressDelete ({{ x.slug }})" ><i class="material-icons" >&#xE872;</i></a></td>
+                                        <td><a href="{{ path('detaileventadmin',{'id':x.id}) }}"  ><i class="material-icons">&#xE417;</i></a></td>
+                                        <td><a href="{{ path('event_updateeventadmin',{'id':x.id}) }}"  ><i class="material-icons">&#xe923;</i></a></td>
+                                        <td><a data-toggle="modal" data-target="#exampleModal" onclick="onPressDelete ({{ x.id }})" ><i class="material-icons" >&#xE872;</i></a></td>
 
 
                                     </tr>
@@ -149,7 +149,7 @@
 
         function onPressDelete (id )
         {
-            newLien = '/admin/deleteevent/' + id;
+            newLien = 'http://localhost:4040/EcoSystem/web/app_dev.php/event/admin/deleteevent/' + id;
             document.getElementById('btnDelete').href = newLien;
         }
 
@@ -159,11 +159,11 @@
 
             if(nb == 0){
 
-                urll ='/etatnonpublie/' +id;
+                urll ='http://localhost:4040/EcoSystem/web/app_dev.php/event/etatnonpublie/' +id;
             }
             else {
 
-                urll = '/etatpublie/' + id;
+                urll = 'http://localhost:4040/EcoSystem/web/app_dev.php/event/etatpublie/' + id;
             }
 
             $.ajax({

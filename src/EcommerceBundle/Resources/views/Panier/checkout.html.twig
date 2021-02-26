@@ -1,0 +1,222 @@
+{% extends 'base.html.twig' %}
+{% block title %} Eco-System {% endblock %}
+{% block Containt %}
+
+
+    <div class="page-banner-section section">
+        <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+
+            <!-- Page Banner -->
+            <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+                <div class="page-banner">
+                    <h1>Checkout</h1>
+                    <div class="breadcrumb">
+                        <ul>
+                            <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                            <li><a href="{{ path('ecommerce_AfficherPanier') }}">Panier</a></li>
+                            <li><a href="{{ path('ecommerce_CheckoutCommande') }}">Checkout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banner -->
+            <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+            </div>
+
+            <!-- Banner -->
+            <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+            </div>
+
+        </div>
+    </div><!-- Page Banner Section End -->
+
+    <!-- Checkout Page Start -->
+    <div class="page-section section mt-90 mb-30">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+
+                    <!-- Checkout Form s-->
+                    <form action="#" class="checkout-form">
+                        <div class="row row-40">
+
+
+                            <div class="col-lg-5">
+                                <div class="row">
+
+                                    <!-- Cart Total -->
+                                    <div class="col-12 mb-60">
+
+                                        <h4 class="checkout-title">Somme des Produits Total</h4>
+
+                                        <div class="checkout-cart-total">
+
+                                            <h4>Product </h4>
+
+                                            <ul>
+                                                {% for p in products %}
+                                                <li>{{ p.titre }} <span>{{ p.prix }}</span></li>
+
+                                                {% endfor %}
+                                            </ul>
+
+                                            <p>Somme Total <span> $ {{ subTotal }} </span></p>
+                                             <p>Frais <span>$10.00</span></p>
+                                            <h4>Somme Final Total <span>${{ prixTotal }}</span></h4>
+
+
+                                        </div>
+                                        <button class="place-order"> <a href="{{ path('ecommerce_GeneratePDF',{"prixTotal":prixTotal,"commandID":commandID} ) }}">
+
+                                                Génerer PDF </a></button>
+
+                                    </div>
+
+
+                                    <!-- Payment Method -->
+                                    <div class="col-12 mb-60">
+
+                                        <h4 class="checkout-title">Payment Method</h4>
+
+                                        <div class="checkout-payment-method">
+
+                                            <div class="single-method">
+                                                <input type="radio" id="payment_check" name="payment-method" value="check">
+                                                <label for="payment_check">Check Payment</label>
+                                                <p data-method="check">Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.</p>
+                                            </div>
+
+                                            <div class="single-method">
+                                                <input type="radio" id="payment_bank" name="payment-method" value="bank">
+                                                <label for="payment_bank">Direct Bank Transfer</label>
+                                                <p data-method="bank">Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.</p>
+                                            </div>
+
+                                            <div class="single-method">
+                                                <input type="radio" id="payment_cash" name="payment-method" value="cash">
+                                                <label for="payment_cash">Cash on Delivery</label>
+                                                <p data-method="cash">Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.</p>
+                                            </div>
+
+                                            <div class="single-method">
+                                                <input type="radio" id="payment_paypal" name="payment-method" value="paypal">
+                                                <label for="payment_paypal">Paypal</label>
+                                                <p data-method="paypal">Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.</p>
+                                            </div>
+
+                                            <div class="single-method">
+                                                <input type="radio" id="payment_payoneer" name="payment-method" value="payoneer">
+                                                <label for="payment_payoneer">Payoneer</label>
+                                                <p data-method="payoneer">Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.</p>
+                                            </div>
+
+                                            <div class="single-method">
+                                                <input type="checkbox" id="accept_terms">
+                                                <label for="accept_terms">I’ve read and accept the terms & conditions</label>
+                                            </div>
+
+                                        </div>
+
+                                        <button class="place-order">Place order</button>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Checkout Page End -->
+
+    <!-- Banner Section Start -->
+    <div class="banner-section section mb-90">
+        <div class="container">
+            <div class="row">
+
+                <!-- Banner -->
+                <div class="col-12">
+                    <div class="banner"><a href="#"><img src="{{ asset('Front/assets/images/product/h.png') }}" alt="Banner"></a></div>
+                </div>
+
+            </div>
+        </div>
+    </div><!-- Banner Section End -->
+
+    <!-- Brands Section Start -->
+    <div class="brands-section section mb-90">
+        <div class="container">
+            <div class="row">
+
+                <!-- Brand Slider Start -->
+                <div class="brand-slider col">
+                    <div class="brand-item col"><img src="{{ asset('Front/assets/images/brands/brand-1.png') }}" alt="Brands"></div>
+                    <div class="brand-item col"><img src="{{ asset('Front/assets/images/brands/brand-2.png') }}" alt="Brands"></div>
+                    <div class="brand-item col"><img src="{{ asset('Front/assets/images/brands/brand-3.png') }}"  alt="Brands"></div>
+                    <div class="brand-item col"><img src="{{ asset('Front/assets/images/brands/brand-4.png') }}" alt="Brands"></div>
+                    <div class="brand-item col"><img src="{{ asset('Front/assets/images/brands/brand-4.png') }}" alt="Brands"></div>
+                </div><!-- Brand Slider End -->
+
+            </div>
+        </div>
+    </div><!-- Brands Section End -->
+
+    <!-- Subscribe Section Start -->
+    <div class="subscribe-section section bg-gray pt-55 pb-55">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <!-- Mailchimp Subscribe Content Start -->
+                <div class="col-lg-6 col-12 mb-15 mt-15">
+                    <div class="subscribe-content">
+                        <h2>SUBSCRIBE <span>OUR NEWSLETTER</span></h2>
+                        <h2><span>TO GET LATEST</span> PRODUCT UPDATE</h2>
+                    </div>
+                </div><!-- Mailchimp Subscribe Content End -->
+
+
+                <!-- Mailchimp Subscribe Form Start -->
+                <div class="col-lg-6 col-12 mb-15 mt-15">
+
+                    <form class="subscribe-form" action="#">
+                        <input type="email" autocomplete="off" placeholder="Enter your email here" />
+                        <button >subscribe</button>
+                    </form>
+                    <!-- mailchimp-alerts Start -->
+                    <div class="mailchimp-alerts text-centre">
+                        <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                        <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                        <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                    </div><!-- mailchimp-alerts end -->
+
+                </div><!-- Mailchimp Subscribe Form End -->
+
+            </div>
+        </div>
+    </div><!-- Subscribe Section End -->
+    <!-- JS
+    ============================================ -->
+
+    <!-- jQuery JS -->
+    <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <!-- Popper JS -->
+    <script src="assets/js/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- Plugins JS -->
+    <script src="assets/js/plugins.js"></script>
+
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+
+    </body>
+
+
+
+
+{% endblock %}

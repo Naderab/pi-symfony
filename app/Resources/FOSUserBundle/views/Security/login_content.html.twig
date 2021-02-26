@@ -5,12 +5,11 @@
         <!-- Page Banner -->
         <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
             <div class="page-banner">
-                <h1>Login</h1>
-                <p>similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita</p>
+                <h1>Connexion</h1>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a href="#">HOME</a></li>
-                        <li><a href="#">Login</a></li>
+                        <li><a href="{{ path('homepage') }}">Acuueil</a></li>
+                        <li><a href="#">Connexion</a></li>
                     </ul>
                 </div>
             </div>
@@ -36,7 +35,8 @@
             <div class="col-md-6 col-12 d-flex">
                 <div class="ee-login">
 
-                    <h3>Login to your account</h3>
+                    <h3>
+                        Connectez-vous à votre compte</h3>
 {% if error %}
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
@@ -51,13 +51,16 @@
 
     <label for="password">{{ 'security.login.password'|trans }}</label>
     <input type="password" id="password" name="_password" required="required" autocomplete="current-password" />
-
+    <div style="padding-top: 20px;">
     <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
 
-    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+    </div>
+<div style="padding-top: 20px; padding-right: 20px;">
+    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" style="width: 100%;"/>
+</div>
 </form>
-                    <h4>Don’t have account? please click <a href="{{ path('fos_user_registration_register') }}">Register</a></h4>
+                    <p><h4>Vous n'avez pas de compte? Cliquez s'il vous plait<a href="{{ path('fos_user_registration_register') }}">Registre</a></h4></p>
 
                 </div>
             </div>
@@ -72,10 +75,10 @@
             <div class="col-md-5 col-12 d-flex">
 
                 <div class="ee-social-login">
-                    <h3>Also you can login with...</h3>
+                    <h3>Aussi, vous pouvez vous connecter avec ...</h3>
 
-                    <a href="/connect/facebook" class="facebook-login">Login with <i class="fa fa-facebook"></i></a>
-                    <a href="/connect/google" class="google-plus-login">Login with <i class="fa fa-google-plus"></i></a>
+                    <a href="/connect/facebook" class="facebook-login">Connectez-vous avec <i class="fa fa-facebook"></i></a>
+                    <a href="/connect/google" class="google-plus-login">Connectez-vous avec <i class="fa fa-google-plus"></i></a>
 
                 </div>
 

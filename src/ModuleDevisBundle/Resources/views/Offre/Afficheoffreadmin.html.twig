@@ -1,0 +1,98 @@
+{% extends('layoutadmin.html.twig') %}
+{% block title %} Admin {% endblock %}
+{% block Containt %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            MES OFFRES
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('homepageadmin') }}"><i class="fas fa-home"></i>Accueil</a></li>
+            <li><a href="#"><i class="fa fa-laptop"></i>Gestion des offres</a></li>
+            <li class="active"><i class="fa fa-edit"></i>liste des offres</li>
+        </ol>
+    </section>
+    <section class="content">
+    <div class="row">
+    <div class="col-xs-12">
+    <div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Liste des offres</h3>
+    </div>
+    <!-- /.box-header -->
+
+    <div class="box-body">
+    <table id="example1" class="table table-bordered table-hover" >
+        <thead>
+        <tr>
+            <th>Societe recyclage</th>
+            <th>Titre</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Date du création du offre</th>
+            <th>Date du validité du offre</th>
+            <th>  Etat  </th>
+            <th>    </th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for x in data %}
+            {% if x.archiver=="non" %}
+            <tr>
+                <th>Societe recyclage</th>
+                <td>{{ x.titre }}</td>
+                <td>{{ x.type }}</td>
+                <td>{{ x.description }}</td>
+                <td>{{ x.dateoffre | date('D,M,Y') }}</td>
+                <td>{{ x.datevalidite | date('D,M,Y') }}</td>
+
+                {% if x.demande=="non" %}
+                    <td>Non traiter</td>
+                    <td><a href="{{ path('demanderdevisduoffre', {'id': x.Id })}}" class="btn btn-info btn-sm" onclick="return confirm('Une demande sera envoyer au responsable')"><i class="fas fa-clipboard-list"></i> Demander un Devis </a> </td>
+
+                    {% elseif x.demande=="oui" and x.etat=="non"%}
+                        <td> <p>En cours de traitement</p></td>
+                        <td><a href="{{ path('annulerdemanderdevisduoffre', {'id': x.Id })}}" class="btn btn-danger btn-sm" onclick="return confirm('La demande sera annuler')"><i class="fas fa-clipboard-list"></i> Annuler la demande </a> </td>
+                    {% elseif x.demande=="oui" and x.etat=="oui" %}
+                        <td>Traiter</td>
+                        <td><a href="{{ path('afficherdevisadmin') }}" class="btn btn-success btn-sm"><i class="fas fa-clipboard-check"></i>Consulter vos devis</a></td>
+
+
+                </td>
+                {% endif %}
+
+            </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+    </div>
+{% endblock %}
+
+    {% block javascripts %}
+
+
+        <script>
+            $(function () {
+                $('#example1').DataTable()
+                $('#example2').DataTable({
+                    'paging'      : true,
+                    'lengthChange': false,
+                    'searching'   : false,
+                    'ordering'    : true,
+                    'info'        : true,
+                    'autoWidth'   : false
+                })
+            })
+        </script>
+
+    {% endblock %}

@@ -143,7 +143,7 @@
 
         function onPressDelete (id )
         {
-            newLien = '/admin/deleteuser/' + id;
+            newLien = 'http://localhost:4040/EcoSystem/web/app_dev.php/event/admin/deleteuser/' + id;
             document.getElementById('btnDelete').href = newLien;
         }
 
@@ -153,11 +153,11 @@
 
             if(nb == 0){
 
-                urll ='/etatdisable/' +id;
+                urll ='http://localhost:4040/EcoSystem/web/app_dev.php/event/etatdisable/' +id;
             }
             else {
 
-                 urll = '/etatenable/' + id;
+                 urll = 'http://localhost:4040/EcoSystem/web/app_dev.php/event/etatenable/' + id;
             }
 
             $.ajax({

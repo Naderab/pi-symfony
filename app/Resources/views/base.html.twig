@@ -165,7 +165,7 @@
             border-top-left-radius: 0;
             padding: 1px 0 0 0;
             border-top-width: 0;
-            width: 300px;
+            width: 250px;
             font-size: 14px;
             font-weight: 600;
         }
@@ -246,6 +246,74 @@
             font-size: 14px;
             font-weight: 600;
             overflow: hidden; }
+        .new-react-version {
+            padding: 20px 20px;
+            border: 1px solid #eee;
+            border-radius: 20px;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .new-react-version .react-svg-logo {
+            text-align: center;
+            max-width: 60px;
+            margin: 20px auto;
+            margin-top: 0;
+        }
+
+        .success-box {
+            margin:50px 0;
+            padding:10px 10px;
+            border:1px solid #eee;
+            background:#f9f9f9;
+        }
+
+        .success-box img {
+            margin-right:10px;
+            display:inline-block;
+            vertical-align:top;
+        }
+
+        .success-box > div {
+            vertical-align:top;
+            display:inline-block;
+            color:#888;
+        }
+
+
+
+        /* Rating Star Widgets Style */
+        .rating-stars ul {
+            list-style-type:none;
+            padding:0;
+
+            -moz-user-select:none;
+            -webkit-user-select:none;
+        }
+        .rating-stars ul > li.star {
+            display:inline-block;
+
+        }
+
+        /* Idle State of the stars */
+        .rating-stars ul > li.star > i.fa {
+            font-size:1.5em; /* Change the size of the stars */
+            color:#ccc; /* Color on idle state */
+        }
+
+        /* Hover state of the stars */
+        .rating-stars ul > li.star.hover > i.fa {
+            color:#FFCC36;
+        }
+
+        /* Selected state of the stars */
+        .rating-stars ul > li.star.selected > i.fa {
+            color:#FF912C;
+        }
+
 
 
     </style>
@@ -273,7 +341,9 @@
                     <!-- Header Links Start -->
                     <div class="header-links">
 
-                        <a href="store.html"><img src="{{ asset('Front/assets/images/icons/marker.png')}}" alt="Car Icon"> <span>localiser Nos points de collect</span></a>
+                        <a href="{{ path('point_collect_homepage') }}"><img src="{{ asset('Front/assets/images/icons/marker.png')}}" alt="Car Icon"> <span>localiser Nos points de collect</span></a>
+                        <a href="{{ path('IténeriareMaps') }}"><img src="{{ asset('Front/assets/images/icons/marker.png')}}" alt="Car Icon"> <span>Chercher point de collect</span></a>
+
                     </div><!-- Header Links End -->
                 </div>
 
@@ -295,23 +365,26 @@
                             <li class="dropdown user user-menu" style="font-size: 14px;
             font-weight: 600;">
 
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: large;">
 
 
-                                    <span >{{ '%username%'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+                                    <span > <i class="icofont icofont-user-alt-7"></i>{{ '%username%'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
                                 </a>
 
 
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <ul class="user-body">
-                                        <li ><a href="{{ path('fos_user_profile_show') }}"><i class="material-icons" style="padding-right:10px">&#xe00c;</i>Profile</a></li>
+                                        <li ><a href="{{ path('fos_user_profile_show') }}" ><img src="https://img.icons8.com/material-rounded/24/000000/gender-neutral-user.png" style="padding-right:15px">Profile</a></li>
                                         <li><hr></li>
-                                        <li ><a href="{{ path('fos_user_profile_edit') }}"><i class="material-icons" style="padding-right:10px">&#xe8b8;</i>Paramétres</a></li>
+                                        <li ><a href="{{ path('fos_user_profile_edit') }} " ><i class="material-icons" style="padding-right:15px">&#xe8b8;</i>Paramétres</a></li>
                                         <li><hr></li>
-                                        <li ><a href="#"><i class="material-icons" style="padding-right:10px">&#xe854;</i>Mes Commandes</a></li>
+                                        <li ><a href="{{ path('ecommerce_CheckoutCommande') }}" ><i class="material-icons" style="padding-right:15px" >&#xe854;</i>Mes Commandes</a></li>
                                         <li><hr></li>
-                                        <li><a href="{{ path('affichemesevenements') }}"><i class="material-icons" style="padding-right:10px">&#xe616;</i>Mes Evenements</a></li>
+                                        <li><a href="{{ path('affichemesevenements') }}" ><i class="material-icons" style="padding-right:15px" >&#xe616;</i>Mes Evenements</a></li>
+                                        <li><hr></li>
+
+                                        <li><a href="{{ path('Mesproduits') }}" ><i class="material-icons" style="padding-right:15px" >&#xe616;</i>Mes Produits</a></li>
 
                                     </ul>
                                     <!-- Menu Body -->
@@ -330,19 +403,11 @@
 
 
                         {% else %}
-                            <a href="{{ path('fos_user_registration_register') }}"><i class="icofont icofont-user-alt-7"></i> <span>{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</span></a>
-                            <a href="{{ path('fos_user_security_login') }}"><i class="icofont icofont-login"></i> <span>{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</span></a>
+                            <a href="{{ path('fos_user_registration_register') }}" style="font-size: large;"><i class="icofont icofont-user-alt-7"></i> <span>{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</span></a>
+                            <a href="{{ path('fos_user_security_login') }}" style="font-size: large;"><i class="icofont icofont-login"></i> <span>{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</span></a>
                         {% endif %}
 
-                        {% if app.request.hasPreviousSession %}
-                            {% for type, messages in app.session.flashbag.all() %}
-                                {% for message in messages %}
-                                    <div class="flash-{{ type }}">
-                                        {{ message }}
-                                    </div>
-                                {% endfor %}
-                            {% endfor %}
-                        {% endif %}
+
                         </ul>
                     </div><!-- Header Account Links End -->
                 </div>
@@ -360,8 +425,8 @@
                     <!-- Logo Start -->
                     <div class="header-logo">
                         <a href="index.html">
-                            <img src="{{ asset('Front/assets/images/logo.png')}}" alt="Eco-System">
-                            <img class="theme-dark" src="{{ asset('Front/assets/images/logo-light.png')}}" alt="Eco-System">
+                            <img src="{{ asset('Front/assets/images/logoEcoSystem.jpg')}}" style="width: 150px;" alt="Eco-System">
+                            <img class="theme-dark" src="{{ asset('Front/assets/images/logoEcoSystem.jpg')}}" alt="Eco-System">
                         </a>
                     </div><!-- Logo End -->
                 </div>
@@ -375,16 +440,21 @@
                                 <li class="active"><a href="{{ path('about') }}">A propos</a></li>
                                 <li class="menu-item-has-children"><a href="">Produits</a>
                                     <ul class="sub-menu">
-                                        <li class="menu-item-has-children"><a href="">Commensez vos achats</a>
+                                        <li class="menu-item-has-children"><a href="{{ path('afficherAnnonce') }}">Commensez vos achats</a>
+
                                             <ul class="sub-menu">
-                                                <li><a href="category-1.html">Téléphones & Tablettes </a></li>
-                                                <li><a href="category-2.html">INFORMATIQUE</a></li>
-                                                <li><a href="category-3.html">ÉLECTROMÉNAGER</a></li>
+                                                <li><a href="{{ path('afficherAnnonce') }}">Téléphones & Tablettes </a></li>
+                                                <li><a href="{{ path('afficherAnnonce') }}">INFORMATIQUE</a></li>
+                                                <li><a href="{{ path('afficherAnnonce') }}">MAISON & BUREAU</a></li>
+                                                <li><a href="{{ path('afficherAnnonce') }}">ELECTRONIQUE</a></li>
+
                                             </ul>
                                         </li>
+
+
                                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
-                                        <li class="menu-item"><a href="{{ path('event_ajoutevenement') }}">Ajoutez Annonce</a>
+                                        <li class="menu-item"><a href="{{ path('ajouterAnnonce') }}">Ajoutez Annonce</a>
                                             {% endif %}
 
                                         </li>
@@ -403,11 +473,33 @@
                                         </li>
                                     </ul>
                                 </li>
-
-                                <li class="menu-item-has-children"><a href="">BLOG</a>
+                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                <li class="menu-item-has-children"><a href="{{ path('afficheroffre') }}">Offres</a>
                                     <ul class="sub-menu">
-                                        <li><a href="">Consulter Les posts</a></li>
-                                        <li><a href="">Ajouter post</a></li>
+                                        <li class="menu-item"><a href="{{ path('afficheroffre') }}">Liste Des Offres</a>
+
+                                        </li>
+
+                                        <li class="menu-item"><a href="{{ path('ajouteroffre') }}">Ajouter Offre</a>
+
+                                        </li>
+
+                                        <li class="menu-item"><a href="{{ path('afficherdemanderdevisduoffre') }}">Liste Des Demandes Devis</a>
+
+                                        </li>
+
+                                        <li class="menu-item"><a href="{{ path('afficherdevis') }}">Liste Des  Devis</a>
+
+                                        </li>
+                                    </ul>
+                                </li>
+                                {% endif %}
+                                <li class="menu-item-has-children"><a href="{{ path('blog_affichepost') }}">BLOG</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="{{ path('blog_affichepost') }}">Consulter Les Blogs</a></li>
+                                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                        <li><a href="{{ path('blog_ajoutpost') }}">Proposer post</a></li>
+                                        {% endif %}
                                     </ul>
                                 </li>
 
@@ -422,7 +514,7 @@
                     <div class="header-shop-links">
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <!-- Wishlist -->
-                        <a href="wishlist.html" class="header-wishlist"><i class="ti-heart"></i> <span class="number">3</span></a>
+                        <a href="{{ path('Mesproduitsfavoris') }}" class="header-wishlist"><i class="ti-heart"></i> <span class="number"></span></a>
                         <!-- Cart -->
                         {% endif %}
                     </div><!-- Header Shop Links End -->
@@ -489,10 +581,8 @@
                             <li><a href="{{ path('about') }}">About us</a></li>
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             <li><a href="{{ path('fos_user_profile_show') }}">My Account</a></li>
-                            <li><a href="#">Cart</a></li>
-                            <li><a href="#">Checkout</a></li>
-                            <li><a href="#">Wishlist</a></li>
-                            <li><a href="#">blog</a></li>
+                            <li><a href="{{ path('Mesproduitsfavoris') }}">Wishlist</a></li>
+                            <li><a href={{ path('blog_affichepost') }}>blog</a></li>
                             {% endif %}
                             <li><a href="{{ path('contact') }}">Contact</a></li>
                         </ul>
@@ -526,7 +616,7 @@
 
                 <!-- Footer Copyright -->
                 <div class="col-lg-6 col-12">
-                    <div class="footer-copyright"><p>&copy; Copyright, 2018 All Rights Reserved by <a href="">DARIN</a></p></div>
+                    <div class="footer-copyright"><p>&copy; Copyright, 2019 All Rights Reserved by <a href="">DARIN</a></p></div>
                 </div>
 
                 <!-- Footer Payment Support -->

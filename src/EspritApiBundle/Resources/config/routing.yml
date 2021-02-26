@@ -1,0 +1,19 @@
+esprit_api_homepage:
+    path:     /
+    defaults: { _controller: EspritApiBundle:Default:index }
+panierAffiche:
+    path: /Panier/afficherpanier
+    defaults: { _controller: EspritApiBundle:Panier:afficherpanier }
+produitAffichage:
+    path: /Produit/afficherproduits
+    defaults: { _controller: EspritApiBundle:Produit:afficherProduitsJson }
+produitRecherche:
+    path: /Produit/rechercherproduit/{id}
+    defaults: { _controller: EspritApiBundle:Produit:RechercheProduitJson }
+
+AjouterProduit:
+    path: /Produit/ajouterproduit
+    defaults: { _controller: EspritApiBundle:Produit:ajouterProduitJson }
+AjouterCommande:
+    path: /Commande/ajoutercommande
+    defaults: { _controller: EspritApiBundle:Commande:ajouterCommandeJson }

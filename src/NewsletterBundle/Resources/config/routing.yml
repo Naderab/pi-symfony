@@ -1,0 +1,23 @@
+
+ajoutnews:
+    path: /ajoutnewsletter
+    defaults: { _controller: NewsletterBundle:Newsletter:ajoutNews }
+ajoutAbonner:
+    path: /ajoutabonner
+    defaults: { _controller: NewsletterBundle:Newsletter:ajoutAbonnement }
+listnews:
+    path: /listnewsletter
+    defaults: { _controller: NewsletterBundle:Newsletter:listNews }
+supprimernews:
+    path: /deletenews/{id}
+    defaults: { _controller: NewsletterBundle:Newsletter:deleteNews }
+modifiernews:
+    path: /modifnews/{id}
+    defaults: { _controller: NewsletterBundle:Newsletter:updateNews }
+send:
+    path: /send/{id}
+    defaults: { _controller: NewsletterBundle:Newsletter:sendmail }
+
+listenews_env:
+    path: /list/{id}
+    defaults: { _controller: NewsletterBundle:Newsletter:listNewsletter }

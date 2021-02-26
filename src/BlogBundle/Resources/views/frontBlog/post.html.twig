@@ -1,0 +1,23 @@
+<div class="row">
+
+{% for x in post %}
+    <div class="col-12 mb-40">
+        <div class="ee-blog">
+
+            <a href="{{ path('blog_detailpost',{'id':x.slug}) }}" class="image"><img src="{{ asset('uploads/images/' ~ x.image) }}" alt="Blog Image"></a>                            <div class="content">
+                <h3><a href="{{ path('blog_detailpost',{'id':x.slug}) }}">{{ x.titre }}</a></h3>
+                <ul class="meta">
+                    <li><a href="#">{{ x.CategorieBlog.nom }}</a></li>
+                    {% set dateTime =date(x.datepost) %}
+                    <li><a href="#">{{ dateTime|date('d') }} &nbsp; , {{ dateTime|date('F') }} &nbsp;  {{ dateTime|date('Y') }}</a></li>
+                    <li><a href="#">  {{ x.nombrevue }} Vue</a></li>
+                    <li><a href="#">  {{ x.nombrelike }} Like</a></li>
+
+                </ul>
+                <p>{{ x.description }}</p>
+
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>

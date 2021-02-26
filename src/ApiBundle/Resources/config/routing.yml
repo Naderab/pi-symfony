@@ -1,0 +1,180 @@
+api_homepage:
+    path:     /
+    defaults: { _controller: ApiBundle:Default:index }
+
+Getall:
+    path:     /event/all
+    defaults: { _controller: ApiBundle:Default:GetAllEvent }
+
+find_event:
+    path:     /event/find
+    defaults: { _controller: ApiBundle:Default:findEventById}
+
+create_event:
+    path:     /event/new
+    defaults: { _controller: ApiBundle:Default:AjoutEvent}
+
+particper_event:
+    path:     /event/particper
+    defaults: { _controller: ApiBundle:Default:particper}
+
+wishlist_event:
+    path:     /event/wishlist
+    defaults: { _controller: ApiBundle:Default:wishlist}
+
+rating_event:
+    path:     /event/rating
+    defaults: { _controller: ApiBundle:Default:Rating}
+
+Getwishlist_event:
+    path:     /event/allwishlist
+    defaults: { _controller: ApiBundle:Default:GetAllwishlist}
+
+mes_event:
+    path:     /event/myevent
+    defaults: { _controller: ApiBundle:Default:AfficheMesEvenements}
+
+deletewishlist_event:
+    path:     /event/deletewishlist
+    defaults: { _controller: ApiBundle:Default:deleteWishlist}
+
+delete_event:
+    path:     /event/delete
+    defaults: { _controller: ApiBundle:Default:deleteEvent}
+
+deletemyevent_event:
+    path:     /event/deletemyevent
+    defaults: { _controller: ApiBundle:Default:deleteEvenementUser}
+
+Orderbynote_event:
+    path:     /event/meilleur
+    defaults: { _controller: ApiBundle:Default:Ordernote}
+
+Orderbyprixasc_event:
+    path:     /event/prixcasc
+    defaults: { _controller: ApiBundle:Default:Orderprixasc}
+
+Orderbyprixdesc_event:
+    path:     /event/prixdesc
+    defaults: { _controller: ApiBundle:Default:Orderprixdesc}
+
+Nblike_event:
+    path:     /event/nblike
+    defaults: { _controller: ApiBundle:Default:GetNbLike}
+
+OrderDate_event:
+    path:     /event/orderdate
+    defaults: { _controller: ApiBundle:Default:Orderdate}
+
+findbyuser_event:
+    path:     /event/findbyuserwishlist
+    defaults: { _controller: ApiBundle:Default:findByUser}
+
+findbyuserparticpation_event:
+    path:     /event/findbyuserparticpation
+    defaults: { _controller: ApiBundle:Default:findByUserParticpation}
+
+finduserbyid_event:
+    path:     /event/finduserbyid
+    defaults: { _controller: ApiBundle:Default:findUserById}
+
+AddUser_event:
+    path:     /register
+    defaults: { _controller: ApiBundle:Default:registerUserJson}
+
+login_event:
+    path:     /login
+    defaults: { _controller: ApiBundle:Default:loginJson}
+
+Profile_event:
+    path:     /profile
+    defaults: { _controller: ApiBundle:Default:profileJson}
+
+ajout_post:
+    path:     /posts/ajout
+    defaults: { _controller: ApiBundle:Default:AddPost}
+
+show_post:
+    path:     /posts/getPost
+    defaults: { _controller: ApiBundle:Default:getPost}
+
+like_post:
+    path:     /posts/like
+    defaults: { _controller: ApiBundle:Default:Likepost}
+
+popu_post:
+    path:     /posts/popu
+    defaults: { _controller: ApiBundle:Default:AffichePost}
+
+login_post:
+    path:     /login
+    defaults: { _controller: ApiBundle:Default:loginJson}
+
+register_post:
+    path:     /register
+    defaults: { _controller: ApiBundle:Default:registerUserJson}
+
+detail_post:
+    path:     /posts/detail/{id}
+    defaults: { _controller: ApiBundle:Default:detailPost}
+
+tri_post:
+    path:     /posts/tri
+    defaults: { _controller: ApiBundle:Default:AffichePost2}
+
+News_post:
+    path:     /posts/news
+    defaults: { _controller: ApiBundle:Default:ajoutAbonnement}
+
+api_afficheOffre:
+    path:     /afficheroffre
+    defaults: { _controller: ApiBundle:Default:all }
+api_ajouterOffre:
+    path:     /ajouteroffre
+    defaults: { _controller: ApiBundle:Default:new }
+api_modifierOffre:
+    path:     /modifieroffre/{id}
+    defaults: { _controller: ApiBundle:Default:ModifierOffre }
+api_supprimerOffre:
+    path:     /supprimeroffre/{id}
+    defaults: { _controller: ApiBundle:Default:DeleteOffre }
+api_afficherdevis:
+    path:     /afficherdevis
+    defaults: { _controller: ApiBundle:Default:AfficherDevis }
+
+
+api_listproduit:
+    path:     /produit/allproduits
+    defaults: { _controller: ApiBundle:Default:GetAllProduct }
+
+api_produitparid:
+    path:     /produit/find
+    defaults: { _controller: ApiBundle:Default:findProductById }
+
+api_ajoutproduit:
+    path:     /produit/ajout
+    defaults: { _controller: ApiBundle:Default:AjoutProduct }
+
+api_ajoutwishlist:
+    path:     /produit/wishlist
+    defaults: { _controller: ApiBundle:Default:wishlist1 }
+
+api_ordercroissant:
+    path:     /produit/ordercroissant
+    defaults: { _controller: ApiBundle:Default:ProduitCroissant }
+
+api_orderdecroissant:
+    path:     /produit/orderdecroissant
+    defaults: { _controller: ApiBundle:Default:ProduitDecroissant }
+
+api_listproduitrating:
+    path:     /produit/produitsrating
+    defaults: { _controller: ApiBundle:Default:ProduitRating }
+
+api_rating:
+    path:     /produit/rating
+    defaults: { _controller: ApiBundle:Default:Rating1 }
+
+api_deleteProduit:
+    path:     /produit/deleteProduct/
+    defaults: { _controller: ApiBundle:Default:deleteProduct }

@@ -27,6 +27,16 @@ class AppKernel extends Kernel
             new FOS\CommentBundle\FOSCommentBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            new CMEN\GoogleChartsBundle\CMENGoogleChartsBundle(),
+            new EcommerceBundle\EcommerceBundle(),
+            new BlogBundle\BlogBundle(),
+            new NewsletterBundle\NewsletterBundle(),
+            new PointCollectBundle\PointCollectBundle(),
+            new ModuleDevisBundle\ModuleDevisBundle(),
+            new ProductBundle\ProductBundle(),
+            new ApiBundle\ApiBundle(),
+            new EspritApiBundle\EspritApiBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

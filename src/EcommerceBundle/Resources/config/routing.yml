@@ -1,0 +1,81 @@
+ecommerce_homepage:
+    path:     /
+    defaults: { _controller: EcommerceBundle:Default:index }
+ecommerce_homepageadmin:
+    path:     /admin
+    defaults: { _controller: EcommerceBundle:Default:indexadmin }
+ecommerce_homepagePanier:
+    path:     /panier/{id}
+    defaults: { _controller: EcommerceBundle:Ecommerce:SupprimerPanier }
+ecommerce_PanierDetails:
+    path:     /affichepanier
+    defaults: { _controller: EcommerceBundle:Ecommerce:AffichePanier }
+
+ecommerce_AddToCart:
+    path: /addCart
+    defaults: { _controller: EcommerceBundle:Ecommerce:addProductToCart }
+ecommerce_ValiderCommande:
+    path: /valider
+    defaults: { _controller: EcommerceBundle:Ecommerce:validerCommande}
+
+ecommerce_CheckoutCommande:
+    path: /checkout
+    defaults: { _controller: EcommerceBundle:Ecommerce:checkoutCommande}
+
+ecommerce_GeneratePDF:
+    path: /generate
+    defaults: { _controller: EcommerceBundle:Ecommerce:generatePDF}
+
+ecommerce_PanierDetailsAjouter:
+    path:     /ajoutpanier
+    defaults: { _controller: EcommerceBundle:Ecommerce:AjouterPanierDetails }
+ecommerce_PanierDetailsSupprimer:
+    path:     /supprimerpanier/{id}
+    defaults: { _controller: EcommerceBundle:Ecommerce:SupprimerPanierDetails }
+ecommerce_PanierDetailsModifier:
+    path:     /modifierpanier/{id}
+    defaults: { _controller: EcommerceBundle:Ecommerce:ModifierPanierDetails }
+ecommerce_AfficherPanier:
+    path:     /affichepanier
+    defaults: { _controller: EcommerceBundle:Ecommerce:AffichePanier }
+
+
+
+ecommerce_homepageadminCommande:
+    path:     /admin/ajoutCommande
+    defaults: { _controller: EcommerceBundle:Ecommerce:AjouterCommandeBack }
+ecommerce_homepageadminAfficherCommande:
+    path:     /admin/afficherCommande
+    defaults: { _controller: EcommerceBundle:Ecommerce:AfficherCommandeBack }
+ecommerce_homepageadminExport:
+    path:     /admin/export
+    defaults: { _controller: EcommerceBundle:Ecommerce:export }
+ecommerce_homepageadminRechercherCommande:
+    path:     /admin/rechercherCommande
+    defaults: { _controller: EcommerceBundle:Ecommerce:RechercherCommandeBack }
+ecommerce_homepageadminTopCommande:
+    path:     /admin/topCommande
+    defaults: { _controller: EcommerceBundle:Ecommerce:TopCommandeBack }
+
+ecommerce_homepageadminSupprimerCommande:
+    path:     /admin/supprimerCommande/{id}
+    defaults: { _controller: EcommerceBundle:Ecommerce:SupprimerCommandeBack }
+ecommerce_homepageadminModifierCommande:
+    path:     /admin/modifierCommande/{id}
+    defaults: { _controller: EcommerceBundle:Ecommerce:ModifierCommandeBack }
+ecommerce_homepageadminAfficherPanier:
+    path:     /admin/afficherPanier
+    defaults: { _controller: EcommerceBundle:Ecommerce:AfficherPanierBack }
+ecommerce_homepageadminSupprimerPanier:
+    path:     /admin/supprimerPanier/{id}
+    defaults: { _controller: EcommerceBundle:Ecommerce:SupprimerPanierBack }
+ecommerce_homepageadminRechercherPanier:
+    path:     /admin/rechercherPanier
+    defaults: { _controller: EcommerceBundle:Ecommerce:RechercherPanierBack }
+ecommerce_homepageadminStatistique:
+    path:     /admin/statistique
+    defaults: { _controller: EcommerceBundle:Ecommerce:Statistique }
+ecommerce_homepageadminHistorique:
+    path:     /admin/historique
+    defaults: { _controller: EcommerceBundle:Ecommerce:afficherHistorique }
+

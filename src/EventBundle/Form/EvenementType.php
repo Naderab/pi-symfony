@@ -41,7 +41,8 @@ class EvenementType extends AbstractType
                     'async'    => true,
                     'enable' => false,
                     'toolbar' => 'basic',
-                    'required' =>'true'
+                    'required' =>'true',
+                    'language' => 'fr',
 
 
                 )))
@@ -54,7 +55,8 @@ class EvenementType extends AbstractType
                     'async'    => true,
                     'enable' => false,
                     'toolbar' => 'basic',
-                    'required' =>'true'
+                    'required' =>'true',
+                    'language' => 'fr',
                     )))
 
             ->add('minParticipants' ,NumberType::class,  array(

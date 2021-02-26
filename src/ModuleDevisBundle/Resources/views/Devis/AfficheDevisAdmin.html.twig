@@ -1,0 +1,83 @@
+{% extends('layoutadmin.html.twig') %}
+{% block title %} Admin {% endblock %}
+
+{% block Containt %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                MES DEVIS
+                <small></small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('homepageadmin') }}"><i class="fas fa-home"></i>Accueil</a></li>
+                <li><a href="#"><i class="fa fa-laptop"></i>Gestion des offres</a></li>
+                <li class="active"><i class="fa fa-edit"></i>liste des devis</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Liste des devis</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+
+                                    <th>Offre</th>
+                                    <th>Date du création du devis</th>
+                                    <th>Date validite du devis</th>
+                                    <th></th>
+                                    <th></th>
+
+
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for x in data %}
+                                    <tr>
+
+                                        <td>{{ x.offre.description }}</td>
+                                        <td>{{ x.datedevis | date('D,M,Y') }}</td>
+                                        <td>{{ x.datevalidite | date('D,M,Y') }}</td>
+                                        <td><a href="{{  path('genererdevis') }}" class="btn btn-info btn-sm" ><i class="fas fa-search"></i></a></td>
+                                            <td>
+                                            {% if x.confirmer=="non"  %}
+                                            <a href="{{ path('confirmerdevis', {'id': x.Id }) }}" class="btn btn-success btn-sm"><i class="fas fa-handshake"></i></a>
+                                            {% elseif x.confirmer=="oui"  %}
+                                            <a href="{{ path('annulerconfirmerdevis', {'id': x.Id }) }}" class="btn btn-danger btn-sm"><i class="fas fa-times-circle"></i></a>
+                                            {% endif %}
+                                        </td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+    $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+    'paging'      : true,
+    'lengthChange': false,
+    'searching'   : false,
+    'ordering'    : true,
+    'info'        : true,
+    'autoWidth'   : false
+    })
+    })
+    </script>
+{% endblock %}

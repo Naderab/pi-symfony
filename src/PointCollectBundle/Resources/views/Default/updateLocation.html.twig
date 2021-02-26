@@ -1,0 +1,142 @@
+{% extends 'layoutadmin.html.twig' %}
+{% block title %} Eco System {% endblock %}
+
+{% block Containt %}
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Geocoder</title>
+
+    <!-- Bootstrap CSS -->
+
+    <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+            integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/places.js/1/places.min.js"></script>
+
+    <style>
+        body {
+            margin-top: 15px;
+        }
+
+        #map-example-container {
+            height: 400px;
+        }
+    </style>
+
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Ajouter point collecte
+                <small></small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('homepageadmin') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+                <li><a href="{{ path('showLocationData') }}">Gestion point de collecte</a></li>
+                <li class="active">Ajouter point collecte</li>
+            </ol>
+        </section>
+        <section class="content">
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Saisir adresse</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <!--  <form action="" class="form">-->
+                            {{ form_start(form) }}
+                            <div class="form-group">
+                                <label for="form-full-address">Adresse appariée</label>
+                                <!--<input disabled="disabled" autocomplete="off" type="text" class="form-control" id="form-full-address" value="" />-->
+                                {{ form_widget(form.address, { 'id': 'form-full-address' }) }}
+                            </div>
+                            <div class="form-group">
+                                <label for="form-latitude">Latitude</label>
+                                <!-- <input autocomplete="off" type="text" class="form-control" id="form-latitude">-->
+                                {{ form_widget(form.lat, { 'id': 'form-latitude' }) }}
+                            </div>
+                            <div class="form-group">
+                                <label for="form-longitude">Longitude</label>
+                                <!--<input autocomplete="off"  type="text" class="form-control" id="form-longitude">-->
+                                {{ form_widget(form.lng, { 'id': 'form-longitude' }) }}
+                            </div>
+                            <div class="form-group">
+                                <label for="form-name">Nom de l'emplacement</label>
+                                <!--<input autocomplete="off"  type="text" class="form-control" id="form-type">-->
+                                {{ form_widget(form.name, { 'id': 'form-type' }) }}
+                            </div>
+                            <div class="form-type">
+                                <label for="form-type">Type</label>
+                                <!--<input autocomplete="off"  type="text" class="form-control" id="form-type">-->
+                                {{ form_widget(form.typePointCollect) }}
+                            </div>
+                            <div class="form-group">
+                                <label for="form-type">Slug</label>
+                                <!--<input autocomplete="off"  type="text" class="form-control" id="form-type">-->
+                                {{ form_widget(form.slug,{'disabled':'disabled'}) }}
+                            </div>
+                            <br/>
+
+
+                            <div class="form-group">
+                                <!--   <button type="button" class="btn btn-primary">Primary</button>-->
+                                {{ form_widget(form.submit, { 'label': 'Modifier' }) }}
+
+                                <!--<button type="button" class="btn btn-block btn-danger">Danger</button>-->
+                            </div>
+                            {{ form_end(form) }}
+                            <!--  </form>-->
+
+                            <!-- /.form-group -->
+                        </div>
+                        <div class="col-md-6">
+
+                            <div id="map"></div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <!--  Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
+                      the plugin.-->
+                </div>
+            </div>
+
+
+        </section>
+    </div>
+
+
+    <script type="text/javascript" src="scripts/index.js"></script>
+
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAchXF7TnN6vtEMPdQKby_8rm1V6hK08TE&callback=initMap">
+    </script>
+
+    <script  type="text/javascript" charset="UTF-8" >
+
+
+
+
+    </script>
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+
+{% endblock %}

@@ -6,10 +6,9 @@
         <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
             <div class="page-banner">
                 <h1>INSCRIPTION</h1>
-                <p>similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita</p>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a href="#">Accueil</a></li>
+                        <li><a href="{{ path('homepage') }}">Accueil</a></li>
                         <li><a href="#">INSCRIPTION</a></li>
                     </ul>
                 </div>
@@ -34,11 +33,12 @@
             <div class="col-md-6 col-12 d-flex">
                 <div class="ee-register">
 
-                    <h3>We will need for your registration</h3>
+                    <h3>
+                        Nous aurons besoin de votre inscription</h3>
 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
     {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'registration.submit'|trans }}" />
+    <div style="padding-top: 30px;">
+        <input type="submit" value="{{ 'registration.submit'|trans }}" style="width: 100%;"/>
     </div>
 
                 </div>
@@ -53,16 +53,12 @@
             <!-- Account Image -->
             <div class="col-md-5 col-12 d-flex">
 
-                <div class="ee-account-image">
-                    <h3>Upload your Image</h3>
+                <div class="ee-social-login">
+                    <h3>
+                        Aussi, vous pouvez vous inscrire avec ...</h3>
 
-                    <img src="{{ asset('Front/assets/images/account-image-placeholder.jpg') }}" alt="Account Image Placeholder" class="image-placeholder">
-
-                    <div class="account-image-upload">
-                        <label class="account-image-label" for="account-image-upload">Choose your image</label>
-                    </div>
-
-                    <p>jpEG 250x250</p>
+                    <a href="/connect/facebook" class="facebook-login">Connectez-vous avec<i class="fa fa-facebook"></i></a>
+                    <a href="/connect/google" class="google-plus-login">Connectez-vous avec<i class="fa fa-google-plus"></i></a>
 
                 </div>
 

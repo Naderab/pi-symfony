@@ -1,6 +1,73 @@
 {% trans_default_domain 'FOSUserBundle' %}
+<div class="page-banner-section section">
+    <div class="page-banner-wrap row row-0 d-flex align-items-center ">
 
-<div class="fos_user_user_show">
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+        <!-- Page Banner -->
+        <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+            <div class="page-banner">
+                <h1>Profile</h1>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                        <li><a href="#">Profile</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banner -->
+        <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+        </div>
+
+        <!-- Banner -->
+        <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+        </div>
+
+    </div>
 </div>
+<div class="product-section section mt-90 mb-90">
+    <div class="container">
+
+        <div class="row mb-90">
+
+            <div class="col-lg-6 col-12 mb-50">
+
+                <!-- Image -->
+                <div class="single-product-image thumb-right">
+
+                    <div class="tab-content">
+                        <div id="single-image-1" class="tab-pane fade show active big-image-slider">
+                            <div class="big-image"><img src="{{ asset('uploads/images/' ~ user.avatar) }}"
+                                                        alt="User"><a
+                                        href="{{ asset('uploads/images/' ~ user.avatar) }}"
+                                        class="big-image-popup"><i class="fa fa-search-plus"></i></a></div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="col-lg-6 col-12 mb-50">
+
+                <!-- Content -->
+                <div class="single-product-content">
+
+                    <!-- Category & Title -->
+                    <div class="head-content">
+<div class="fos_user_user_show">
+    <p style="font-size: 20px;">{{ 'profile.show.username'|trans }}: </p> <p style="font-size: 15px;"> {{ user.username }}</p>
+    <p style="font-size: 20px;">{{ 'profile.show.email'|trans }}: </p> <p style="font-size: 15px;">{{ user.email }}</p>
+    <p style="padding-top: 70px; padding-right: 50px"><a href="{{ path('fos_user_profile_edit') }}" style="font-size: 25px; color: #14455c;"><i class="fa fa-edit" style="padding-right: 15px"></i> Paramétres</a> </p>
+</div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

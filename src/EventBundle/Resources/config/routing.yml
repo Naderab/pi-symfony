@@ -1,6 +1,4 @@
-event_homepage:
-    path:     /
-    defaults: { _controller: EventBundle:Default:index }
+
 event_homepageadmin:
     path:     /admin/
     defaults: { _controller: EventBundle:Default:indexadmin }
@@ -31,9 +29,18 @@ decroissant:
 date:
     path:     /date
     defaults: { _controller: EventBundle:Event:Orderdate }
+EventGratuit:
+    path:     /gratuit
+    defaults: { _controller: EventBundle:Event:EventGratuit }
+EventPayant:
+    path:     /payant
+    defaults: { _controller: EventBundle:Event:EventPayant }
 meilleur:
     path:     /meilleur
     defaults: { _controller: EventBundle:Event:Ordermeuilleur }
+note:
+    path:     /note
+    defaults: { _controller: EventBundle:Event:Ordernote }
 event_afficheeventuser:
     path:     /listeevenements
     defaults: { _controller: EventBundle:Event:AfficheEvenement }
@@ -80,7 +87,7 @@ traiteruserdisable:
     path:     /etatdisable/{id}
     defaults: { _controller: EventBundle:Event:traiteruserdisable }
 deleteuser:
-    path:         /admin/deleteuser/{id}
+    path:     /admin/deleteuser/{id}
     defaults: { _controller: EventBundle:Event:deleteuser }
 afficheuser:
     path:     /admin/users
@@ -91,3 +98,13 @@ traitereventpublie:
 traitereventnonpublie:
     path:     /etatnonpublie/{id}
     defaults: { _controller: EventBundle:Event:traiterEvenementnonpublie }
+afficheparticipation:
+    path:     /admin/participations
+    defaults: { _controller: EventBundle:Event:Afficheparticipation }
+detaileventadmin:
+    path:     /admin/detaileventadmin/{id}
+    defaults: { _controller: EventBundle:Event:DetailEvent }
+Rating:
+    path:     /rating
+    defaults: { _controller: EventBundle:Event:Rating }
+

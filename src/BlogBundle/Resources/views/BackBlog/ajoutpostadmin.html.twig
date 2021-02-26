@@ -1,0 +1,111 @@
+{% extends 'layoutadmin.html.twig' %}
+{% block title %}
+    Admin
+{% endblock %}
+{% block Containt %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Formulaire d'ajout d'un blog
+
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('homepageadmin') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+            <li><a href="#">Gestion de blog</a></li>
+            <li class="active">ajouter un blog</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+
+
+
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title"></h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        {{ form_start(form) }}
+                        <div class="my-custom-class-for-errors">
+                            {{ form_errors(form) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.titre, 'Titre :') }}
+                            <div class="input-group-addon">
+
+                            {{ form_widget(form.titre, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.description, 'Description :') }}
+                            <div class="input-group-addon">
+
+                            {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.contenu, 'Contenu :') }}
+                            <div class="input-group-addon">
+
+                            {{ form_widget(form.contenu, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="form-group">
+
+
+                            {{ form_label(form.CategorieBlog, 'Categorie :') }}
+                            <div class="input-group-addon">
+
+                                {{ form_widget(form.CategorieBlog, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+
+
+                            <!-- /.input group -->
+                        </div>
+
+
+
+
+
+
+
+
+                        <div class="form-group">
+                            <label for="exampleInputFile">{{ form_label(form.image, 'Choisir image :') }}</label>
+                            <div>
+                                {{ form_widget(form.image) }}
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="form-group">
+                            {{ form_widget(form.ajouter,{'attr':{'class':'btn btn-primary'}}) }}
+                        </div>
+
+                        {{ form_end(form) }}
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+
+    </section>
+
+
+
+
+{% endblock %}

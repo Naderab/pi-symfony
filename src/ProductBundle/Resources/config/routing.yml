@@ -1,0 +1,69 @@
+
+ajouterAnnonce:
+    path:     /ajouterAnnonce
+    defaults: { _controller: ProductBundle:Produit:ajouterAnnonce }
+afficherAnnonce:
+    path:     /afficherAnnonce
+    defaults: { _controller: ProductBundle:Produit:afficherAnnonce }
+detailAnnonce:
+    path:     /detailAnnonce/{id}
+    defaults: { _controller: ProductBundle:Produit:detailAnnonce }
+supprimerAnnonce:
+    path:     /supprimerAnnonce/{id}
+    defaults: { _controller: ProductBundle:Produit:supprimerAnnonce }
+modifierAnnonce:
+    path:     /modifierAnnonce/{id}
+    defaults: { _controller: ProductBundle:Produit:modifierAnnonce }
+getproduit:
+    path:     /getProduit
+    defaults: { _controller: ProductBundle:Produit:getProduit }
+validerAnnonceadmin:
+    path:     /admin/validerAnnonceadmin/{id}
+    defaults: { _controller: ProductBundle:Produit:validerAnnonceadmin }
+supprimerAnnonceAdmin:
+    path:     /admin/supprimerAnnonceAdmin/{id}
+    defaults: { _controller: ProductBundle:Produit:supprimerAnnonceAdmin }
+afficherAnnonceadmin:
+    path:     /admin/afficherAnnonceadmin
+    defaults: { _controller: ProductBundle:Produit:afficherAnnonceadmin }
+AfficheProduitNonTraiter:
+    path:     /admin/AfficheProduitNonTraiter
+    defaults: { _controller: ProductBundle:Produit:AfficheProduitNonTraiter }
+ProduitCroissant:
+    path:     /croissant
+    defaults: { _controller: ProductBundle:Produit:ProduitCroissant }
+Telephonie:
+    path:     /1
+    defaults: { _controller: ProductBundle:Produit:Telephonie }
+Electronique:
+    path:     /2
+    defaults: { _controller: ProductBundle:Produit:Electronique }
+Maison:
+    path:     /3
+    defaults: { _controller: ProductBundle:Produit:Maison }
+Electromenager:
+    path:     /4
+    defaults: { _controller: ProductBundle:Produit:Electromenager }
+ProduitDecroissant:
+    path:     /decroissant
+    defaults: { _controller: ProductBundle:Produit:ProduitDecroissant }
+Wishlistproduit:
+    path:     /wishlist
+    defaults: { _controller: ProductBundle:Produit:wishlist }
+Mesproduits:
+    path:     /mesproduits
+    defaults: { _controller: ProductBundle:Produit:AfficheMesProduits }
+Mesproduitsfavoris:
+    path:     /mesproduitsfavoris
+    defaults: { _controller: ProductBundle:Produit:affichewishlist }
+Deletefavoris:
+    path:     /supprimerfavoris/{id}
+    defaults: { _controller: ProductBundle:Produit:deleteWishlist }
+
+
+
+
+
+
+
+

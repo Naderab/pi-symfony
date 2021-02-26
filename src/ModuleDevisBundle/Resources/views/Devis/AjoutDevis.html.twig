@@ -1,0 +1,224 @@
+{% extends('base.html.twig') %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block Containt %}
+
+    <div class="page-banner-section section">
+        <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+            <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+                <div class="page-banner">
+                    <h1>Devis</h1>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+            </div>
+            <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+            </div>
+        </div>
+    </div>
+
+    <div class="login-section section mt-90 mb-90">
+        <div class="container">
+            <div class="row">
+
+                   <div class="row"></div>
+
+                <div class="col-md-6">
+                    <div class="box box-warning">
+
+                        {{ form_start(form) }}
+
+                        <div class="form-group">
+                            {{ form_errors(form.libelle) }}
+                            {{ form_label(form.libelle, 'libelle:') }}
+                            {{ form_widget(form.libelle,{'attr':{'class':'form-control'}}) }}
+                        </div>
+                    </div>
+                </div>
+                        <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_errors(form.datevalidite) }}
+                            {{ form_label(form.datevalidite, 'Date de validite :') }}
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+
+                            </div>
+                            {{ form_widget(form.datevalidite) }}
+                            <!-- /.input group -->
+                        </div>
+
+                    </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group" >
+                        {{ form_label(form.message, 'Message  :') }}
+                        {{ form_widget(form.message,{'attr':{'class':'form-control','rows':'5','cols':'120'}}) }}
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-1" ></div>
+                <div class="col-md-10" draggable="true">
+                <table>
+                    <thead>
+                    <tr>
+                        <th> </th>
+                        <th>QTÉ	</th>
+                        <th> </th>
+                        <th>PRIX UNITAIRE</th>
+                        <th> </th>
+                        <th>TAUX DE TVA</th>
+                        <th> </th>
+                        <th>MONTANT</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td>{{ form_widget(form.qte,{'attr':{'class':'form-control'}}) }} </td>
+                        <td></td>
+                        <td>{{ form_widget(form.prixunit,{'attr':{'class':'form-control'}}) }}</td>
+                        <td></td>
+                        <td>{{ form_widget(form.tVA,{'attr':{'class':'form-control'}}) }}</td>
+                        <td></td>
+                        <td>{{ form_widget(form.totalHT,{'attr':{'class':'form-control'}}) }}</td>
+                        <td></td>
+
+
+                    </tr>
+                    </tbody>
+
+                </table>
+                </div>
+                <div class="col-md-1" ></div>
+
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-4" >
+                    <div class=" center-block">
+                        {{ form_widget(form.Sauvgarder, { 'attr': {'class': 'btn btn-block btn-success btn-lg-1'} }) }}
+                        {{ form_widget(form.Annuler, { 'attr': {'class': 'btn btn-block btn-primary btn-lg-1'} }) }}
+                    </div>
+                </div>
+                <div class="col-md-4" ></div>
+                <div class="col-md-4" >
+                    <hr>
+                    totalHT : <label id="HT" value="0">0</label> <br>
+
+                    <label id="tvaa">TVA :  <label id="tva" value="0">0</label></label> <br>
+                    <hr>
+                    totalTTC {{ form_widget(form.totalTTC) }} <br>
+                </div>
+            </div>
+
+                {{ form_end(form) }}
+
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script >
+
+
+
+
+        $(document).ready(function() {
+
+
+
+            $("#moduledevisbundle_devis_prixunit").keyup(function () {
+            var qte = $('#moduledevisbundle_devis_qte').val();
+
+            var prixu = $('#moduledevisbundle_devis_prixunit').val();
+            var tva = $('#moduledevisbundle_devis_tVA').val();
+
+            var calcul =parseInt(qte) * parseInt(prixu) ;
+
+
+
+                $('#moduledevisbundle_devis_totalHT').val(calcul);
+
+                $('#HT').html(calcul);
+
+
+            });
+
+            $("#moduledevisbundle_devis_qte").keyup(function () {
+                var qte = $('#moduledevisbundle_devis_qte').val();
+
+                var prixu = $('#moduledevisbundle_devis_prixunit').val();
+                var tva = $('#moduledevisbundle_devis_tVA').val();
+
+                var calcul =parseInt(qte) * parseInt(prixu) ;
+
+
+
+                $('#moduledevisbundle_devis_totalHT').val(calcul);
+
+                $('#HT').html(calcul);
+
+
+
+            });
+
+
+        });
+
+        $('#moduledevisbundle_devis_tVA').on('change', function() {
+            var selected=this.value;
+            var qte = $('#moduledevisbundle_devis_qte').val();
+
+            var prixu = $('#moduledevisbundle_devis_prixunit').val();
+
+            var calcul =parseInt(qte) * parseInt(prixu) ;
+
+            CalculTva(calcul,selected);
+
+        });
+
+        function CalculTva(calcul,seleted) {
+
+
+
+
+            if(seleted == 0)
+            {
+                $('#tvaa').hide();
+                $('#moduledevisbundle_devis_totalTTC').val(calcul);
+
+
+            }
+            else if(seleted == 9)
+            {
+                $('#tvaa').show();
+                $('#tva').html(((calcul * 9)/ 100));
+                $('#moduledevisbundle_devis_totalTTC').val(calcul + ((calcul * 9)/ 100));
+
+
+
+            }
+            else if(seleted == 12)
+            {
+                $('#tvaa').show();
+                $('#tva').html(((calcul * 12)/ 100));
+                $('#moduledevisbundle_devis_totalTTC').val(calcul + ((calcul * 12)/ 100));
+
+            }
+            else
+            {
+                $('#tvaa').show();
+                $('#tva').html(((calcul * 19)/ 100));
+                $('#moduledevisbundle_devis_totalTTC').val(calcul + ((calcul * 19)/ 100));
+
+            }
+
+        }
+    </script>
+{% endblock %}

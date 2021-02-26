@@ -1,0 +1,181 @@
+{% extends 'layoutadmin.html.twig' %}
+{% block title %}
+    Admin
+{% endblock %}
+{% block Containt %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Liste des postes
+
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('homepageadmin') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+                <li><a href="#">Gestion de blog</a></li>
+                <li class="active">Liste des postes</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+
+
+
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title"></h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Titre</th>
+                                    <th>Date de post</th>
+                                    <th>description</th>
+                                    <th>Nombre de vue</th>
+                                    <th>Nombre de like</th>
+                                    <th>Categorie de post</th>
+                                    <th>Action</th>
+                                    <th>-</th>
+                                    <th>-</th>
+                                    <th>-</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for x in post %}
+                                    <tr>
+                                        <td><img src="{{ asset('uploads/images/' ~ x.image) }}" alt="Blog Image" style="width: 50px;" ></td>
+                                        <td>{{ x.titre }}</td>
+                                        <td>{{  x.datepost|date('Y-m-d')}}</td>
+                                        <td>{{ x.description }}</td>
+                                        <td>{{  x.nombrevue}}</td>
+                                        <td>{{  x.nombrelike}}</td>
+                                        <td>{{ x.CategorieBlog.nom }}</td>
+                                        {% if x.publier == 0 %}
+                                            <td><select name="etat" class="nice-select" onchange="Update(this.options[this.selectedIndex].value,{{ x.id }});">
+                                                    <option value="0" selected>Non publié</option>
+                                                    <option value="1">Publié</option>
+
+                                                </select>
+                                            </td>
+                                        {% else %}
+                                            <td>
+                                                <select name="etat" class="nice-select" onchange="Update(this.options[this.selectedIndex].value,{{ x.id }});">
+                                                    <option value="0" >Non publié</option>
+                                                    <option value="1" selected>Publié</option>
+
+                                                </select>
+
+                                            </td>
+                                        {% endif %}
+                                        <td><a href="{{ path('blog_detailpostadminn',{'id':x.slug}) }}"  ><i class="material-icons">&#xE417;</i></a></td>
+                                        <td><a href="{{ path('blog_updatepostadminn',{'id':x.slug}) }}"  ><i class="material-icons">&#xe923;</i></a></td>
+                                        <td><a data-toggle="modal" data-target="#exampleModal" onclick="onPressDelete ({{ x.slug }})"><i class="material-icons">&#xE872;</i></a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+        </section>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff6b6b">
+                    <h5 class="modal-title" id="exampleModalLabel">Supprimer un post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Voulez-vous bien supprimer cet post ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a   class="btn btn-primary" href="" id="btnDelete" style="background-color: #ff6b6b; border-color: white">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #1e7e34">
+                    <h5 class="modal-title" id="exampleModalLabel">Accepter ce blog</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Opération effectué!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $(function () {
+            $('#example1').DataTable()
+            $('#example2').DataTable({
+                'paging'      : true,
+                'lengthChange': false,
+                'searching'   : false,
+                'ordering'    : true,
+                'info'        : true,
+                'autoWidth'   : false
+            })
+        })
+
+        function onPressDelete (id )
+        {
+            newLien = 'http://localhost:4040/EcoSystem/web/app_dev.php/blog/admin/deletepostadmin/' + id;
+            document.getElementById('btnDelete').href = newLien;
+        }
+
+        function Update(nb,id) {
+
+            var urll='';
+
+            if(nb == 0){
+
+                urll ='http://localhost:4040/EcoSystem/web/app_dev.php/blog/etatnonpublie/' +id;
+            }
+            else {
+
+                urll = 'http://localhost:4040/EcoSystem/web/app_dev.php/blog/etatpublie/' + id;
+            }
+
+            $.ajax({
+                url: urll ,
+                method: "GET",
+                dataType: 'json',
+                success: function(data, status){
+                    $('#exampleModal1').modal('show');
+
+                }
+            });
+        };
+
+    </script>
+
+{% endblock %}

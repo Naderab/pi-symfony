@@ -15,7 +15,7 @@
     {% endif %}
 
                 </div>
-                <a href="{{ path('detailsevent',{'id':x.slug}) }}" ><img src="{{ asset('uploads/images/' ~ x.image) }} " style="width:  380px;"/></a>
+                <a href="{{ path('detailsevent',{'id':x.id}) }}" ><img src="{{ asset('uploads/images/' ~ x.image) }} " style="width:  380px;"/></a>
             </div>
             <!-- Post Content-->
             <div class="post-content">
@@ -33,7 +33,10 @@
                         <a href="#">{{ x.OwnerUser.username }} </a>
                     </span>
                     <span class="timestamp">
-                        <i class="fa fa-eye"></i>{{ x.nombrevu }} Vu</span></div>
+                        <i class="fa fa-eye"></i>{{ x.nombrevu }} Vu</span>
+                    <span class="timestamp">
+                        <i class="fa fa-star"></i>{{ x.rating }} </span>
+                </div>
 
 
             </div>

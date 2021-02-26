@@ -113,6 +113,13 @@ class Evenement
     private $publie;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="rating", type="integer" , nullable=true)
+     */
+    private $rating;
+
+    /**
      * @var text
      *
      * @ORM\Column(name="description", type="text")
@@ -128,29 +135,27 @@ class Evenement
      */
     private $OwnerUser;
 
-    /**
-     * @var string
-     *
-     * @Gedmo\Slug(fields={"id"})
-     * @ORM\Column(length=255, unique=true, nullable=false)
-     */
-    protected $slug;
+
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getSlug()
+    public function getRating()
     {
-        return $this->slug;
+        return $this->rating;
     }
 
     /**
-     * @param mixed $slug
+     * @param int $rating
      */
-    public function setSlug($slug)
+    public function setRating($rating)
     {
-        $this->slug = $slug;
+        $this->rating = $rating;
     }
+
+
+
+
 
     /**
      * @return int

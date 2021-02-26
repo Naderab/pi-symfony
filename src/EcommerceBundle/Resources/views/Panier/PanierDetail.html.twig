@@ -1,0 +1,376 @@
+{% extends 'base.html.twig' %}
+{% block title %} Eco-System {% endblock %}
+{% block Containt %}
+
+
+
+    <div class="mini-cart-wrap">
+
+        <!-- Mini Cart Top -->
+        <div class="mini-cart-top">
+
+            <button class="close-cart">Close Cart<i class="icofont icofont-close"></i></button>
+
+        </div>
+
+        <!-- Mini Cart Products -->
+        <ul class="mini-cart-products">
+            <li> <a class="image"><img src="{{ asset('Front/assets/images/product/rose.png') }}" alt="Product"></a></li>
+            {% for x in products %}
+            <li>
+
+                <div class="content">
+                    <a href="single-product.html" class="title">{{ x.titre }}</a>
+                    <span class="price">Prix produit</span> <td>{{ x.prix }}</td>
+                    <span class="qty">Qantite</span><td>{{ x.quantite }}</td>
+                </div>
+                <button class="remove"><i class="fa fa-trash-o"></i></button>
+            </li>
+
+
+            {% endfor %}
+            <li> <a class="image"><img src="{{ asset('Front/assets/images/product/watch.jpg') }}" alt="Product"></a></li>
+        </ul>
+        <div class="mini-cart-bottom">
+            <div class="button">
+                <a href="{{ path('ecommerce_CheckoutCommande') }}">Commande</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay"></div>
+
+    <!-- Page Banner Section Start -->
+    <div class="page-banner-section section">
+        <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+
+            <!-- Page Banner -->
+            <div class="col-lg-4 col-md-6 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+                <div class="page-banner">
+                    <h1>Panier</h1>
+                    <div class="breadcrumb">
+                        <ul>
+                            <li><a href="{{ path('ecommerce_homepage') }}">HOME</a></li>
+                            <li><a href="{{ path('ecommerce_PanierDetailsAjouter') }}">Ajout Panier</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banner -->
+            <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+            </div>
+
+            <!-- Banner -->
+            <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+            </div>
+
+        </div>
+    </div><!-- Page Banner Section End -->
+
+    <!-- Cart Page Start -->
+    <div class="page-section section pt-90 pb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="#">
+                        <!-- Cart Table -->
+                        <div class="cart-table table-responsive mb-40">
+
+                            {% for x in products %}
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th style="color :brown" class="pro-thumbnail">Image</th>
+                                    <th style="color :brown" class="pro-quantity">Quantite</th>
+                                    <th style="color :brown" class="pro-price">Prix</th>
+                                    <th style="color :brown" class="pro-remove">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="pro-thumbnail"><a href="#"><img src="{{ asset('Front/assets/images/product/rose.png') }}" alt="Product">{{ x.titre }}</a></td>
+                                    <td class="pro-quantity"><span>{{ x.quantite }}</span></td>
+                                    <td class="pro-price"><span>{{ x.prix }}</span></td>
+                                    <td class="pro-remove"><a href="{{ path('ecommerce_PanierDetailsSupprimer',{'id':x.id}) }}"><i class="fa fa-trash-o"></i></a><br>
+                                   <a href="{{ path('ecommerce_PanierDetailsModifier',{'id':x.id}) }} " class="fa fa-edit"></a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            {% endfor %}
+
+                        </div>
+
+                    </form>
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-12 mb-15">
+                            <!-- Calculate Shipping -->
+                            <div class="calculate-shipping">
+                                <h4>Calculate Shipping</h4>
+                                <form action="#">
+                                    <div class="row">
+                                        <div class="col-md-6 col-12 mb-25">
+                                            <select class="nice-select">
+                                                <option>Bangladesh</option>
+                                                <option>China</option>
+                                                <option>country</option>
+                                                <option>India</option>
+                                                <option>Japan</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-25">
+                                            <select class="nice-select">
+                                                <option>Dhaka</option>
+                                                <option>Barisal</option>
+                                                <option>Khulna</option>
+                                                <option>Comilla</option>
+                                                <option>Chittagong</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-25">
+                                            <input type="text" placeholder="Postcode / Zip">
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-25">
+                                            <input type="submit" value="Estimate">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Discount Coupon -->
+                            <div class="discount-coupon">
+                                <h4>Discount Coupon Code</h4>
+                                <form action="#">
+                                    <div class="row">
+                                        <div class="col-md-6 col-12 mb-25">
+                                            <input type="text" placeholder="Coupon Code">
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-25">
+                                            <input type="submit" value="Apply Code">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Cart Summary -->
+                        <div class="col-lg-6 col-12 mb-40 d-flex">
+                            <div class="cart-summary">
+                                <div class="cart-summary-wrap">
+
+                                    <h4 style="color :brown">Somme Total Des Produits</h4>
+                                    <p>Somme Total<span> $ {{ subTotal }} </span></p>
+                                    <p>Frais <span>$10.00</span></p>
+                                    <h2>Somme Final Total  <span> $ {{ prixTotal }} </span></h2>
+                                </div>
+
+                                <div class="cart-summary-button">
+                                    <button class="checkout-btn">  <a  href="{{ path('ecommerce_ValiderCommande',{'products':products} ) }}" class="checkout-btn" >Valider Panier</a></button>
+                                    <button class="checkout-btn"> <a  href="{{ path('ecommerce_CheckoutCommande') }}" >Commander</a></button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Cart Page End -->
+
+    <!-- Banner Section Start -->
+    <div class="banner-section section mb-90">
+        <div class="container">
+            <div class="row">
+
+                <!-- Banner -->
+                <div class="col-12">
+                    <div class="banner"><a href="#"><img src="{{ asset('Front/assets/images/product/h.png') }}" width="400" height="400" alt="Banner"></a></div>
+                </div>
+
+            </div>
+        </div>
+    </div><!-- Banner Section End -->
+
+    <!-- Brands Section Start -->
+    <div class="brands-section section mb-90">
+        <div class="container">
+            <div class="row">
+
+                <!-- Brand Slider Start -->
+                <div class="brand-slider col">
+                    <div class="brand-item col"><img src="{{ asset('Front/assets/images/brands/brand-1.png') }}" alt="Brands"></div>
+                    <div class="brand-item col"><img src="{{ asset('Front/assets/images/brands/brand-2.png') }}" alt="Brands"></div>
+                    <div class="brand-item col"><img src="{{ asset('Front/assets/images/brands/brand-3.png') }}" alt="Brands"></div>
+                    <div class="brand-item col"><img src="{{ asset('Front/assets/images/brands/brand-4.png') }}" alt="Brands"></div>
+                    <div class="brand-item col"><img src="{{ asset('Front/assets/images/brands/brand-5.png') }}" alt="Brands"></div>
+                </div><!-- Brand Slider End -->
+
+            </div>
+        </div>
+    </div><!-- Brands Section End -->
+
+    <!-- Subscribe Section Start -->
+    <div class="subscribe-section section bg-gray pt-55 pb-55">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <!-- Mailchimp Subscribe Content Start -->
+                <div class="col-lg-6 col-12 mb-15 mt-15">
+                    <div class="subscribe-content">
+                        <h2>SUBSCRIBE <span>OUR NEWSLETTER</span></h2>
+                        <h2><span>TO GET LATEST</span> PRODUCT UPDATE</h2>
+                    </div>
+                </div><!-- Mailchimp Subscribe Content End -->
+
+
+                <!-- Mailchimp Subscribe Form Start -->
+                <div class="col-lg-6 col-12 mb-15 mt-15">
+
+                    <form class="subscribe-form" action="#">
+                        <input type="email" autocomplete="off" placeholder="Enter your email here" />
+                        <button >subscribe</button>
+                    </form>
+                    <!-- mailchimp-alerts Start -->
+                    <div class="mailchimp-alerts text-centre">
+                        <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                        <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                        <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                    </div><!-- mailchimp-alerts end -->
+
+                </div><!-- Mailchimp Subscribe Form End -->
+
+            </div>
+        </div>
+    </div><!-- Subscribe Section End -->
+{% block Footer%}
+    <!-- Footer Section Start -->
+    <div class="footer-section section bg-ivory">
+
+        <!-- Footer Top Section Start -->
+        <div class="footer-top-section section pt-90 pb-50">
+            <div class="container">
+
+                <!-- Footer Widget Start -->
+                <div class="row">
+
+                </div><!-- Footer Widget End -->
+
+                <div class="row">
+
+                    <!-- Footer Widget Start -->
+                    <div class="col-lg-3 col-md-6 col-12 mb-40">
+                        <div class="footer-widget">
+
+                            <h4 class="widget-title">CONTACT INFO</h4>
+
+                            <p class="contact-info">
+                                <span>Address</span>
+                                Eco System space, Immeuble NEO, 2ème étage, Rue du lac lochness, Les Berges du Lac1, Tunis 1055<br>
+                            <p class="contact-info">
+                                <span>Phone</span>
+                                <a href="tel:01234567890">(+216) 51 563 290</a>
+                                <a href="tel:01234567891">(+216) 50 287 104</a>
+                            </p>
+
+                            <p class="contact-info">
+                                <span>Web</span>
+                                <a href="mailto:info@example.com">EcoSystem@gmail.com</a>
+
+                            </p>
+
+                        </div>
+                    </div><!-- Footer Widget End -->
+
+                    <!-- Footer Widget Start -->
+                    <div class="col-lg-3 col-md-8 col-12 mb-40">
+                        <div class="footer-widget">
+
+                            <h4 class="widget-title">CUSTOMER CARE</h4>
+
+                            <ul class="link-widget">
+                                <li><a href="#">About us</a></li>
+                                <li><a href="#">Features</a></li>
+                                <li><a href="#">Client Porfil</a></li>
+                                <li><a href="#">Panier</a></li>
+                                <li><a href="#">Commande</a></li>
+                                <li><a href="#">blog</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+
+                        </div>
+                    </div><!-- Footer Widget End -->
+
+                    <!-- Footer Widget Start -->
+                    <div class="col-lg-3 col-md-8 col-12 mb-40">
+                        <div class="footer-widget">
+
+                            <h4 class="widget-title">INFORMATION</h4>
+
+                            <ul class="link-widget">
+                                <li><a href="#">Livraison</a></li>
+                                <li><a href="#">EcoSystem Address</a></li>
+                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a href="#">Payment</a></li>
+                                <li><a href="#">Shipping & Returns</a></li>
+                            </ul>
+
+                        </div>
+                    </div><!-- Footer Widget End -->
+
+                    <!-- Footer Widget Start -->
+
+                </div>
+
+            </div>
+        </div><!-- Footer Bottom Section Start -->
+
+        <!-- Footer Bottom Section Start -->
+        <div class="footer-bottom-section section">
+            <div class="container">
+                <div class="row">
+
+                    <!-- Footer Copyright -->
+                    <div class="col-lg-6 col-12">
+                        <div class="footer-copyright"><p>&copy; Copyright, 2018 All Rights Reserved by <a href="">EcoSystem</a></p></div>
+                    </div>
+
+                    <!-- Footer Payment Support -->
+
+
+                </div>
+            </div>
+        </div><!-- Footer Bottom Section Start -->
+
+    </div><!-- Footer Section End -->
+
+    <!-- Popup Subscribe Section Start -->
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+    {% endif %}
+{% endblock %}
+<!-- JS
+============================================ -->
+
+<!-- jQuery JS -->
+<script src="{{ asset('Front/assets/js/vendor/jquery-1.12.4.min.js')}}"></script>
+<!-- Popper JS -->
+<script src="{{ asset('Front/assets/js/popper.min.js')}}"></script>
+<!-- Bootstrap JS -->
+<script src="{{ asset('Front/assets/js/bootstrap.min.js')}}"></script>
+<!-- Plugins JS -->
+<script src="{{ asset('Front/assets/js/plugins.js')}}"></script>
+
+<!-- Main JS -->
+<script src="{{ asset('Front/assets/js/main.js') }}"></script>
+
+
+{% block javascripts  %} {% endblock %}
+</body>
+
+{% endblock %}

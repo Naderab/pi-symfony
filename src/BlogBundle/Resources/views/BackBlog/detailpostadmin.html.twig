@@ -1,0 +1,150 @@
+
+{% extends 'layoutadmin.html.twig' %}
+{% block title %}
+    Admin
+{% endblock %}
+{% block Containt %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                {{ post.titre }}
+
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('homepageadmin') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+                <li><a href="#">Gestion de blog</a></li>
+                <li class="active">Liste des postes</li>
+                <li class="active">{{ post.titre }}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-6">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+
+
+                            <!-- /.box-header -->
+
+
+
+
+                            <img  class="img-responsive" src="{{ asset('uploads/images/' ~ post.image) }}" alt="Blog Image"  >
+                            <hr>
+
+                            <strong><i class="fa fa-file-text-o margin-r-5"></i> Description</strong>
+
+                            <p>{{ post.description }}</p>
+                            <hr>
+                            <div>
+                            <strong><i class="fa fa-file-text-o margin-r-5"></i> Contenu</strong>
+
+                            <p>{{ post.contenu }}</p>
+                            </div>
+                            <hr>
+                            <hr>
+                            <hr>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+
+                                <p><a href="{{ path('blog_updatepostadminn',{'id':post.slug}) }}"  ><i class="material-icons">&#xe923;</i> Update</a>
+                                <a data-toggle="modal" data-target="#exampleModal" onclick="onPressDelete ({{ post.slug }})"><i class="material-icons" >&#xE872;</i> Delete</a></p>
+                            </div>
+                            <div class="col-md-4"></div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <div class="box-body">
+
+
+
+                                <strong><i class="fa fa-file-text-o margin-r-5"></i> Catégorie</strong>
+
+                                <p>{{ post.CategorieBlog.nom }}</p>
+                                <hr>
+                                {% set dateTime = date(post.datepost) %}
+
+                                <strong><i class="fa fa-calendar-o margin-r-5"></i> Date Debut</strong>
+
+                                <p>{{  post.datepost|date('Y-m-d')}}
+                                    &nbsp; {{ dateTime | date('F') }} &nbsp; {{ dateTime | date('Y') }}
+                                    &nbsp;@ {{ dateTime | date('H') }} &nbsp;{{ dateTime | date('i') }}</p>
+                                <hr>
+
+
+                                <hr>
+                                <strong><i class="fa fa-sort-numeric-asc margin-r-5"></i> Nombre de vue </strong>
+
+                                <p>{{  post.nombrevue}} vue</p>
+
+                                <hr>
+                                <strong><i class="fa fa-sort-numeric-asc margin-r-5"></i> Nombre de like </strong>
+
+                                <p>{{  post.nombrelike}} Like</p>
+
+
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+        </section>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff6b6b">
+                    <h5 class="modal-title" id="exampleModalLabel">Supprimer un post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Voulez-vous bien supprimer ce blog ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a   class="btn btn-primary" href="" id="btnDelete" style="background-color: #ff6b6b; border-color: white">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+
+        function onPressDelete (id )
+        {
+            newLien = 'http://localhost:4040/EcoSystem/web/app_dev.php/blog/admin/deleteevent/' + id;
+            document.getElementById('btnDelete').href = newLien;
+        }
+
+
+    </script>
+
+{% endblock %}

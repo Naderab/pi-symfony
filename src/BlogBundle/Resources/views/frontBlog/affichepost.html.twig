@@ -1,0 +1,181 @@
+{% extends 'base.html.twig' %}
+    {% block title %} Eco System {% endblock %}
+    {% block Containt %}
+
+<div class="page-banner-section section">
+            <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+
+                <!-- Page Banner -->
+                <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+                    <div class="page-banner">
+                        <h1>BLOG</h1>
+
+                        <div class="breadcrumb">
+                            <ul>
+                                <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                                <li><a href="">Liste des Blogs</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Banner -->
+                <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+                </div>
+
+                <!-- Banner -->
+                <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Blog Section Start -->
+        <div class="blog-section section mt-90 mb-50" >
+            <div class="container">
+                <div class="row row-40">
+
+                    <div class="col-lg-8 col-12 order-1 order-lg-2 mb-40" id="parent">
+
+<div class="row">
+
+{% for x in post %}
+    <div class="col-12 mb-40">
+        <div class="ee-blog">
+
+            <a href="{{ path('blog_detailpost',{'id':x.slug}) }}" class="image"><img src="{{ asset('uploads/images/' ~ x.image) }}" alt="Blog Image"></a>                            <div class="content">
+                <h3><a href="{{ path('blog_detailpost',{'id':x.slug}) }}">{{ x.titre }}</a></h3>
+                <ul class="meta">
+                    <li><a href="#">{{ x.CategorieBlog.nom }}</a></li>
+                    {% set dateTime =date(x.datepost) %}
+                    <li><a href="#">{{ dateTime|date('d') }} &nbsp; , {{ dateTime|date('F') }} &nbsp;  {{ dateTime|date('Y') }}</a></li>
+                    <li><a href="#">  {{ x.nombrevue }} Vue</a></li>
+                    <li><a href="#">  {{ x.nombrelike }} Like</a></li>
+
+                </ul>
+                <p>{{ x.description }}</p>
+
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+                    </div>
+
+                    <div class="col-lg-4 col-12 order-2 order-lg-1">
+
+                        <!-- Blog Sidebar -->
+
+                           <div class="blog-sidebar mb-40">
+
+                                <div class="product-showing">
+                                    <p>Showing</p>
+                                    <select name="showing" class="nice-select" onchange="Showing(this.options[this.selectedIndex].value);">
+                                        <option value="6">6</option>
+                                        <option value="10">10</option>
+                                        <option value="14">14</option>
+                                        <option value="18">18</option>
+                                    </select>
+                                </div>
+
+
+                           </div>
+                           <hr>
+
+                         <div class="blog-sidebar mb-40">
+
+
+                            <h4 class="title">CATEGORIES</h4>
+
+                            <ul>
+                                {% for y in categorie %}
+
+                                <li><a onclick="categorie({{ y.id }})">{{ y.nom }}</a></li>
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+
+                        <div class="blog-sidebar mb-40">
+
+                            <h4 class="title">PLUS POPULAIRES</h4>
+                            {% for z in postpop %}
+
+                            <div class="sidebar-blog">
+                                <a href="{{ path('blog_detailpost',{'id':z.slug}) }}" class="image"><img src="{{ asset('uploads/images/' ~ z.image) }}" alt="Sidebar Blog"></a>
+                                <div class="content">
+                                    <h5><a href="{{ path('blog_detailpost',{'id':z.slug}) }}">{{ z.titre }}</a></h5>
+                                    <span> {{ z.nombrevue }} vue</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+
+
+                        <!-- Blog Sidebar -->
+
+                        <!-- Blog Sidebar -->
+
+                </div>
+            </div>
+        </div><!-- Blog Section End -->
+
+
+{% endblock %}
+{% block javascripts %}
+<script>
+
+    $(document).ready(function(){
+
+        $.ajax({
+            url: "{{path('blog_getpost')}}",
+            method: "GET",
+            dataType: 'json',
+            success: function(data, status){
+                $('#parent').html(data);
+            }
+        });
+    });
+
+    function categorie(id)
+    {
+        urll='/blog/categoriepost/' +id;
+        $.ajax({
+            url: urll,
+            method: "GET",
+            dataType: 'json',
+            success: function(data, status){
+                $('#parent').html(data);
+            }
+        });
+    }
+
+
+     function Showing(nb) {
+
+                      urll = 'http://localhost:4040/EcoSystem/web/app_dev.php/blog/showing' +nb ;
+
+                    $.ajax({
+                        url: urll ,
+                        method: "GET",
+                        dataType: 'json',
+                        success: function(data, status){
+                            $('#parent').html(data);
+
+                        }
+                    });
+                }
+
+
+
+
+
+
+</script>
+
+
+
+{% endblock %}

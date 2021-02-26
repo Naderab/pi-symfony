@@ -1,0 +1,84 @@
+point_collect_homepage:
+    path:     /pointCollect
+    defaults: { _controller: PointCollectBundle:Default:index }
+
+
+
+addLocation:
+    path:     /addLocation
+    defaults: { _controller: PointCollectBundle:Default:addLocation }
+
+showLocationData:
+    path:     /showLocationData
+    defaults: { _controller: PointCollectBundle:Default:showLocationData }
+
+deleteLocation:
+    path:     /deleteLocation/{id}
+    defaults: { _controller: PointCollectBundle:Default:deleteLocation }
+
+updateLocation:
+    path:     /updateLocation/{id}
+    defaults: { _controller: PointCollectBundle:Default:updateLocation }
+
+showDetailsLocations:
+    path:     /showDetailsLocations/{id}
+    defaults: { _controller: PointCollectBundle:Default:showDetailsLocations }
+
+searchMaps:
+    path:     /searchMaps
+    defaults: { _controller: PointCollectBundle:Default:itineraireMaps }
+
+addTypePointCollect:
+    path:     /addTypePointCollect/{type}
+    defaults: { _controller: PointCollectBundle:Default:addTypePointCollect }
+
+showTypePointCollect:
+    path:     /showTypePointCollect
+    defaults: { _controller: PointCollectBundle:Default:showTypePointCollect }
+
+addTypePointCollect:
+    path:     /addTypePointCollect
+    defaults: { _controller: PointCollectBundle:Default:addTypePointCollect }
+
+deleteTypePointCollect:
+    path:     /deleteTypePointCollect/{id}
+    defaults: { _controller: PointCollectBundle:Default:deleteTypePointCollect }
+
+updateTypePointCollect:
+    path:     /updateTypePointCollect/{id}
+    defaults: { _controller: PointCollectBundle:Default:updateTypePointCollect }
+
+searchLikeAddress:
+    path:     /searchLikeAddress
+    defaults: { _controller: PointCollectBundle:Default:searchLikeAddress }
+afficheMagasin:
+    path:     /Magasin2
+    defaults: { _controller: PointCollectBundle:Default: }
+IténeriareMaps:
+    path:     /recherchepoint
+    defaults: { _controller: PointCollectBundle:Default:itineraireMaps }
+markersJsonApi:
+    path:     /markersJsonApi
+    defaults: { _controller: PointCollectBundle:Default:markersJsonApi }
+markersDistance:
+    path:     /markersDistance/{lat}/{lng}/{dis}
+    defaults: { _controller: PointCollectBundle:Default:markersDistance }
+addressNameJsonApi:
+    path:     /addressNameJsonApi/{id}
+    defaults: { _controller: PointCollectBundle:Default:addressNameJsonApi }
+nearestAddress:
+    path:     /nearestAddress/{lat}/{lng}
+    defaults: { _controller: PointCollectBundle:Default:nearestAddress }
+
+new:
+    path:     /new/{nom}
+    defaults: { _controller: PointCollectBundle:Default:new }
+ListeFavoris:
+    path:     /ListeFavoris
+    defaults: { _controller: PointCollectBundle:Default:ListeFavoris }
+delete:
+    path:     /delete/{nom}
+    defaults: { _controller: PointCollectBundle:Default:delete }
+VerifFavoris:
+    path:     /VerifFavoris/{nom}
+    defaults: { _controller: PointCollectBundle:Default:VerifFavoris }

@@ -1,0 +1,68 @@
+
+blog_ajoutpost:
+    path:     /ajoutpost
+    defaults: { _controller: BlogBundle:Blog:AddPost }
+blog_affichepost:
+    path:     /affichepost
+    defaults: { _controller: BlogBundle:Blog:AffichePost }
+blog_detailpost:
+    path:     /detailpost/{id}
+    defaults: { _controller: BlogBundle:Blog:detailPost }
+blog_categoriepost:
+    path:     /categoriepost/{id}
+    defaults: { _controller: BlogBundle:Blog:AffichePost2 }
+blog_getpost:
+    path:     /getpost
+    defaults: { _controller: BlogBundle:Blog:getPost }
+blog_showing10:
+    path:     /showing10
+    defaults: { _controller: BlogBundle:Blog:showing10 }
+blog_getevent14:
+    path:     /showing14
+    defaults: { _controller: BlogBundle:Blog:showing14 }
+blog_getevent18:
+    path:     /showing18
+    defaults: { _controller: BlogBundle:Blog:showing18 }
+blog_traitereventpublie:
+    path:     /etatpublie/{id}
+    defaults: { _controller: BlogBundle:Blog:traiterEvenementpublie }
+blog_traitereventnonpublie:
+    path:     /etatnonpublie/{id}
+    defaults: { _controller: BlogBundle:Blog:traiterEvenementnonpublie }
+blog_likepost:
+    path:     /like
+    defaults: { _controller: BlogBundle:Blog:Likepost }
+blog_deletepostadminn:
+    path:     /admin/deletepostadmin/{id}
+    defaults: { _controller: BlogBundle:Blog:deletePostadmin }
+blog_traiterpostadminn:
+    path:     /admin/traiterpostadmin/{id}
+    defaults: { _controller: BlogBundle:Blog:traiterPostadmin }
+blog_affichepostATadminn:
+    path:     /admin/affichepostatadmin
+    defaults: { _controller: BlogBundle:Blog:AffichePostATraiter }
+blog_affichepostadminn:
+    path:     /admin/affichepostadmin
+    defaults: { _controller: BlogBundle:Blog:AffichePostadmin }
+blog_ajoutpostadminn:
+    path:     /admin/ajoutpostadmin
+    defaults: { _controller: BlogBundle:Blog:AddPostadmin }
+blog_ajoutcategorieadminn:
+    path:     /admin/ajoutcategorieadmin
+    defaults: { _controller: BlogBundle:Default:ajoutCategorieadmin }
+blog_affichecategorieadminn:
+    path:     /admin/affichecategorieadmin
+    defaults: { _controller: BlogBundle:Default:Affichecategorieadmin }
+blog_deletecategorieadminn:
+    path:     /admin/deletecategorieadmin/{id}
+    defaults: { _controller: BlogBundle:Default:deletecategorieadmin }
+blog_updatepostadminn:
+    path:     /admin/updatepostadmin/{id}
+    defaults: { _controller: BlogBundle:Blog:Updatepostadmin }
+blog_detailpostadminn:
+    path:     /admin/detailpostadmin/{id}
+    defaults: { _controller: BlogBundle:Blog:detailPostadmin }
+
+
+
+

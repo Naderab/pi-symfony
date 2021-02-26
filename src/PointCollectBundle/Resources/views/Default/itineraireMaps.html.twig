@@ -1,0 +1,280 @@
+
+{% extends "@FOSUser/layout.html.twig" %}
+{% block title %} Eco System {% endblock %}
+
+{% block Containt %}
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+
+
+
+
+    <style>
+      /*  #map {
+            height: 700px;
+            width: 100%;
+            background-color: grey;
+        }*/
+
+        div.container {
+            padding: 10px;
+           /* background: rgba(242,246,248,1);*/
+        }
+        div#map {
+            width: 100%;
+            height: 700px;
+        }
+    </style>
+    <div class="page-banner-section section">
+            <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+
+                <!-- Page Banner -->
+                <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+                    <div class="page-banner">
+                        <h1>Checher Point de collect</h1>
+
+                        <div class="breadcrumb">
+                            <ul>
+                                <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                                <li><a href="">Checher Point de collect</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Banner -->
+                <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+                </div>
+
+                <!-- Banner -->
+                <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+                </div>
+            </div>
+        </div>
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+
+            <div class="header-advance-search">
+
+
+                             <form method="post" action="{{ path('searchMaps') }}">
+                                     <div class="input"><input type="text" placeholder="Chercher location" name="findAddress"></div>
+
+                                     <div class="submit"><input type="submit" class="btn btn-block btn-success btn-lg"></div>
+                                    </form>
+
+
+
+                                      </div>
+
+
+
+        </section>
+
+<div class="store-section section mt-90 mb-20">
+    <div class="container">
+                                   <!-- <form method="post" action="{{ path('point_collect_homepage') }}">
+                                     <div class="input"><input type="text" placeholder="Search your product" name="findAddress"></div>
+
+                                     <div class="submit"><input type="submit"><i class="icofont icofont-search-alt-1"></i></div>
+                                    </form>-->
+        <div class="row">
+
+           <div id="map"></div>
+
+        </div>
+
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+      {% block javascripts %}
+        <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/3.5.4/select2.min.js"></script>
+        <script src="{{ asset('bundles/pugxautocompleter/js/autocompleter-select2.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
+
+        <script type="text/javascript" src="scripts/index.js"></script>
+
+
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAchXF7TnN6vtEMPdQKby_8rm1V6hK08TE&callback=initMap">
+        </script>
+
+        <script  type="text/javascript" charset="UTF-8" >
+
+            function Tri(nom) {
+
+                var urll = '/' +nom ;
+
+                $.ajax({
+                    url: urll ,
+                    method: "GET",
+                    dataType: 'json',
+                    success: function(data, status){
+
+                    }
+                });
+            };
+
+
+
+          var x = document.getElementById("lat");
+            var y = document.getElementById("lng");
+
+
+            window.onload = function()  {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                } else {
+                    x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+            };
+
+            function showPosition(position) {
+                x.innerHTML = "Latitude: " + position.coords.latitude ;
+                y.innerHTML =   "Longitude: " + position.coords.longitude;
+
+                var lng = position.coords.longitude;
+                var lat = position.coords.latitude ;
+
+
+                $.ajax({
+                    type:'POST',
+                    url:'{{ (path('point_collect_homepage')) }}',
+                    dataType:"json",
+                    data: {
+                        lng : lng,
+                        lat : lat
+                    },
+                    async: true,
+                    success:function(data){
+
+                    }
+
+                });
+            }
+
+            function initMap() {
+
+                var locations=[];
+
+
+                {% set markers = [] %}
+
+                {% for item in locationPoint %}
+
+
+                {% set markers = markers|merge(
+
+                {
+                "title": item.name,
+                "lat": item.lat,
+                "lng": item.lng,
+                "description": item.address
+
+
+                }
+
+
+                )
+                %}
+
+                locations.push([
+                     '{{ markers.title  }}',
+                    '{{ markers.lat }}',
+                    '{{ markers.lng }}',
+                    '{{ markers.description }}'
+
+                ]);
+                {% endfor %}
+
+
+                var center = {lat: 36.8374946 , lng: 10.1927389};
+
+
+
+                              /*  var locations = [
+                                    ['Philz Coffee<br>\
+                            801 S Hope St A, Los Angeles, CA 90017<br>\
+                           <a href="https://goo.gl/maps/L8ETMBt7cRA2">Get Directions</a>',   34.046438, -118.259653],
+                                    ['Philz Coffee<br>\
+                            525 Santa Monica Blvd, Santa Monica, CA 90401<br>\
+                           <a href="https://goo.gl/maps/PY1abQhuW9C2">Get Directions</a>', 34.017951, -118.493567],
+                                    ['Philz Coffee<br>\
+                            146 South Lake Avenue #106, At Shoppers Lane, Pasadena, CA 91101<br>\
+                            <a href="https://goo.gl/maps/eUmyNuMyYNN2">Get Directions</a>', 34.143073, -118.132040],
+                                    ['Philz Coffee<br>\
+                            21016 Pacific Coast Hwy, Huntington Beach, CA 92648<br>\
+                            <a href="https://goo.gl/maps/Cp2TZoeGCXw">Get Directions</a>', 33.655199, -117.998640],
+                                    ['Philz Coffee<br>\
+                            252 S Brand Blvd, Glendale, CA 91204<br>\
+                        <a href="https://goo.gl/maps/WDr2ef3ccVz">Get Directions</a>', 34.142823, -118.254569]
+                                ];
+                                */
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 9,
+                    center: center
+                });
+                var infowindow =  new google.maps.InfoWindow({});
+                var marker, count;
+                for (count = 0; count < locations.length; count++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[count][1], locations[count][2]),
+                        map: map,
+                        title: locations[count][0]+"<br/>"+ locations[count][3]+"<br/>"+locations[count][4]
+
+                    });
+
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                        marker1 = new google.maps.Marker({
+                            position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                            map: map,
+                            title: "Ma position",
+                            icon: {
+                                url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                            }
+                        });
+
+                        google.maps.event.addListener(marker1, "click", function (e) {
+                            var infoWindow = new google.maps.InfoWindow();
+                            infoWindow.setContent(marker1.title);
+                            infoWindow.open(map, marker1);
+                        });
+                        map.setCenter(geolocate);
+                    });
+
+
+
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, count) {
+                        return function () {
+                            infowindow.setContent(locations[count][0]+"<br/><span style='font-size:14px;font-weight:bold'>Adresse: </span>" + locations[count][3]
+                                +"<br/><span style='font-size:14px;font-weight:bold'><a href='https://www.google.com/maps/dir//" + locations[count][1] + "," +locations[count][2]+ "/'/>Itinéraire: voir chemin </a></span> ");
+                            infowindow.open(map, marker);
+
+
+                        }
+                    })(marker, count));
+
+
+                }
+
+
+            }
+
+
+
+        </script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+    {% endblock %}

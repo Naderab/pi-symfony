@@ -1,0 +1,156 @@
+{% extends 'layoutadmin.html.twig' %}
+{% block title %}
+    Admin
+{% endblock %}
+{% block Containt %}
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            {{ evenement.nom }}
+
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('homepageadmin') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+            <li><a href="{{ path('event_afficheeventadmin') }}">liste des évenements</a></li>
+            <li class="active">Détail : {{ evenement.nom }}</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+
+
+                        <!-- /.box-header -->
+
+
+
+
+                                    <img class="img-responsive" src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="Evenement">
+
+                                <hr>
+
+                                <strong><i class="fa fa-file-text-o margin-r-5"></i> Description</strong>
+
+                                <p>{{ evenement.description }}</p>
+
+                        <hr>
+                        <hr>
+                        <hr>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+
+                        <p><a href="{{ path('event_updateeventadmin',{'id':evenement.id}) }}"  ><i class="material-icons">&#xe923;</i> Update</a>
+                        <a data-toggle="modal" data-target="#exampleModal" onclick="onPressDelete ({{ evenement.id }})" ><i class="material-icons" >&#xE872;</i> Delete</a></p>
+                        </div>
+                        <div class="col-md-4"></div>
+
+
+
+
+
+
+                    </div>
+                    </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <div class="box-body">
+
+                            <strong><i class="fa fa-map-marker margin-r-5"></i> Adresse</strong>
+
+                            <p class="text-muted">{{ evenement.adresse }}</p>
+
+
+                            <hr>
+                            <strong><i class="fa fa-money margin-r-5"></i> Prix</strong>
+
+                            <p>{{ evenement.prix }}</p>
+                            <hr>
+                            <strong><i class="fa fa-file-text-o margin-r-5"></i> Catégorie</strong>
+
+                            <p>{{ evenement.categorie }}</p>
+                            <hr>
+                            {% set dateTime = date(evenement.dateDebut) %}
+
+                            <strong><i class="fa fa-calendar-o margin-r-5"></i> Date Debut</strong>
+
+                            <p>{{ dateTime | date('d') }}
+                                &nbsp; {{ dateTime | date('F') }} &nbsp; {{ dateTime | date('Y') }}
+                                &nbsp;@ {{ dateTime | date('H') }} &nbsp;{{ dateTime | date('i') }}</p>
+                            <hr>
+                            {% set dateTime1 = date(evenement.dateFin) %}
+
+                            <strong><i class="fa fa-calendar-o margin-r-5"></i> Date Fin </strong>
+
+                            <p>{{ dateTime1 | date('d') }}
+                                &nbsp; {{ dateTime1 | date('F') }} &nbsp; {{ dateTime1 | date('Y') }}
+                                &nbsp;@ {{ dateTime1 | date('H') }} &nbsp;{{ dateTime1 | date('i') }}</p>
+                            <hr>
+                            <strong><i class="fa fa-sort-numeric-asc margin-r-5"></i> Nombre Particpants </strong>
+
+                            <p>{{ evenement.nombretickets }}</p>
+                            <hr>
+                            <strong><i class="fa fa-sort-numeric-asc margin-r-5"></i> Nombre Vu </strong>
+
+                            <p>{{ evenement.nombrevu }}</p>
+
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+
+
+
+                </div>
+
+    </section>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff6b6b">
+                    <h5 class="modal-title" id="exampleModalLabel">Supprimer un évenement</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Voulez-vous bien supprimer cet évenement ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a   class="btn btn-primary" href="" id="btnDelete" style="background-color: #ff6b6b; border-color: white">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+
+        function onPressDelete (id )
+        {
+            newLien = 'http://localhost:4040/EcoSystem/web/app_dev.php/admin/deleteevent/' + id;
+            document.getElementById('btnDelete').href = newLien;
+        }
+
+
+
+    </script>
+
+{% endblock %}
