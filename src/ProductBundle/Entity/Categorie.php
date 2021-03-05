@@ -39,7 +39,7 @@ class Categorie
     /**
      * @var int
      *
-     * @ORM\OneToMany(targetEntity="produit2" , mappedBy="categorie")
+     * @ORM\OneToMany(targetEntity="Produit2" , mappedBy="categorie")
      */
     private $produit;
 

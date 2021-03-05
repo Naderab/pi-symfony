@@ -38,7 +38,7 @@ class Produit2
     /**
      * @var int
      *
-     * @ORM\ManyToOne(targetEntity="Categorie")
+     * @ORM\ManyToOne(targetEntity="Categorie",inversedBy="produit")
      * @ORM\JoinColumn(name="id_categorie",referencedColumnName="id")
      *
      */

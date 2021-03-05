@@ -96,8 +96,8 @@ class Produit
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="EcommerceBundle\Entity\Commande")
-     * @ORM\JoinColumn(name="id_commande", referencedColumnName="id" ,nullable=true, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="EcommerceBundle\Entity\Commande",inversedBy="products")
+     * @ORM\JoinColumn(name="idCommande", referencedColumnName="id" ,nullable=true, onDelete="CASCADE")
      */
     private $idCommande;
 
